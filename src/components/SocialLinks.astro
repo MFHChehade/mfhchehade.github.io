@@ -1,0 +1,35 @@
+---
+const socialLinks = [
+  { icon: "fab fa-linkedin", url: "https://lb.linkedin.com/in/mfhchehade", label: "LinkedIn" },
+  { icon: "fas fa-user-graduate", url: "https://scholar.google.com/citations?user=cVUnhukAAAAJ&hl=en", label: "Google Scholar" },
+  { icon: "fab fa-github", url: "https://github.com/mfhchehade", label: "GitHub" },
+  { icon: "fab fa-twitter", url: "https://twitter.com/MFHChehade", label: "Twitter" },
+  { icon: "fas fa-envelope", url: "mailto:chehade@utexas.edu", label: "Email" },
+  { icon: "fas fa-phone", url: "tel:7373400862", label: "Phone" }
+];
+---
+
+<div class="social-links">
+  {socialLinks.map(link => (
+    <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+      <i class={link.icon}></i>
+    </a>
+  ))}
+</div>
+
+<style>
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .social-links a {
+    color: var(--text);
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  .social-links a:hover {
+    color: var(--primary);
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/mergedLayout.astro';
+---
+
+<Layout title="Publications - Mohamad Chehade">
+  <h1>Publications</h1>
+
+  <section class="section">
+    <h2>Peer-Reviewed Publications</h2>
+    <div class="publications-list">
+      <div class="publication">
+        <p class="authors">
+          <strong>Chehade, M.</strong>, Young-Ho Cho, Sandeep Chinchali, Hao Zhu
+        </p>
+        <p class="title">
+          "Should We Use Model-Free or Model-Based Control? A Case Study of Battery Control"
+        </p>
+        <p class="venue">
+          2024 56th North American Power Symposium (NAPS), IEEE, pp. 1–5, Oct. 2024
+        </p>
+        <a href="https://ieeexplore.ieee.org/abstract/document/10741791" target="_blank" class="paper-link">Paper</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Preprints</h2>
+    <div class="publications-list">
+      <div class="publication">
+        <p class="authors">
+          <strong>Chehade, M.</strong>, Zhu, H.
+        </p>
+        <p class="title">
+          "CAT: Caution Aware Transfer in Reinforcement Learning via Distributional Risk"
+        </p>
+        <p class="venue">arXiv, 2024</p>
+        <a href="https://doi.org/10.48550/arXiv.2408.08812" target="_blank" class="paper-link">arXiv</a>
+      </div>
+
+      <div class="publication">
+        <p class="authors">
+          <strong>Chehade, M.</strong>, Zhu, H.
+        </p>
+        <p class="title">
+          "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks"
+        </p>
+        <p class="venue">arXiv, 2024</p>
+        <a href="https://doi.org/10.48550/arXiv.2408.08824" target="_blank" class="paper-link">arXiv</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .publications-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .publication {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .authors {
+    margin-bottom: 0.5rem;
+  }
+
+  .title {
+    font-weight: 500;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .venue {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+.paper-link {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  background: var(--primary);
+  color: white !important; /* Ensure the text is white */
+  border-radius: 4px;
+  text-decoration: none; /* Remove underline if present */
+}
+
+.paper-link:hover {
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+</style>

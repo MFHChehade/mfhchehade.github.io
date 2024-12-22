@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Research - John Doe">
+	<h1>Research</h1>
+	
+	<section class="current-research">
+		<h2>Current Research</h2>
+		<p>
+			My research focuses on developing machine learning algorithms for healthcare applications,
+			with a particular emphasis on medical image analysis and diagnostic support systems.
+		</p>
+		
+		<div class="research-areas">
+			<div class="research-area">
+				<h3>Medical Image Analysis</h3>
+				<p>
+					Developing deep learning models for automated diagnosis from medical imaging,
+					including X-rays, MRI, and CT scans.
+				</p>
+			</div>
+			
+			<div class="research-area">
+				<h3>Efficient Deep Learning</h3>
+				<p>
+					Investigating methods to reduce the computational complexity of deep neural
+					networks while maintaining high accuracy.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="publications">
+		<h2>Selected Publications</h2>
+		<div class="publication-list">
+			<div class="publication">
+				<h3>Paper Title 1</h3>
+				<p class="authors">John Doe, Jane Smith, Robert Johnson</p>
+				<p class="venue">Conference on Machine Learning (CML 2023)</p>
+				<div class="publication-links">
+					<a href="#" class="link">PDF</a>
+					<a href="#" class="link">Code</a>
+					<a href="#" class="link">BibTeX</a>
+				</div>
+			</div>
+
+			<div class="publication">
+				<h3>Paper Title 2</h3>
+				<p class="authors">John Doe, Sarah Williams</p>
+				<p class="venue">Journal of Artificial Intelligence in Medicine (2022)</p>
+				<div class="publication-links">
+					<a href="#" class="link">PDF</a>
+					<a href="#" class="link">Code</a>
+					<a href="#" class="link">BibTeX</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.research-areas {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 2rem;
+		margin: 2rem 0;
+	}
+	.research-area {
+		background: var(--secondary-bg);
+		padding: 1.5rem;
+		border-radius: 0.5rem;
+	}
+	.research-area h3 {
+		margin-top: 0;
+	}
+	.publication {
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid #e5e7eb;
+	}
+	.publication h3 {
+		margin-bottom: 0.5rem;
+	}
+	.authors {
+		color: #4b5563;
+		margin: 0.5rem 0;
+	}
+	.venue {
+		font-style: italic;
+		color: #6b7280;
+		margin: 0.5rem 0;
+	}
+	.publication-links {
+		margin-top: 1rem;
+	}
+	.link {
+		display: inline-block;
+		margin-right: 1rem;
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.link:hover {
+		text-decoration: underline;
+	}
+</style>

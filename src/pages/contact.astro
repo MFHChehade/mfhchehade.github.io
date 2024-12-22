@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact - John Doe">
+	<h1>Contact</h1>
+
+	<div class="contact-grid">
+		<div class="contact-info">
+			<h2>Get in Touch</h2>
+			<p>
+				I'm always interested in collaborating on research projects and discussing
+				new ideas in machine learning and healthcare.
+			</p>
+			
+			<div class="contact-details">
+				<div class="detail">
+					<h3>Email</h3>
+					<p>john.doe@stanford.edu</p>
+				</div>
+				
+				<div class="detail">
+					<h3>Office</h3>
+					<p>Gates Building, Room 123<br>
+					Stanford University<br>
+					Stanford, CA 94305</p>
+				</div>
+				
+				<div class="detail">
+					<h3>Social</h3>
+					<div class="social-links">
+						<a href="#" target="_blank">Google Scholar</a>
+						<a href="#" target="_blank">LinkedIn</a>
+						<a href="#" target="_blank">Twitter</a>
+						<a href="#" target="_blank">GitHub</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.contact-grid {
+		max-width: 600px;
+	}
+	.contact-info {
+		background: var(--secondary-bg);
+		padding: 2rem;
+		border-radius: 0.5rem;
+	}
+	.contact-details {
+		margin-top: 2rem;
+	}
+	.detail {
+		margin-bottom: 1.5rem;
+	}
+	.detail h3 {
+		margin: 0 0 0.5rem;
+		font-size: 1.1rem;
+	}
+	.detail p {
+		margin: 0;
+		color: #4b5563;
+	}
+	.social-links {
+		display: flex;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.social-links a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.social-links a:hover {
+		text-decoration: underline;
+	}
+</style>
