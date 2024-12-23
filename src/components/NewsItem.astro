@@ -11,7 +11,11 @@ const { date, content, link } = Astro.props;
 <div class="news-item">
   <strong>{date}:</strong>
   {link ? (
-    <a href={link} target="_blank" rel="noopener noreferrer">{content}</a>
+    <>
+      {preText}
+      <a href={link} target="_blank" rel="noopener noreferrer">Paper</a>
+      {postText}
+    </>
   ) : (
     <span>{content}</span>
   )}
