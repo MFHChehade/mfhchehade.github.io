@@ -14,8 +14,10 @@ const hasPaper = content.includes("Paper");
 let preText = "";
 let postText = "";
 
-if (hasPaper) {
-  [preText, postText] = content.split("Paper");
+if (hasPaper && link) {
+  const parts = content.split("Paper");
+  preText = parts[0];
+  postText = parts[1].replace(/accepted to NAPS 2024/, 'accepted to <strong>NAPS 2024</strong>');
 }
 ---
 <div class="news-item">
@@ -24,10 +26,10 @@ if (hasPaper) {
     <>
       {preText}
       <a href={link} target="_blank" rel="noopener noreferrer">Paper</a>
-      {postText}
+      <span set:html={postText} />
     </>
   ) : (
-    <span>{content}</span>
+    <span set:html={content} />
   )}
 </div>
 
