@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/mergedLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import NewsItem from '../components/NewsItem.astro';
+---
+
+<Layout title="Mohamad Chehade - PhD Student">
+  <header class="hero">
+    <img src="./public/profile.jpeg" alt="Mohamad Chehade" class="profile-img">
+    <h1>Mohamad Chehade</h1>
+    <p class="subtitle">Ph.D. Student in Electrical and Computer Engineering</p>
+    <SocialLinks />
+  </header>
+
+  <section class="section" id="about">
+    <h2>About</h2>
+    <p>
+      I am <strong>Mohamad Fares El Hajj Chehade</strong>, a <strong>Ph.D. student</strong> in <strong>Electrical and Computer Engineering</strong> at 
+      <a href="https://www.utexas.edu/" target="_blank">The University of Texas at Austin</a>, where I work under the guidance of 
+      <a href="https://sites.utexas.edu/haozhu/" target="_blank">Dr. Hao Zhu</a>. My research focuses on 
+      <strong>Risk-aware Transfer in Reinforcement Learning</strong> and <strong>Physics-aware Supervised Learning</strong>, with applications in power and energy systems.
+    </p>
+    <p>
+      I hold a <strong>B.Eng. in Electrical and Computer Engineering</strong> with a minor in Mathematics from the 
+      <a href="https://www.aub.edu.lb/" target="_blank">American University of Beirut (AUB)</a>, where I worked with 
+      <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank">Dr. Rabih Jabr</a> and 
+      <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank">Dr. Sami Karaki</a>.
+    </p>
+  </section>
+
+  <section class="section" id="news">
+    <h2>News</h2>
+    <NewsItem 
+      date="Oct 16"
+      content="Awarded Best Graduate Presentation Award at NAPS 2024"
+    />
+    <NewsItem 
+      date="Aug 24"
+      content="Paper accepted to NAPS 2024"
+      link="https://ieeexplore.ieee.org/document/10741791"
+    />
+  </section>
+
+  <section class="section" id="education">
+    <h2>Education</h2>
+    <div class="education-list">
+      <div class="education-item">
+        <div class="education-content">
+          <h3>Ph.D. in Electrical and Computer Engineering</h3>
+          <p>The University of Texas at Austin</p>
+          <p>Advisor: <a href="https://sites.utexas.edu/haozhu/">Dr. Hao Zhu</a></p>
+        </div>
+        <div class="education-date">Aug. 2023 - Present</div>
+      </div>
+
+      <div class="education-item">
+        <div class="education-content">
+          <h3>B.Eng. in Electrical and Computer Engineering</h3>
+          <p>American University of Beirut</p>
+          <p>Minor in Mathematics</p>
+        </div>
+        <div class="education-date">Aug. 2019 - Jun. 2023</div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    margin: 2rem 0 4rem;
+  }
+
+  .profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin: 0.5rem 0;
+  }
+
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .education-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem;
+    background: var(--secondary-bg);
+    border-radius: 0.5rem;
+  }
+
+  .education-content h3 {
+    margin: 0;
+    color: var(--primary);
+  }
+
+  .education-date {
+    color: #666;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .education-item {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .education-date {
+      align-self: flex-start;
+    }
+  }
+</style>
