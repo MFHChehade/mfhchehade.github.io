@@ -1,4 +1,4 @@
----
+^---
 import Layout from '../layouts/mergedLayout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import NewsItem from '../components/NewsItem.astro';
@@ -38,20 +38,25 @@ import NewsItem from '../components/NewsItem.astro';
 
   <section class="section" id="news">
     <h2>News</h2>
-    <NewsItem 
+<NewsItem 
   date="May 2025"
-  content='Papers <a href="https://arxiv.org/pdf/2408.08824"><strong>LEVIS</strong></a> and <a href="https://arxiv.org/pdf/2505.23729"><strong>SITAlign</strong></a> accepted to <strong>ICML 2025</strong>'
+  content='Papers LEVIS and SITAlign accepted to ICML 2025'
+  link="https://arxiv.org/pdf/2408.08824"
 />
-    <NewsItem 
-      date="Jan 2025"
-      content="Paper accepted to <strong>TPEC 2025</strong>"
-      link="https://ieeexplore.ieee.org/document/10907217"
-    />
-    <NewsItem 
-      date="Oct 2024"
-      content="Awarded <strong>Best Graduate Presentation Award</strong> at <strong>NAPS 2024</strong>"
-    />
-
+<NewsItem 
+  date="Jan 2025"
+  content="Paper accepted to TPEC 2025"
+  link="https://ieeexplore.ieee.org/document/10907217"
+/>
+<NewsItem 
+  date="Oct 2024"
+  content="Awarded Best Graduate Presentation Award at NAPS 2024"
+/>
+<NewsItem 
+  date="Aug 2024"
+  content="Paper accepted to NAPS 2024"
+  link="https://ieeexplore.ieee.org/document/10741791"
+/>
   </section>
 
   <section class="section" id="education">
