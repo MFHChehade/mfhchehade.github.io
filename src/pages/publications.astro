@@ -50,18 +50,29 @@ import Layout from '../layouts/mergedLayout.astro';
       <a href="https://doi.org/10.48550/arXiv.2408.08812" target="_blank" class="paper-link">arXiv</a>
     </div>
 
-      <div class="publication">
-        <p class="authors">
-          <strong>M Chehade</strong>, BW Bell, R Bent, H Zhu, W Li
-        </p>
-        <p class="title">
-          "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks"
-        </p>
-        <p class="venue">arXiv, 2024</p>
-        <a href="https://doi.org/10.48550/arXiv.2408.08824" target="_blank" class="paper-link">arXiv</a>
-      </div>
+    <div class="publication">
+      <p class="authors">
+        <strong>M Chehade</strong>, BW Bell, R Bent, H Zhu, W Li
+      </p>
+      <p class="title">
+        "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks"
+      </p>
+      <p class="venue">arXiv, 2024</p>
+      <a href="https://doi.org/10.48550/arXiv.2408.08824" target="_blank" class="paper-link">arXiv</a>
     </div>
-  </section>
+
+    <div class="publication">
+      <p class="authors">
+        <strong>M Chehade</strong>, SS Ghosal, S Chakraborty, A Reddy, D Manocha, H Zhu, AS Bedi
+      </p>
+      <p class="title">
+        "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time"
+      </p>
+      <p class="venue">arXiv, 2025</p>
+      <a href="https://arxiv.org/abs/2505.23729" target="_blank" class="paper-link">arXiv</a>
+    </div>
+  </div>
+</section>
 </Layout>
 
 <style>
@@ -93,18 +104,17 @@ import Layout from '../layouts/mergedLayout.astro';
     margin-bottom: 0.5rem;
   }
 
-.paper-link {
-  display: inline-block;
-  padding: 0.25rem 1rem;
-  background: var(--primary);
-  color: white !important; /* Ensure the text is white */
-  border-radius: 4px;
-  text-decoration: none; /* Remove underline if present */
-}
+  .paper-link {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background: var(--primary);
+    color: white !important;
+    border-radius: 4px;
+    text-decoration: none;
+  }
 
-.paper-link:hover {
-  opacity: 0.9;
-  text-decoration: none;
-}
-
+  .paper-link:hover {
+    opacity: 0.9;
+    text-decoration: none;
+  }
 </style>
