@@ -45,8 +45,7 @@ import Layout from '../layouts/mergedLayout.astro';
         Proceedings of the 41st International Conference on Machine Learning (ICML), 2025
       </p>
       <a href="https://doi.org/10.48550/arXiv.2408.08824" target="_blank" class="paper-link">Paper</a>
-      <!-- Optional OpenReview link -->
-      <!-- <a href="https://openreview.net/forum?id=WFIMSlNS7C" target="_blank" class="paper-link">OpenReview</a> -->
+      <a href="https://openreview.net/forum?id=WFIMSlNS7C" target="_blank" class="paper-link">OpenReview</a>
     </div>
 
     <div class="publication">
@@ -60,8 +59,7 @@ import Layout from '../layouts/mergedLayout.astro';
         Proceedings of the 41st International Conference on Machine Learning (ICML), 2025
       </p>
       <a href="https://arxiv.org/abs/2505.23729" target="_blank" class="paper-link">Paper</a>
-      <!-- Optional OpenReview link -->
-      <!-- <a href="https://openreview.net/forum?id=cEhLObwvvu" target="_blank" class="paper-link">OpenReview</a> -->
+      <a href="https://openreview.net/forum?id=cEhLObwvvu" target="_blank" class="paper-link">OpenReview</a>
     </div>
   </div>
 </section>
@@ -83,3 +81,47 @@ import Layout from '../layouts/mergedLayout.astro';
 </section>
 </Layout>
 
+<style>
+  .publications-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .publication {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .authors {
+    margin-bottom: 0.5rem;
+  }
+
+  .title {
+    font-weight: 500;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .venue {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  .paper-link {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background: var(--primary);
+    color: white !important;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 0.5rem;
+  }
+
+  .paper-link:hover {
+    opacity: 0.9;
+    text-decoration: none;
+  }
+</style>
