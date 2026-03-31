@@ -6,7 +6,7 @@ import NewsItem from '../components/NewsItem.astro';
 
 <Layout title="Mohamad Chehade - PhD Student">
   <header class="hero">
-    <img src="profile.jpeg" alt="Mohamad Chehade" class="profile-img">
+    <img src="profile.jpeg" alt="Mohamad Chehade" class="profile-img" />
     <h1>Mohamad Chehade</h1>
     <p class="subtitle">Ph.D. Student in Electrical and Computer Engineering</p>
     <SocialLinks />
@@ -14,37 +14,88 @@ import NewsItem from '../components/NewsItem.astro';
 
   <section class="section" id="about">
     <h2>About</h2>
+
     <p>
-      Welcome! I am <strong>Mohamad Chehade</strong>, a <strong>Ph.D. student</strong> in <strong>Electrical and Computer Engineering</strong> at
-      <a href="https://www.utexas.edu/" target="_blank">The University of Texas at Austin</a>, where I am advised by
-      <a href="https://sites.utexas.edu/haozhu/" target="_blank">Dr. Hao Zhu</a>. My research focuses on
-      <strong>Risk-aware Transfer in Reinforcement Learning</strong> and <strong>Physics-aware Supervised Learning</strong>, with applications in power and energy systems.
+      Welcome! I am <strong>Mohamad Chehade</strong>, a <strong>Ph.D. student</strong> in
+      <strong>Electrical and Computer Engineering</strong> at
+      <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">
+        The University of Texas at Austin
+      </a>,
+      where I am advised by
+      <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">
+        Dr. Hao Zhu
+      </a>.
+      My research focuses on <strong>Risk-aware Transfer in Reinforcement Learning</strong> and
+      <strong>Physics-aware Supervised Learning</strong>, with applications in power and energy systems.
     </p>
 
     <p>
       I hold a <strong>B.Eng. in Electrical and Computer Engineering</strong> with a minor in Mathematics from the
-      <a href="https://www.aub.edu.lb/" target="_blank">American University of Beirut (AUB)</a>, where I worked with
-      <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank">Dr. Rabih Jabr</a> and
-      <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank">Dr. Sami Karaki</a>. In addition, I have interned at the
-      <a href="https://www.lanl.gov/" target="_blank">Los Alamos National Laboratory</a>, where I worked with
-      <a href="https://wendy0601.github.io/" target="_blank">Dr. Wenting Li</a>,
-      <a href="https://sites.google.com/math.arizona.edu/brian-bell/home?authuser=0" target="_blank">Dr. Brian Bell</a>, and
-      <a href="https://lanlexperts.elsevierpure.com/en/persons/russell-whitford-bent" target="_blank">Dr. Russell Bent</a>.
+      <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">
+        American University of Beirut (AUB)
+      </a>,
+      where I worked with
+      <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+        Dr. Rabih Jabr
+      </a>
+      and
+      <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+        Dr. Sami Karaki
+      </a>.
+      In addition, I have interned at the
+      <a href="https://www.lanl.gov/" target="_blank" rel="noopener noreferrer">
+        Los Alamos National Laboratory
+      </a>,
+      where I worked with
+      <a href="https://wendy0601.github.io/" target="_blank" rel="noopener noreferrer">
+        Dr. Wenting Li
+      </a>,
+      <a href="https://sites.google.com/math.arizona.edu/brian-bell/home?authuser=0" target="_blank" rel="noopener noreferrer">
+        Dr. Brian Bell
+      </a>, and
+      <a href="https://lanlexperts.elsevierpure.com/en/persons/russell-whitford-bent" target="_blank" rel="noopener noreferrer">
+        Dr. Russell Bent
+      </a>.
     </p>
 
     <p>
-      Outside academia, I enjoy playing and watching sports like soccer, basketball and Formula 1, and I'm an avid participant in related games like
-      Fantasy Premier League and FIFA.
+      Outside academia, I enjoy playing and watching sports like soccer, basketball and Formula 1,
+      and I'm an avid participant in related games like Fantasy Premier League and FIFA.
     </p>
   </section>
 
   <section class="section" id="news">
     <h2>News</h2>
 
-    <NewsItem
-      date="Mar 2026"
-      content='Two papers accepted to the <strong>2026 IEEE Power &amp; Energy Society General Meeting (PESGM)</strong>:<ul><li><a href="https://arxiv.org/abs/2602.15350" target="_blank" rel="noopener noreferrer"><strong>Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid</strong></a></li><li><a href="https://arxiv.org/abs/2603.08654" target="_blank" rel="noopener noreferrer"><strong>Carbon-aware Market Participation for Building Energy Management Systems</strong></a></li></ul>'
-    />
+    <div class="custom-news-item">
+      <div class="custom-news-mainline">
+        <strong>Mar 2026:</strong>
+        Two papers accepted to the
+        <strong>2026 IEEE Power &amp; Energy Society General Meeting (PESGM)</strong>
+      </div>
+
+      <div class="custom-news-links">
+        <div class="custom-news-linkline">
+          <a
+            href="https://arxiv.org/abs/2602.15350"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid</strong>
+          </a>
+        </div>
+
+        <div class="custom-news-linkline">
+          <a
+            href="https://arxiv.org/abs/2603.08654"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <strong>Carbon-aware Market Participation for Building Energy Management Systems</strong>
+          </a>
+        </div>
+      </div>
+    </div>
 
     <NewsItem
       date="Aug 2025"
@@ -53,12 +104,12 @@ import NewsItem from '../components/NewsItem.astro';
 
     <NewsItem
       date="May 2025"
-      content='Papers <a href="https://arxiv.org/pdf/2408.08824"><strong>LEVIS</strong></a> and <a href="https://arxiv.org/pdf/2505.23729"><strong>SITAlign</strong></a> accepted to <strong>ICML 2025</strong>'
+      content='Papers <a href="https://arxiv.org/pdf/2408.08824" target="_blank" rel="noopener noreferrer"><strong>LEVIS</strong></a> and <a href="https://arxiv.org/pdf/2505.23729" target="_blank" rel="noopener noreferrer"><strong>SITAlign</strong></a> accepted to <strong>ICML 2025</strong>'
     />
 
     <NewsItem
       date="Jan 2025"
-      content='<a href="https://ieeexplore.ieee.org/document/10907217"><strong>BOOST</strong></a> accepted to <strong>TPEC 2025</strong>'
+      content='<a href="https://ieeexplore.ieee.org/document/10907217" target="_blank" rel="noopener noreferrer"><strong>BOOST</strong></a> accepted to <strong>TPEC 2025</strong>'
     />
 
     <NewsItem
@@ -68,7 +119,7 @@ import NewsItem from '../components/NewsItem.astro';
 
     <NewsItem
       date="Aug 2024"
-      content='The study <a href="https://ieeexplore.ieee.org/document/10741791"><strong>RLvsMPC</strong></a> for battery control accepted to <strong>NAPS 2024</strong>'
+      content='The study <a href="https://ieeexplore.ieee.org/document/10741791" target="_blank" rel="noopener noreferrer"><strong>RLvsMPC</strong></a> for battery control accepted to <strong>NAPS 2024</strong>'
     />
   </section>
 
@@ -80,7 +131,12 @@ import NewsItem from '../components/NewsItem.astro';
         <div class="education-content">
           <h3>Ph.D. in Electrical and Computer Engineering</h3>
           <p>The University of Texas at Austin</p>
-          <p>Advisor: <a href="https://sites.utexas.edu/haozhu/">Dr. Hao Zhu</a></p>
+          <p>
+            Advisor:
+            <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">
+              Dr. Hao Zhu
+            </a>
+          </p>
         </div>
         <div class="education-date">Aug. 2023 - Present</div>
       </div>
@@ -119,5 +175,37 @@ import NewsItem from '../components/NewsItem.astro';
 
   #about p {
     margin-bottom: 20px;
+  }
+
+  .custom-news-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem 0.9rem;
+    border-left: 3px solid var(--primary);
+    background: #f5f5f5;
+  }
+
+  .custom-news-mainline {
+    margin-bottom: 0.45rem;
+    line-height: 1.45;
+  }
+
+  .custom-news-links {
+    margin-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .custom-news-linkline {
+    line-height: 1.4;
+  }
+
+  .custom-news-linkline a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .custom-news-linkline a:hover {
+    text-decoration: underline;
   }
 </style>
