@@ -8,6 +8,7 @@ import SocialLinks from '../components/SocialLinks.astro';
   description="Contact information for Mohamad Chehade, Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin."
 >
   <header class="page-heading">
+    <p class="eyebrow">Contact</p>
     <h1>Contact</h1>
     <p>
       Please feel free to contact me about research, collaboration, or related questions
@@ -16,14 +17,14 @@ import SocialLinks from '../components/SocialLinks.astro';
     </p>
   </header>
 
-  <div class="academic-grid">
-    <article>
-      <section class="section">
+  <div class="contact-grid">
+    <article class="contact-panel surface">
+      <section>
         <h2>Email</h2>
         <p><a href="mailto:chehade@utexas.edu">chehade@utexas.edu</a></p>
       </section>
 
-      <section class="section">
+      <section>
         <h2>Affiliation</h2>
         <p>
           Department of Electrical and Computer Engineering<br />
@@ -31,7 +32,7 @@ import SocialLinks from '../components/SocialLinks.astro';
         </p>
       </section>
 
-      <section class="section">
+      <section>
         <h2>Advisor</h2>
         <p>
           <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Prof. Hao Zhu</a>
@@ -39,12 +40,12 @@ import SocialLinks from '../components/SocialLinks.astro';
       </section>
     </article>
 
-    <aside class="sidebar">
-      <section class="sidebar-section">
+    <aside class="contact-panel surface">
+      <section>
         <h2>Links</h2>
         <SocialLinks />
       </section>
-      <section class="sidebar-section">
+      <section>
         <h2>Documents</h2>
         <ul class="plain-list">
           <li><a href="/CV_Mohamad.pdf" target="_blank" rel="noopener noreferrer">Curriculum vitae</a></li>
@@ -53,3 +54,32 @@ import SocialLinks from '../components/SocialLinks.astro';
     </aside>
   </div>
 </Layout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 1rem;
+  }
+
+  .contact-panel {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .contact-panel h2 {
+    margin-bottom: 0.45rem;
+  }
+
+  .contact-panel p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

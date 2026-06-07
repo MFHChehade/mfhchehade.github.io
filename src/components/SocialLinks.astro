@@ -6,33 +6,42 @@ const links = [
 ];
 ---
 
-<ul class="profile-links plain-list">
+<div class="social-links">
   {links.map((link) => {
     const isExternal = link.url.startsWith("http");
     return (
-      <li>
-        <a
-          href={link.url}
-          target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noopener noreferrer" : undefined}
-        >
-          {link.label}
-        </a>
-      </li>
+      <a
+        href={link.url}
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+      >
+        {link.label}
+      </a>
     );
   })}
-</ul>
+</div>
 
 <style>
-  .profile-links {
-    margin-bottom: 0;
+  .social-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
-  .profile-links a {
+  .social-links a {
+    min-height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--blue);
+    background: var(--wash);
+    border-radius: 6px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.92rem;
     text-decoration: none;
   }
 
-  .profile-links a:hover {
-    text-decoration: underline;
+  .social-links a:hover {
+    color: #ffffff;
+    background: var(--burnt);
   }
 </style>

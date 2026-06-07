@@ -37,10 +37,10 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     <a class="skip-link" href="#content">Skip to content</a>
     <header class="site-header">
       <div class="site-header-inner">
-        <div class="site-identity">
-          <a href="/" class="site-name">Mohamad Chehade</a>
-          <p>Ph.D. Student, Electrical and Computer Engineering, The University of Texas at Austin</p>
-        </div>
+        <a href="/" class="site-name" aria-label="Mohamad Chehade home">
+          <span class="site-mark">MC</span>
+          <span>Mohamad Chehade</span>
+        </a>
         <nav class="site-nav" aria-label="Main navigation">
           {navLinks.map((link) => (
             <a
@@ -61,24 +61,30 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     </main>
 
     <footer>
-      <p>&copy; {new Date().getFullYear()} Mohamad Chehade</p>
+      <div class="footer-inner">
+        <p>&copy; {new Date().getFullYear()} Mohamad Chehade</p>
+        <p>Risk-aware ML, data-driven reliability, RL, LLMs, and power systems applications.</p>
+      </div>
     </footer>
   </body>
 </html>
 
 <style is:global>
   :root {
-    --ut-burnt: #bf5700;
-    --ut-charcoal: #333f48;
-    --link: #005f86;
-    --ink: #222222;
-    --muted: #5f6870;
-    --line: #d9dde0;
-    --soft: #f4f6f7;
-    --panel: #ffffff;
-    --background: #f8f9f9;
-    --max-width: 1120px;
+    --burnt: #bf5700;
+    --charcoal: #27313b;
+    --ink: #17202a;
+    --muted: #637083;
+    --blue: #005f86;
+    --green: #22715f;
+    --bg: #f6f7f4;
+    --paper: #ffffff;
+    --wash: #eef4f5;
+    --warm: #fff6ef;
+    --line: #d9dee3;
+    --shadow: 0 18px 45px rgba(39, 49, 59, 0.08);
     --radius: 8px;
+    --max-width: 1120px;
   }
 
   * {
@@ -87,8 +93,15 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
 
   html {
     color: var(--ink);
-    background: var(--background);
-    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    font-family:
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
     font-size: 16px;
     scroll-behavior: smooth;
   }
@@ -96,13 +109,11 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
   body {
     min-height: 100vh;
     margin: 0;
-    line-height: 1.58;
+    line-height: 1.62;
     display: flex;
     flex-direction: column;
-    background:
-      linear-gradient(180deg, #ffffff 0, var(--background) 360px),
-      var(--background);
-    border-top: 4px solid var(--ut-burnt);
+    background: var(--bg);
+    border-top: 4px solid var(--burnt);
   }
 
   img {
@@ -114,7 +125,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     width: min(100% - 2rem, var(--max-width));
     flex: 1;
     margin: 0 auto;
-    padding: 2.5rem 0 3.5rem;
+    padding: 2rem 0 4rem;
   }
 
   .skip-link {
@@ -124,7 +135,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     z-index: 100;
     padding: 0.45rem 0.65rem;
     color: #ffffff;
-    background: var(--ut-charcoal);
+    background: var(--charcoal);
     border-radius: 4px;
     transform: translateY(-150%);
   }
@@ -136,61 +147,67 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.92);
-    border-bottom: 1px solid var(--line);
-    backdrop-filter: blur(14px);
+    z-index: 20;
+    background: rgba(246, 247, 244, 0.88);
+    border-bottom: 1px solid rgba(217, 222, 227, 0.86);
+    backdrop-filter: blur(18px);
   }
 
   .site-header-inner {
     width: min(100% - 2rem, var(--max-width));
+    min-height: 72px;
     margin: 0 auto;
-    padding: 1rem 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-  }
-
-  .site-identity {
-    min-width: 0;
+    gap: 1.5rem;
   }
 
   .site-name {
-    color: var(--ut-charcoal);
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.72rem;
-    line-height: 1.1;
-    font-weight: 700;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ink);
+    font-weight: 800;
     text-decoration: none;
-    transition: color 160ms ease;
+    white-space: nowrap;
+  }
+
+  .site-mark {
+    width: 2.2rem;
+    height: 2.2rem;
+    display: inline-grid;
+    place-items: center;
+    color: #ffffff;
+    background: var(--charcoal);
+    border-radius: 6px;
+    font-size: 0.76rem;
+    font-weight: 800;
   }
 
   .site-name:hover {
-    color: var(--ut-burnt);
+    color: var(--burnt);
     text-decoration: none;
-  }
-
-  .site-identity p {
-    color: var(--muted);
-    margin: 0.35rem 0 0;
-    font-size: 0.92rem;
   }
 
   .site-nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: 0.45rem;
+    gap: 0.35rem;
     font-size: 0.95rem;
   }
 
   .site-nav a {
-    color: var(--ut-charcoal);
+    min-height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--muted);
     text-decoration: none;
     border: 1px solid transparent;
-    border-radius: 999px;
-    padding: 0.28rem 0.55rem;
+    border-radius: 6px;
+    padding: 0.32rem 0.7rem;
     transition:
       background 160ms ease,
       border-color 160ms ease,
@@ -199,48 +216,48 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
 
   .site-nav a:hover,
   .site-nav a.active {
-    color: var(--ut-burnt);
-    background: #fff7f0;
-    border-color: #efc7a5;
+    color: var(--burnt);
+    background: #ffffff;
+    border-color: var(--line);
   }
 
   footer {
-    border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 0.9rem;
-    padding: 1.2rem 1rem;
+    padding: 1.4rem 1rem;
     background: #ffffff;
+    border-top: 1px solid var(--line);
   }
 
-  footer p {
+  .footer-inner {
     width: min(100%, var(--max-width));
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
   }
 
   h1,
   h2,
   h3 {
-    color: var(--ut-charcoal);
+    color: var(--charcoal);
     margin: 0;
-    line-height: 1.25;
+    line-height: 1.16;
   }
 
   h1 {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 2.15rem;
-    font-weight: 700;
-    margin-bottom: 0.45rem;
+    font-size: 3.35rem;
+    font-weight: 850;
   }
 
   h2 {
-    font-size: 1.22rem;
-    margin-bottom: 0.85rem;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid var(--line);
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
   }
 
   h3 {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   p {
@@ -248,92 +265,23 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
   }
 
   a {
-    color: var(--link);
-    text-underline-offset: 0.16em;
+    color: var(--blue);
+    text-underline-offset: 0.18em;
     transition: color 160ms ease;
   }
 
   a:hover {
-    color: var(--ut-burnt);
+    color: var(--burnt);
   }
 
   ul,
   ol {
-    margin: 0.25rem 0 0.75rem 1.2rem;
+    margin: 0.35rem 0 0.75rem 1.2rem;
     padding: 0;
   }
 
   li {
-    margin: 0.25rem 0;
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--ut-burnt);
-    outline-offset: 3px;
-  }
-
-  .page-heading {
-    margin-bottom: 1.8rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .page-heading p {
-    max-width: 760px;
-    color: var(--muted);
-    margin-bottom: 0;
-  }
-
-  .section {
-    margin-top: 2.35rem;
-  }
-
-  .section:first-child {
-    margin-top: 0;
-  }
-
-  .academic-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(230px, 270px);
-    gap: 3rem;
-    align-items: start;
-  }
-
-  .sidebar {
-    position: sticky;
-    top: 6rem;
-    font-size: 0.94rem;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--ut-burnt);
-    border-radius: var(--radius);
-    padding: 1rem;
-  }
-
-  .sidebar-section {
-    padding: 0.95rem 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .sidebar-section:first-child {
-    border-top: 0;
-    padding-top: 0;
-  }
-
-  .sidebar-section h2,
-  .sidebar-section h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.4rem;
-    padding: 0;
-    border: 0;
-  }
-
-  .profile-photo {
-    width: 100%;
-    max-width: 215px;
-    margin: 0 auto 1rem;
-    border: 1px solid var(--line);
-    border-radius: 4px;
+    margin: 0.3rem 0;
   }
 
   .plain-list {
@@ -341,45 +289,139 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     margin-left: 0;
   }
 
-  .plain-list li {
-    margin: 0.35rem 0;
+  :focus-visible {
+    outline: 2px solid var(--burnt);
+    outline-offset: 3px;
+  }
+
+  .page-heading {
+    max-width: 820px;
+    margin-bottom: 2rem;
+  }
+
+  .page-heading p,
+  .lead {
+    color: var(--muted);
+    font-size: 1.08rem;
+  }
+
+  .eyebrow {
+    color: var(--burnt);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0.55rem;
+  }
+
+  .section {
+    margin-top: 3rem;
+  }
+
+  .section:first-child {
+    margin-top: 0;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .section-heading p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .button {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: var(--charcoal);
+    border: 1px solid var(--charcoal);
+    border-radius: 6px;
+    padding: 0.62rem 0.95rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+      background 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .button:hover {
+    color: #ffffff;
+    background: var(--burnt);
+    border-color: var(--burnt);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .button.secondary {
+    color: var(--charcoal);
+    background: #ffffff;
+    border-color: var(--line);
+  }
+
+  .button.secondary:hover {
+    color: var(--burnt);
+    background: var(--warm);
+    border-color: #efc7a5;
+  }
+
+  .modern-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .surface {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
   }
 
   .publication-list,
   .news-list {
     display: grid;
-    gap: 0.55rem;
+    gap: 0.75rem;
   }
 
   .publication-entry {
-    padding: 0.85rem 0.9rem;
-    border: 1px solid transparent;
-    border-bottom-color: var(--line);
+    padding: 1rem;
+    background: #ffffff;
+    border: 1px solid var(--line);
     border-radius: var(--radius);
     transition:
-      background 160ms ease,
+      transform 160ms ease,
       border-color 160ms ease,
-      transform 160ms ease;
-  }
-
-  .publication-entry:last-child {
-    border-bottom-color: transparent;
+      box-shadow 160ms ease;
   }
 
   .publication-entry:hover {
-    background: var(--panel);
-    border-color: var(--line);
+    border-color: #c8d3d8;
+    box-shadow: 0 12px 30px rgba(39, 49, 59, 0.07);
     transform: translateY(-1px);
   }
 
   .publication-entry h3 {
     color: var(--ink);
-    font-weight: 700;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.35rem;
   }
 
   .publication-entry p {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.28rem;
   }
 
   .authors {
@@ -397,67 +439,56 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     flex-wrap: wrap;
     gap: 0.5rem;
     font-size: 0.92rem;
+    margin-top: 0.45rem;
   }
 
   .link-row a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.85rem;
+    color: var(--blue);
+    background: var(--wash);
+    border-radius: 6px;
+    padding: 0.18rem 0.55rem;
     text-decoration: none;
   }
 
-  .link-row a::before {
-    content: "[";
-    color: var(--muted);
+  .link-row a:hover {
+    color: #ffffff;
+    background: var(--burnt);
   }
 
-  .link-row a::after {
-    content: "]";
-    color: var(--muted);
-  }
-
-  .academic-note {
-    background: var(--soft);
-    border-left: 3px solid var(--ut-burnt);
-    padding: 0.8rem 1rem;
-    border-radius: 0 6px 6px 0;
-  }
-
-  @media (max-width: 760px) {
+  @media (max-width: 820px) {
     main,
     .site-header-inner {
       width: min(100% - 1.2rem, var(--max-width));
-    }
-
-    .site-header-inner {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.75rem;
     }
 
     .site-header {
       position: static;
     }
 
+    .site-header-inner {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.85rem;
+      padding: 0.9rem 0;
+    }
+
     .site-nav {
       justify-content: flex-start;
-      gap: 0.7rem;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2.3rem;
     }
 
-    .academic-grid {
+    h2 {
+      font-size: 1.35rem;
+    }
+
+    .modern-grid {
       grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .sidebar {
-      position: static;
-    }
-
-    .profile-photo {
-      width: 170px;
-      margin-left: 0;
-      margin-right: 0;
     }
   }
 </style>

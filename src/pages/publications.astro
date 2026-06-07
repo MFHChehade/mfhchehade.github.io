@@ -70,6 +70,7 @@ const preprints = [
   description="Peer-reviewed publications and preprints by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
 >
   <header class="page-heading">
+    <p class="eyebrow">Publications</p>
     <h1>Publications</h1>
     <p>
       Peer-reviewed publications and preprints in reliable machine learning, reinforcement learning,
@@ -78,7 +79,13 @@ const preprints = [
   </header>
 
   <section class="section">
-    <h2>Peer-Reviewed Publications</h2>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Peer Reviewed</p>
+        <h2>Conference publications</h2>
+      </div>
+      <p>{peerReviewed.length} papers</p>
+    </div>
     <div class="publication-list">
       {peerReviewed.map((paper) => (
         <article class="publication-entry">
@@ -105,7 +112,12 @@ const preprints = [
   </section>
 
   <section class="section">
-    <h2>Preprints</h2>
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Preprints</p>
+        <h2>Working papers</h2>
+      </div>
+    </div>
     <div class="publication-list">
       {preprints.map((paper) => (
         <article class="publication-entry">
