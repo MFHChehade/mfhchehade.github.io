@@ -189,6 +189,7 @@ const researchAreas = [
     gap: clamp(2rem, 6vw, 5rem);
     min-height: calc(100vh - 190px);
     padding: 1rem 0 3rem;
+    border-bottom: 1px solid var(--line);
   }
 
   .hero-copy {
@@ -197,7 +198,7 @@ const researchAreas = [
   }
 
   .hero-subtitle {
-    color: var(--primary-dark);
+    color: var(--primary);
     font-size: 1.35rem;
     font-weight: 750;
   }
@@ -215,7 +216,8 @@ const researchAreas = [
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 1px solid var(--line);
+    border: 5px solid #ffffff;
+    outline: 1px solid var(--line);
     box-shadow: var(--shadow);
   }
 
@@ -223,7 +225,7 @@ const researchAreas = [
     display: grid;
     gap: 0.6rem;
     padding-left: 1rem;
-    border-left: 3px solid var(--primary);
+    border-left: 4px solid var(--primary);
     color: var(--muted);
     font-size: 0.98rem;
   }
@@ -247,8 +249,9 @@ const researchAreas = [
     padding: 1.25rem;
     background: var(--panel);
     border: 1px solid var(--line);
+    border-top: 4px solid var(--primary);
     border-radius: var(--radius);
-    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.05);
+    box-shadow: 0 10px 30px rgba(51, 63, 72, 0.06);
   }
 
   .quick-facts div {
@@ -263,7 +266,7 @@ const researchAreas = [
 
   .fact-label {
     display: block;
-    color: var(--accent);
+    color: var(--primary);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0;
@@ -273,6 +276,7 @@ const researchAreas = [
   .news-list {
     background: var(--panel);
     border: 1px solid var(--line);
+    border-top: 4px solid var(--primary);
     border-radius: var(--radius);
     padding: 1.25rem;
   }
@@ -289,6 +293,7 @@ const researchAreas = [
     padding: 1.25rem;
     background: var(--panel);
     border: 1px solid var(--line);
+    border-left: 4px solid var(--primary);
     border-radius: var(--radius);
   }
 
@@ -298,7 +303,7 @@ const researchAreas = [
   }
 
   .education-item span {
-    color: var(--accent);
+    color: var(--primary);
     font-weight: 800;
     white-space: nowrap;
   }
