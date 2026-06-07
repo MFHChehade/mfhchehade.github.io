@@ -5,16 +5,39 @@ import NewsItem from '../components/NewsItem.astro';
 
 const researchAreas = [
   {
-    title: "Risk-aware machine learning",
-    body: "Modeling uncertainty, distribution shift, and downside risk for learning systems that need to make reliable decisions.",
+    title: "Risk-aware machine learning and RL",
+    body: "Methods for modeling uncertainty, distribution shift, and downside risk in learning-based decision systems.",
   },
   {
-    title: "Reinforcement learning under uncertainty",
-    body: "Studying transfer, adaptation, and policy design for sequential decision-making when environments and objectives change.",
+    title: "Data-driven reliability",
+    body: "Verification, stress testing, and reliability assessment for models deployed under realistic operational constraints.",
   },
   {
-    title: "Data-driven reliability for LLMs and PS",
-    body: "Developing verifiable methods for LLM-guided decisions and physics-constrained systems, including power systems applications.",
+    title: "LLMs for constrained decisions",
+    body: "Fine-tuning and inference-time methods for using language models in structured technical decision-making problems.",
+  },
+];
+
+const selectedPublications = [
+  {
+    title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
+    venue: "ICML 2025",
+    href: "https://doi.org/10.48550/arXiv.2408.08824",
+  },
+  {
+    title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
+    venue: "ICML 2025",
+    href: "https://arxiv.org/abs/2505.23729",
+  },
+  {
+    title: "CAT: Caution Aware Transfer in Reinforcement Learning via Distributional Risk",
+    venue: "arXiv 2024",
+    href: "https://doi.org/10.48550/arXiv.2408.08812",
+  },
+  {
+    title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
+    venue: "IEEE PESGM 2026",
+    href: "https://arxiv.org/abs/2602.15350",
   },
 ];
 ---
@@ -29,8 +52,8 @@ const researchAreas = [
       <h1>Mohamad Chehade</h1>
       <p class="hero-subtitle">Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin.</p>
       <p class="lead">
-        I work on risk-aware machine learning and data-driven reliability, with applications
-        in reinforcement learning, large language models, and power systems.
+        My research develops risk-aware and data-driven methods for reliable machine learning,
+        with an emphasis on reinforcement learning, large language models, and power systems applications.
       </p>
       <div class="button-row">
         <a class="button" href="/publications">View publications</a>
@@ -43,9 +66,9 @@ const researchAreas = [
     <aside class="hero-profile" aria-label="Profile summary">
       <img src="/profile.jpeg" alt="Mohamad Chehade" class="profile-img" />
       <div class="profile-details">
+        <span>Ph.D. Student, UT Austin ECE</span>
         <span>Advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Dr. Hao Zhu</a></span>
-        <span>Risk-aware ML and data-driven reliability</span>
-        <span>Applications in RL, LLMs, and PS</span>
+        <span>Risk-aware ML, RL, LLMs, and reliability</span>
       </div>
     </aside>
   </header>
@@ -54,19 +77,19 @@ const researchAreas = [
     <div class="section-header">
       <div>
         <p class="eyebrow">About</p>
-        <h2>Building reliable data-driven learning systems under risk.</h2>
+        <h2>Research interests and background</h2>
       </div>
     </div>
 
     <div class="about-grid">
       <div class="about-copy">
         <p>
-          Welcome! I am a Ph.D. student in <strong>Electrical and Computer Engineering</strong> at
+          I am a Ph.D. student in <strong>Electrical and Computer Engineering</strong> at
           <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">The University of Texas at Austin</a>,
           where I am advised by
           <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Dr. Hao Zhu</a>.
-          My research sits at the intersection of risk-aware machine learning, data-driven reliability,
-          reinforcement learning, LLMs, and power systems applications.
+          My research focuses on risk-aware machine learning, data-driven reliability, and learning-based
+          decision-making, with applications in reinforcement learning, large language models, and power systems.
         </p>
         <p>
           I earned my <strong>B.Eng. in Electrical and Computer Engineering</strong>, with a minor in Mathematics, from the
@@ -83,16 +106,16 @@ const researchAreas = [
 
       <div class="quick-facts">
         <div>
-          <span class="fact-label">Current</span>
-          <strong>Ph.D. student, UT Austin</strong>
+          <span class="fact-label">Affiliation</span>
+          <strong>UT Austin ECE</strong>
         </div>
         <div>
-          <span class="fact-label">Focus</span>
-          <strong>Risk-aware ML, RL, LLMs, and PS</strong>
+          <span class="fact-label">Research</span>
+          <strong>Risk-aware ML and data-driven reliability</strong>
         </div>
         <div>
-          <span class="fact-label">Interests</span>
-          <strong>Soccer, basketball, Formula 1</strong>
+          <span class="fact-label">Applications</span>
+          <strong>RL, LLMs, and power systems</strong>
         </div>
       </div>
     </div>
@@ -102,7 +125,7 @@ const researchAreas = [
     <div class="section-header">
       <div>
         <p class="eyebrow">Research Focus</p>
-        <h2>Risk and reliability for data-driven decision-making.</h2>
+        <h2>Research interests</h2>
       </div>
       <a href="/research">Read more</a>
     </div>
@@ -112,6 +135,25 @@ const researchAreas = [
         <article class="info-card">
           <h3>{area.title}</h3>
           <p>{area.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" id="selected-publications">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Selected Publications</p>
+        <h2>Recent papers</h2>
+      </div>
+      <a href="/publications">Full list</a>
+    </div>
+
+    <div class="paper-list">
+      {selectedPublications.map((paper) => (
+        <article class="paper-item">
+          <h3><a href={paper.href} target="_blank" rel="noopener noreferrer">{paper.title}</a></h3>
+          <p>{paper.venue}</p>
         </article>
       ))}
     </div>
@@ -280,6 +322,38 @@ const researchAreas = [
     border-top: 4px solid var(--primary);
     border-radius: var(--radius);
     padding: 1.25rem;
+  }
+
+  .paper-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .paper-item {
+    padding: 1rem 0 1rem 1rem;
+    border-left: 4px solid var(--primary);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .paper-item h3 {
+    font-size: 1.08rem;
+    line-height: 1.35;
+  }
+
+  .paper-item h3 a {
+    color: var(--primary-dark);
+    text-decoration: none;
+  }
+
+  .paper-item h3 a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  .paper-item p {
+    color: var(--muted);
+    margin-top: 0.25rem;
+    font-style: italic;
   }
 
   .education-list {
