@@ -3,30 +3,30 @@ import Layout from '../layouts/Layout.astro';
 
 const areas = [
   {
-    title: "Risk-aware transfer in reinforcement learning",
-    body: "Developing methods that account for uncertainty and downside risk when policies move across environments or operating regimes.",
+    title: "Risk-aware machine learning and RL",
+    body: "Developing methods that account for uncertainty, distribution shift, and downside risk when policies move across environments or operating regimes.",
   },
   {
-    title: "Physics-aware supervised learning",
-    body: "Using structure from power systems, optimization, and control to make learned models more reliable and easier to verify.",
+    title: "Data-driven reliability and verification",
+    body: "Building learned models whose predictions and decisions can be stress-tested, verified, and trusted under realistic constraints.",
   },
   {
-    title: "AI for grid operations",
-    body: "Applying learning systems to practical energy decisions such as switching, battery control, market participation, and building energy management.",
+    title: "LLMs for constrained decision-making",
+    body: "Studying how large language models can support reliable actions in technical domains, including power systems, control, and optimization.",
   },
 ];
 ---
 
 <Layout
   title="Research - Mohamad Chehade"
-  description="Research areas for Mohamad Chehade, including risk-aware reinforcement learning, physics-aware learning, and AI for power systems."
+  description="Research areas for Mohamad Chehade, including risk-aware machine learning, data-driven reliability, reinforcement learning, LLMs, and power systems applications."
 >
   <header class="page-hero">
     <p class="eyebrow">Research</p>
-    <h1>Reliable learning for energy decision-making.</h1>
+    <h1>Risk-aware machine learning for reliable decisions.</h1>
     <p class="lead">
-      My work studies machine learning methods that can operate under constraints, uncertainty,
-      and changing grid conditions while remaining useful for real power system decisions.
+      My work studies learning methods that remain useful under uncertainty, constraints,
+      and distribution shift, with applications in RL, LLMs, and power systems.
     </p>
   </header>
 
@@ -59,13 +59,24 @@ const areas = [
     <div class="project-list">
       <article class="project">
         <div>
-          <h3>NEO-Grid</h3>
+          <h3>CAT</h3>
           <p>
-            A neural approximation framework for optimization and control in distribution grids,
-            accepted to HICSS 2026.
+            Caution-aware transfer in reinforcement learning via distributional risk, focused on
+            robust policy transfer under uncertainty.
           </p>
         </div>
-        <a href="/Neo-Grid.pdf" target="_blank" rel="noopener noreferrer">Paper</a>
+        <a href="https://doi.org/10.48550/arXiv.2408.08812" target="_blank" rel="noopener noreferrer">arXiv</a>
+      </article>
+
+      <article class="project">
+        <div>
+          <h3>SITAlign</h3>
+          <p>
+            Bounded rationality for LLMs through satisficing alignment at inference time,
+            accepted to ICML 2025.
+          </p>
+        </div>
+        <a href="https://arxiv.org/abs/2505.23729" target="_blank" rel="noopener noreferrer">Paper</a>
       </article>
 
       <article class="project">
@@ -80,10 +91,10 @@ const areas = [
 
       <article class="project">
         <div>
-          <h3>Grid-oriented LLM fine-tuning</h3>
+          <h3>LLM fine-tuning for constrained actions</h3>
           <p>
-            Fine-tuning large language models to generate economical and reliable corrective
-            actions for power grid scenarios.
+            Fine-tuning large language models to generate economical and reliable corrective actions,
+            with power systems as a testbed.
           </p>
         </div>
         <a href="https://arxiv.org/abs/2602.15350" target="_blank" rel="noopener noreferrer">arXiv</a>
