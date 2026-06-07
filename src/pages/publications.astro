@@ -6,18 +6,24 @@ const peerReviewed = [
     authors: "M. Chehade, H. Zhu",
     title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
     venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
+    year: "2026",
+    shortVenue: "PESGM",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
   },
   {
     authors: "Y. Cho, M. Chehade, F. Al-Janahi, S. Lim, J. Mohammadi, H. Zhu",
     title: "Carbon-aware Market Participation for Building Energy Management Systems",
     venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
+    year: "2026",
+    shortVenue: "PESGM",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
   },
   {
     authors: "M. Chehade, H. Zhu",
     title: "NEO-Grid: A Neural Approximation Framework for Optimization and Control in Distribution Grids",
     venue: "Proceedings of the 59th Hawaii International Conference on System Sciences (HICSS), 2026",
+    year: "2026",
+    shortVenue: "HICSS",
     links: [
       { label: "paper", href: "/Neo-Grid.pdf" },
       { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
@@ -27,6 +33,8 @@ const peerReviewed = [
     authors: "M. Chehade, W. Li, B. W. Bell, R. Bent, S. R. Kazi, H. Zhu",
     title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
     venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
+    year: "2025",
+    shortVenue: "ICML",
     links: [
       { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
@@ -36,6 +44,8 @@ const peerReviewed = [
     authors: "M. Chehade, S. S. Ghosal, S. Chakraborty, A. Reddy, D. Manocha, H. Zhu, A. S. Bedi",
     title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
     venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
+    year: "2025",
+    shortVenue: "ICML",
     links: [
       { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
@@ -45,12 +55,16 @@ const peerReviewed = [
     authors: "M. Chehade, S. Karaki",
     title: "BOOST: Microgrid Sizing using Ordinal Optimization",
     venue: "2025 Texas Power and Energy Conference (TPEC), IEEE, pp. 1-4, Feb. 2025",
+    year: "2025",
+    shortVenue: "TPEC",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
   },
   {
     authors: "M. Chehade, Y. H. Cho, S. Chinchali, H. Zhu",
     title: "Should We Use Model-Free or Model-Based Control? A Case Study of Battery Control",
     venue: "2024 56th North American Power Symposium (NAPS), IEEE, pp. 1-5, Oct. 2024",
+    year: "2024",
+    shortVenue: "NAPS",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
   },
 ];
@@ -60,6 +74,8 @@ const preprints = [
     authors: "M. Chehade, A. S. Bedi, A. Zhang, H. Zhu",
     title: "CAT: Caution Aware Transfer in Reinforcement Learning via Distributional Risk",
     venue: "arXiv, 2024",
+    year: "2024",
+    shortVenue: "arXiv",
     links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
   },
 ];
@@ -69,13 +85,27 @@ const preprints = [
   title="Publications - Mohamad Chehade"
   description="Peer-reviewed publications and preprints by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
 >
-  <header class="page-heading">
+  <header class="page-heading publications-heading">
     <p class="eyebrow">Publications</p>
     <h1>Publications</h1>
     <p>
       Peer-reviewed publications and preprints in reliable machine learning, reinforcement learning,
       LLMs, optimization, and power systems applications.
     </p>
+    <div class="publication-stats">
+      <div>
+        <span>{peerReviewed.length}</span>
+        <strong>conference papers</strong>
+      </div>
+      <div>
+        <span>{preprints.length}</span>
+        <strong>preprint</strong>
+      </div>
+      <div>
+        <span>2024-2026</span>
+        <strong>recent work</strong>
+      </div>
+    </div>
   </header>
 
   <section class="section">
@@ -89,6 +119,10 @@ const preprints = [
     <div class="publication-list">
       {peerReviewed.map((paper) => (
         <article class="publication-entry">
+          <div class="pub-topline">
+            <span>{paper.year}</span>
+            <span>{paper.shortVenue}</span>
+          </div>
           <h3>{paper.title}</h3>
           <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
@@ -121,6 +155,10 @@ const preprints = [
     <div class="publication-list">
       {preprints.map((paper) => (
         <article class="publication-entry">
+          <div class="pub-topline">
+            <span>{paper.year}</span>
+            <span>{paper.shortVenue}</span>
+          </div>
           <h3>{paper.title}</h3>
           <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
@@ -134,3 +172,55 @@ const preprints = [
     </div>
   </section>
 </Layout>
+
+<style>
+  .publications-heading {
+    max-width: 940px;
+  }
+
+  .publication-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 1.35rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .publication-stats div {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.9rem 1rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .publication-stats div:last-child {
+    border-right: 0;
+  }
+
+  .publication-stats span {
+    color: var(--burnt);
+    font-size: 1.25rem;
+    font-weight: 850;
+  }
+
+  .publication-stats strong {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 640px) {
+    .publication-stats {
+      grid-template-columns: 1fr;
+    }
+
+    .publication-stats div {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .publication-stats div:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>
