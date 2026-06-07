@@ -24,7 +24,7 @@ const researchPillars = [
 const researchSignals = [
   { label: "Home", value: "UT Austin ECE" },
   { label: "Recent", value: "ICML 2025" },
-  { label: "Methods", value: "RL · LLMs · Verification" },
+  { label: "Methods", value: "RL / LLMs / Verification" },
   { label: "Applications", value: "Power systems" },
 ];
 
@@ -62,15 +62,27 @@ const selectedPublications = [
 >
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">UT Austin ECE · Reliable learning systems</p>
+      <p class="eyebrow">UT Austin ECE / Reliable learning systems</p>
       <h1>Mohamad Chehade</h1>
       <p class="hero-statement">Reliable machine learning for risk, constraints, and decisions.</p>
-      <p class="lead">
-        I am a Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin,
-        advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Prof. Hao Zhu</a>.
-        My research develops risk-aware and verifiable learning methods for decision-making under uncertainty,
-        with applications in reinforcement learning, large language models, and power systems.
-      </p>
+      <div class="bio-block">
+        <p>
+          I am a Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin,
+          advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Prof. Hao Zhu</a>.
+          My research develops risk-aware and verifiable learning methods for decision-making under uncertainty,
+          with applications in reinforcement learning, large language models, and power systems.
+        </p>
+        <p>
+          I received my B.Eng. in Electrical and Computer Engineering, with a minor in Mathematics, from the
+          <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">American University of Beirut</a>,
+          where I worked with
+          <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Prof. Rabih Jabr</a>
+          and
+          <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Prof. Sami Karaki</a>.
+          I have also interned at Los Alamos National Laboratory with Dr. Wenting Li, Dr. Brian Bell,
+          and Dr. Russell Bent.
+        </p>
+      </div>
       <div class="button-row">
         <a class="button" href="/publications">Publications</a>
         <a class="button secondary" href="/research">Research</a>
@@ -177,21 +189,6 @@ const selectedPublications = [
         />
       </div>
     </div>
-
-    <aside class="background-panel">
-      <p class="eyebrow">Background</p>
-      <h2>Education and collaborators</h2>
-      <p>
-        I received my B.Eng. in Electrical and Computer Engineering, with a minor in Mathematics, from the
-        <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">American University of Beirut</a>,
-        where I worked with
-        <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Prof. Rabih Jabr</a>
-        and
-        <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Prof. Sami Karaki</a>.
-        I have also interned at Los Alamos National Laboratory with Dr. Wenting Li, Dr. Brian Bell,
-        and Dr. Russell Bent.
-      </p>
-    </aside>
   </section>
 </Layout>
 
@@ -199,40 +196,32 @@ const selectedPublications = [
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-    gap: 1.35rem 2.4rem;
+    gap: 1.15rem 2.4rem;
     align-items: center;
     position: relative;
-    padding: 2.35rem 0 1.45rem;
-    border-bottom: 1px solid var(--line-strong);
-  }
-
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: 2.35rem;
-    left: 0;
-    width: 5rem;
-    height: 0.35rem;
-    background: var(--burnt);
-    border-radius: 4px;
+    padding: 2.1rem 0 1.3rem;
   }
 
   .hero-copy {
-    max-width: 780px;
-    padding-top: 0.95rem;
+    max-width: 800px;
   }
 
   .hero-statement {
-    max-width: 760px;
+    max-width: 720px;
     color: var(--charcoal);
-    font-size: 1.7rem;
-    line-height: 1.32;
-    font-weight: 720;
-    margin: 0.85rem 0 1rem;
+    font-size: 1.38rem;
+    line-height: 1.36;
+    font-weight: 650;
+    margin: 0.75rem 0 1.05rem;
   }
 
-  .hero .lead {
-    margin: 0 0 1.45rem;
+  .bio-block {
+    display: grid;
+    gap: 0.7rem;
+    max-width: 760px;
+    margin-bottom: 1.25rem;
+    color: var(--muted);
+    font-size: 1.02rem;
   }
 
   .hero-social {
@@ -241,10 +230,10 @@ const selectedPublications = [
 
   .hero-media {
     display: grid;
-    gap: 0.85rem;
+    gap: 0.75rem;
     align-self: stretch;
     justify-self: end;
-    width: min(100%, 330px);
+    width: min(100%, 310px);
   }
 
   .portrait-shell {
@@ -276,7 +265,7 @@ const selectedPublications = [
   .affiliation-strip {
     display: grid;
     gap: 0.2rem;
-    padding: 0.9rem 0;
+    padding: 0.8rem 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
@@ -296,21 +285,21 @@ const selectedPublications = [
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    gap: 0.75rem;
+    margin-top: 0.45rem;
   }
 
   .signal-rail div {
-    min-height: 4.55rem;
+    min-height: 4.35rem;
     display: grid;
     align-content: center;
     gap: 0.18rem;
-    padding: 0.85rem 1rem;
-    border-right: 1px solid var(--line);
-  }
-
-  .signal-rail div:last-child {
-    border-right: 0;
+    padding: 0.78rem 0.95rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--burnt);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
   }
 
   .signal-rail span {
@@ -328,27 +317,23 @@ const selectedPublications = [
   .flow-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    gap: 1rem;
   }
 
   .flow-card {
-    min-height: 13rem;
-    padding: 1.35rem 1.2rem;
-    border-right: 1px solid var(--line);
-    background: rgba(255, 255, 255, 0.45);
-  }
-
-  .flow-card:last-child {
-    border-right: 0;
+    min-height: 11.5rem;
+    padding: 1.15rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
   }
 
   .flow-card span {
     display: inline-flex;
     color: var(--burnt);
     font-weight: 850;
-    margin-bottom: 2.4rem;
+    margin-bottom: 1.55rem;
   }
 
   .flow-card h3 {
@@ -362,22 +347,9 @@ const selectedPublications = [
 
   .lower-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 0;
     align-items: start;
-  }
-
-  .background-panel {
-    padding: 1.2rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .background-panel p {
-    color: var(--muted);
-    margin: 0;
   }
 
   @media (max-width: 820px) {
@@ -387,19 +359,11 @@ const selectedPublications = [
     }
 
     .hero {
-      padding-top: 2rem;
+      padding-top: 1.6rem;
     }
 
     .signal-rail {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .signal-rail div:nth-child(2) {
-      border-right: 0;
-    }
-
-    .signal-rail div:nth-child(-n + 2) {
-      border-bottom: 1px solid var(--line);
     }
 
     .flow-grid {
@@ -408,32 +372,20 @@ const selectedPublications = [
 
     .flow-card {
       min-height: auto;
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .flow-card:last-child {
-      border-bottom: 0;
     }
   }
 
   @media (max-width: 520px) {
     .hero-statement {
-      font-size: 1.25rem;
+      font-size: 1.18rem;
     }
 
     .signal-rail {
       grid-template-columns: 1fr;
     }
 
-    .signal-rail div,
-    .signal-rail div:nth-child(2) {
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .signal-rail div:last-child {
-      border-bottom: 0;
+    .bio-block {
+      font-size: 0.98rem;
     }
   }
 </style>

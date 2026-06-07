@@ -73,12 +73,12 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
   :root {
     --burnt: #bf5700;
     --burnt-dark: #8d3f00;
-    --charcoal: #2f3a45;
-    --ink: #17202a;
-    --muted: #64707d;
+    --charcoal: #263341;
+    --ink: #15212d;
+    --muted: #536273;
     --blue: #0a6785;
     --green: #24705f;
-    --bg: #f7f8f3;
+    --bg: #fbfaf7;
     --paper: #ffffff;
     --wash: #ecf4f4;
     --warm: #fff5eb;
@@ -99,12 +99,12 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     color: var(--ink);
     background: var(--bg);
     font-family:
-      Inter,
+      Aptos,
+      "Segoe UI",
       ui-sans-serif,
       system-ui,
       -apple-system,
       BlinkMacSystemFont,
-      "Segoe UI",
       sans-serif;
     font-size: 16px;
     scroll-behavior: smooth;
@@ -249,18 +249,25 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     line-height: 1.16;
   }
 
+  h1,
+  h2 {
+    font-family: Georgia, Cambria, "Times New Roman", ui-serif, serif;
+  }
+
   h1 {
-    font-size: 4.1rem;
-    font-weight: 880;
+    font-size: 3.45rem;
+    font-weight: 700;
   }
 
   h2 {
-    font-size: 1.85rem;
+    font-size: 1.55rem;
+    font-weight: 700;
     margin-bottom: 1rem;
   }
 
   h3 {
-    font-size: 1.08rem;
+    font-size: 1.03rem;
+    font-weight: 750;
   }
 
   p {
@@ -311,14 +318,14 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
 
   .eyebrow {
     color: var(--burnt);
-    font-size: 0.8rem;
+    font-size: 0.74rem;
     font-weight: 850;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.45rem;
   }
 
   .section {
-    margin-top: 4rem;
+    margin-top: 3rem;
   }
 
   .section:first-child {
@@ -330,14 +337,17 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     align-items: end;
     justify-content: space-between;
     gap: 1rem;
-    padding-top: 1rem;
-    margin-bottom: 1.25rem;
-    border-top: 1px solid var(--line-strong);
+    margin-bottom: 1rem;
+  }
+
+  .section-heading h2 {
+    margin-bottom: 0;
   }
 
   .section-heading p {
     color: var(--muted);
     margin: 0;
+    max-width: 520px;
   }
 
   .button-row {
@@ -347,7 +357,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
   }
 
   .button {
-    min-height: 2.75rem;
+    min-height: 2.5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -355,8 +365,8 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     background: var(--burnt);
     border: 1px solid var(--burnt);
     border-radius: 6px;
-    padding: 0.62rem 1rem;
-    font-weight: 800;
+    padding: 0.5rem 0.82rem;
+    font-weight: 750;
     text-decoration: none;
     transition:
       background 160ms ease,
@@ -521,7 +531,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     }
 
     h1 {
-      font-size: 2.65rem;
+      font-size: 2.45rem;
     }
 
     h2 {
@@ -545,7 +555,7 @@ const isActive = (href: string) => href === "/" ? currentPath === "/" : currentP
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.05rem;
     }
 
     .site-nav {
