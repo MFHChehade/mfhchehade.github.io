@@ -1,63 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const areas = [
-  {
-    index: "01",
-    title: "Risk-aware machine learning and reinforcement learning",
-    body: "I study methods that account for uncertainty, distribution shift, and downside risk in learning-based decision systems, particularly when policies are transferred across environments or operating regimes.",
-  },
-  {
-    index: "02",
-    title: "Data-driven reliability and verification",
-    body: "I am interested in reliability assessment, stress testing, and verifiable input-space construction for learned models deployed under realistic constraints.",
-  },
-  {
-    index: "03",
-    title: "LLMs for constrained decision-making",
-    body: "I study how large language models can support reliable actions in structured technical domains, including settings where decisions must satisfy operational or physical constraints.",
-  },
-  {
-    index: "04",
-    title: "Power systems applications",
-    body: "Power systems provide a reliability-critical application domain for studying data-driven control, optimization, market participation, and learning-based decision support.",
-  },
-];
-
-const projects = [
-  {
-    title: "CAT",
-    body: "Caution-aware transfer in reinforcement learning via distributional risk, focused on robust policy transfer under uncertainty.",
-    year: "2024",
-    shortVenue: "arXiv",
-    href: "https://doi.org/10.48550/arXiv.2408.08812",
-    label: "arXiv",
-  },
-  {
-    title: "SITAlign",
-    body: "Bounded rationality for LLMs through satisficing alignment at inference time, accepted to ICML 2025.",
-    year: "2025",
-    shortVenue: "ICML",
-    href: "https://arxiv.org/abs/2505.23729",
-    label: "paper",
-  },
-  {
-    title: "LEVIS",
-    body: "Exact and verifiable input-space construction for neural networks, accepted to ICML 2025.",
-    year: "2025",
-    shortVenue: "ICML",
-    href: "https://doi.org/10.48550/arXiv.2408.08824",
-    label: "paper",
-  },
-  {
-    title: "LLM fine-tuning for constrained actions",
-    body: "Fine-tuning large language models to generate economical and reliable corrective actions, with power systems as a testbed.",
-    year: "2026",
-    shortVenue: "PESGM",
-    href: "https://arxiv.org/abs/2602.15350",
-    label: "arXiv",
-  },
-];
+import { getTopicPapers, topics } from '../data/research';
 ---
 
 <Layout
@@ -68,132 +11,170 @@ const projects = [
     <p class="eyebrow">Research</p>
     <h1>Research</h1>
     <p>
-      My work develops learning methods that remain useful under uncertainty, constraints,
-      and distribution shift, with emphasis on reinforcement learning, LLMs, verification,
-      and reliability-critical applications.
+      My work studies reliable learning systems for decisions under uncertainty. The pages below organize
+      projects by research direction and connect each topic to the papers that develop it.
     </p>
-    <div class="research-tags">
-      <span>Risk-aware ML</span>
-      <span>Data-driven reliability</span>
-      <span>Reinforcement learning</span>
-      <span>LLMs</span>
-      <span>Power systems</span>
-    </div>
   </header>
 
-  <section class="section">
+  <section class="section topic-overview">
     <div class="section-heading">
       <div>
         <p class="eyebrow">Themes</p>
-        <h2>Research interests</h2>
+        <h2>Research directions</h2>
       </div>
+      <p>Each direction includes multiple related papers and paper-derived visuals.</p>
     </div>
-    <div class="theme-list">
-      {areas.map((area) => (
-        <article class="theme-entry">
-          <span>{area.index}</span>
-          <div>
-            <h3>{area.title}</h3>
-            <p>{area.body}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Projects</p>
-        <h2>Selected projects</h2>
-      </div>
-    </div>
-    <div class="publication-list">
-      {projects.map((project) => (
-        <article class="publication-entry">
-          <div class="pub-topline">
-            <span>{project.year}</span>
-            <span>{project.shortVenue}</span>
-          </div>
-          <h3>{project.title}</h3>
-          <p>{project.body}</p>
-          <div class="link-row">
-            <a href={project.href} target="_blank" rel="noopener noreferrer">{project.label}</a>
-          </div>
-        </article>
-      ))}
+    <div class="topic-grid">
+      {topics.map((topic) => {
+        const topicPapers = getTopicPapers(topic.slug);
+        return (
+          <article class="topic-card">
+            <a class="topic-image" href={`/research/${topic.slug}`} aria-label={`Open ${topic.title}`}>
+              <img src={topic.image} alt={topic.imageAlt} />
+            </a>
+            <div class="topic-body">
+              <div class="topic-topline">
+                <span>{topic.index}</span>
+                <span>{topicPapers.length} papers</span>
+              </div>
+              <h3><a href={`/research/${topic.slug}`}>{topic.title}</a></h3>
+              <p>{topic.summary}</p>
+              <div class="mini-paper-list">
+                {topicPapers.slice(0, 3).map((paper) => (
+                  <a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a>
+                ))}
+              </div>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 </Layout>
 
 <style>
   .research-heading {
-    max-width: 900px;
+    max-width: 920px;
   }
 
-  .research-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-top: 1.2rem;
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
   }
 
-  .research-tags span {
-    color: var(--charcoal);
+  .topic-card {
+    display: grid;
+    grid-template-columns: minmax(190px, 0.82fr) minmax(0, 1fr);
+    gap: 1rem;
+    min-height: 17rem;
+    padding: 0.85rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .topic-image {
+    display: block;
+    min-height: 100%;
+    overflow: hidden;
     background: var(--soft);
     border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 0.26rem 0.62rem;
-    font-size: 0.9rem;
-    font-weight: 750;
   }
 
-  .theme-list {
+  .topic-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 15rem;
+    object-fit: cover;
+  }
+
+  .topic-body {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
+    align-content: start;
+    gap: 0.7rem;
+    padding: 0.15rem 0.2rem 0.15rem 0;
   }
 
-  .theme-entry {
-    display: grid;
-    grid-template-columns: 3rem minmax(0, 1fr);
-    gap: 1rem;
-    min-height: 12rem;
-    padding: 1.2rem;
-    background: rgba(255, 255, 255, 0.48);
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+  .topic-topline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
   }
 
-  .theme-entry > span {
+  .topic-topline span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.55rem;
     color: var(--burnt);
+    background: var(--warm);
+    border: 1px solid rgba(191, 87, 0, 0.16);
+    border-radius: 6px;
+    padding: 0.1rem 0.45rem;
+    font-size: 0.78rem;
     font-weight: 850;
   }
 
-  .theme-entry h3 {
-    margin-bottom: 0.45rem;
+  .topic-card h3 {
+    font-size: 1.15rem;
   }
 
-  .theme-entry p {
+  .topic-card h3 a {
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .topic-card h3 a:hover {
+    color: var(--burnt);
+  }
+
+  .topic-card p {
     color: var(--muted);
     margin: 0;
   }
 
-  @media (max-width: 760px) {
-    .theme-list {
-      grid-template-columns: 1fr;
-    }
+  .mini-paper-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.3rem;
+  }
 
-    .theme-entry {
-      min-height: auto;
+  .mini-paper-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.9rem;
+    color: var(--blue);
+    background: var(--wash);
+    border: 1px solid rgba(10, 103, 133, 0.12);
+    border-radius: 6px;
+    padding: 0.18rem 0.55rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .mini-paper-list a:hover {
+    color: #ffffff;
+    background: var(--burnt);
+  }
+
+  @media (max-width: 960px) {
+    .topic-grid {
+      grid-template-columns: 1fr;
     }
   }
 
-  @media (max-width: 480px) {
-    .theme-entry {
+  @media (max-width: 640px) {
+    .topic-card {
       grid-template-columns: 1fr;
-      gap: 0.4rem;
+    }
+
+    .topic-image img {
+      min-height: 12rem;
     }
   }
 </style>

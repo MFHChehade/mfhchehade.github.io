@@ -1,0 +1,232 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { publications, topics } from '../../data/research';
+
+export function getStaticPaths() {
+  return publications.map((paper) => ({
+    params: { slug: paper.slug },
+    props: { paper },
+  }));
+}
+
+const { paper } = Astro.props;
+const relatedTopics = paper.topics
+  .map((slug) => topics.find((topic) => topic.slug === slug))
+  .filter(Boolean);
+---
+
+<Layout
+  title={`${paper.shortTitle} - Mohamad Chehade`}
+  description={`${paper.title}: ${paper.summary}`}
+>
+  <article class="paper-page">
+    <header class="paper-hero">
+      <div class="paper-copy">
+        <a class="back-link" href="/publications">Publications</a>
+        <div class="pub-topline">
+          <span>{paper.year}</span>
+          <span>{paper.shortVenue}</span>
+        </div>
+        <h1>{paper.title}</h1>
+        <p class="authors">{paper.authors}</p>
+        <p class="venue">{paper.venue}</p>
+        <p class="lead">{paper.summary}</p>
+        <div class="link-row">
+          {paper.links.map((link) => {
+            const isExternal = link.href.startsWith("http");
+            return (
+              <a
+                href={link.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+              >
+                {link.label}
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      {paper.image ? (
+        <figure class="paper-figure">
+          <img src={paper.image} alt={paper.imageAlt} />
+          <figcaption>Preview cropped from the paper PDF.</figcaption>
+        </figure>
+      ) : (
+        <aside class="paper-fallback">
+          <span>{paper.shortVenue}</span>
+          <strong>{paper.year}</strong>
+          <p>Publication page without a locally accessible paper image.</p>
+        </aside>
+      )}
+    </header>
+
+    <section class="section paper-grid">
+      <div class="paper-panel">
+        <p class="eyebrow">Contribution</p>
+        <h2>What this paper adds</h2>
+        <ul>
+          {paper.contribution.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+
+      <aside class="paper-panel">
+        <p class="eyebrow">Research Topics</p>
+        <h2>Where it fits</h2>
+        <div class="topic-list">
+          {relatedTopics.map((topic) => (
+            <a href={`/research/${topic.slug}`}>
+              <span>{topic.index}</span>
+              <strong>{topic.shortTitle}</strong>
+            </a>
+          ))}
+        </div>
+      </aside>
+    </section>
+  </article>
+</Layout>
+
+<style>
+  .paper-page {
+    display: grid;
+  }
+
+  .paper-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(330px, 0.78fr);
+    gap: 2rem;
+    align-items: center;
+    padding: 3.2rem 0 1.4rem;
+  }
+
+  .paper-copy {
+    max-width: 780px;
+  }
+
+  .paper-copy h1 {
+    margin: 0.7rem 0 0.75rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    color: var(--blue);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--burnt);
+  }
+
+  .paper-figure {
+    margin: 0;
+    padding: 0.75rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .paper-figure img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .paper-figure figcaption {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-top: 0.55rem;
+  }
+
+  .paper-fallback {
+    min-height: 18rem;
+    display: grid;
+    place-content: center;
+    gap: 0.25rem;
+    padding: 1.25rem;
+    color: var(--burnt);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+  }
+
+  .paper-fallback strong {
+    color: var(--charcoal);
+    font-size: 2rem;
+  }
+
+  .paper-fallback p {
+    color: var(--muted);
+    max-width: 18rem;
+    margin: 0.6rem auto 0;
+  }
+
+  .paper-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+    gap: 1rem;
+  }
+
+  .paper-panel {
+    padding: 1.15rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .paper-panel h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .paper-panel ul {
+    margin-bottom: 0;
+  }
+
+  .topic-list {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .topic-list a {
+    display: grid;
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--charcoal);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.55rem;
+    text-decoration: none;
+  }
+
+  .topic-list a:hover {
+    color: var(--burnt);
+    background: var(--warm);
+  }
+
+  .topic-list span {
+    color: var(--burnt);
+    font-weight: 850;
+  }
+
+  @media (max-width: 820px) {
+    .paper-hero,
+    .paper-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .paper-hero {
+      padding-top: 2rem;
+    }
+  }
+</style>

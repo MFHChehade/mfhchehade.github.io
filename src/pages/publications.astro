@@ -1,84 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { peerReviewed, preprints, publications, topics } from '../data/research';
 
-const peerReviewed = [
-  {
-    authors: "M. Chehade, H. Zhu",
-    title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
-    venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
-    year: "2026",
-    shortVenue: "PESGM",
-    links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
-  },
-  {
-    authors: "Y. Cho, M. Chehade, F. Al-Janahi, S. Lim, J. Mohammadi, H. Zhu",
-    title: "Carbon-aware Market Participation for Building Energy Management Systems",
-    venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
-    year: "2026",
-    shortVenue: "PESGM",
-    links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
-  },
-  {
-    authors: "M. Chehade, H. Zhu",
-    title: "NEO-Grid: A Neural Approximation Framework for Optimization and Control in Distribution Grids",
-    venue: "Proceedings of the 59th Hawaii International Conference on System Sciences (HICSS), 2026",
-    year: "2026",
-    shortVenue: "HICSS",
-    links: [
-      { label: "paper", href: "/Neo-Grid.pdf" },
-      { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
-    ],
-  },
-  {
-    authors: "M. Chehade, W. Li, B. W. Bell, R. Bent, S. R. Kazi, H. Zhu",
-    title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
-    venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
-    year: "2025",
-    shortVenue: "ICML",
-    links: [
-      { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
-      { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
-    ],
-  },
-  {
-    authors: "M. Chehade, S. S. Ghosal, S. Chakraborty, A. Reddy, D. Manocha, H. Zhu, A. S. Bedi",
-    title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
-    venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
-    year: "2025",
-    shortVenue: "ICML",
-    links: [
-      { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
-      { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
-    ],
-  },
-  {
-    authors: "M. Chehade, S. Karaki",
-    title: "BOOST: Microgrid Sizing using Ordinal Optimization",
-    venue: "2025 Texas Power and Energy Conference (TPEC), IEEE, pp. 1-4, Feb. 2025",
-    year: "2025",
-    shortVenue: "TPEC",
-    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
-  },
-  {
-    authors: "M. Chehade, Y. H. Cho, S. Chinchali, H. Zhu",
-    title: "Should We Use Model-Free or Model-Based Control? A Case Study of Battery Control",
-    venue: "2024 56th North American Power Symposium (NAPS), IEEE, pp. 1-5, Oct. 2024",
-    year: "2024",
-    shortVenue: "NAPS",
-    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
-  },
-];
-
-const preprints = [
-  {
-    authors: "M. Chehade, A. S. Bedi, A. Zhang, H. Zhu",
-    title: "CAT: Caution Aware Transfer in Reinforcement Learning via Distributional Risk",
-    venue: "arXiv, 2024",
-    year: "2024",
-    shortVenue: "arXiv",
-    links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
-  },
-];
+const featured = publications.filter((paper) => paper.image).slice(0, 6);
+const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?.shortTitle ?? slug;
 ---
 
 <Layout
@@ -102,11 +27,39 @@ const preprints = [
         <strong>preprint</strong>
       </div>
       <div>
-        <span>2024-2026</span>
-        <strong>recent work</strong>
+        <span>{publications.length}</span>
+        <strong>paper pages</strong>
       </div>
     </div>
   </header>
+
+  <section class="section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Visual Index</p>
+        <h2>Paper previews</h2>
+      </div>
+      <p>Selected papers with visuals cropped from their PDFs.</p>
+    </div>
+
+    <div class="featured-grid">
+      {featured.map((paper) => (
+        <article class="featured-paper">
+          <a class="featured-image" href={`/publications/${paper.slug}`}>
+            <img src={paper.image} alt={paper.imageAlt} />
+          </a>
+          <div class="featured-body">
+            <div class="pub-topline">
+              <span>{paper.year}</span>
+              <span>{paper.shortVenue}</span>
+            </div>
+            <h3><a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a></h3>
+            <p>{paper.summary}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
 
   <section class="section">
     <div class="section-heading">
@@ -116,17 +69,23 @@ const preprints = [
       </div>
       <p>{peerReviewed.length} papers</p>
     </div>
-    <div class="publication-list">
+    <div class="publication-list rich-list">
       {peerReviewed.map((paper) => (
         <article class="publication-entry">
           <div class="pub-topline">
             <span>{paper.year}</span>
             <span>{paper.shortVenue}</span>
           </div>
-          <h3>{paper.title}</h3>
+          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
           <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
+          <div class="topic-row">
+            {paper.topics.map((slug) => (
+              <a href={`/research/${slug}`}>{topicName(slug)}</a>
+            ))}
+          </div>
           <div class="link-row">
+            <a href={`/publications/${paper.slug}`}>details</a>
             {paper.links.map((link) => {
               const isExternal = link.href.startsWith("http");
               return (
@@ -152,17 +111,23 @@ const preprints = [
         <h2>Working papers</h2>
       </div>
     </div>
-    <div class="publication-list">
+    <div class="publication-list rich-list">
       {preprints.map((paper) => (
         <article class="publication-entry">
           <div class="pub-topline">
             <span>{paper.year}</span>
             <span>{paper.shortVenue}</span>
           </div>
-          <h3>{paper.title}</h3>
+          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
           <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
+          <div class="topic-row">
+            {paper.topics.map((slug) => (
+              <a href={`/research/${slug}`}>{topicName(slug)}</a>
+            ))}
+          </div>
           <div class="link-row">
+            <a href={`/publications/${paper.slug}`}>details</a>
             {paper.links.map((link) => (
               <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
             ))}
@@ -209,8 +174,93 @@ const preprints = [
     font-size: 0.9rem;
   }
 
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .featured-paper {
+    display: grid;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+  }
+
+  .featured-image {
+    display: block;
+    background: var(--soft);
+  }
+
+  .featured-image img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .featured-body {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0.95rem;
+  }
+
+  .featured-paper h3 {
+    font-size: 1.06rem;
+  }
+
+  .featured-paper h3 a,
+  .publication-entry h3 a {
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+
+  .featured-paper h3 a:hover,
+  .publication-entry h3 a:hover {
+    color: var(--burnt);
+  }
+
+  .featured-paper p {
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .topic-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.5rem;
+  }
+
+  .topic-row a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.7rem;
+    color: var(--green);
+    background: #edf5ef;
+    border: 1px solid rgba(36, 112, 95, 0.14);
+    border-radius: 6px;
+    padding: 0.12rem 0.5rem;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .topic-row a:hover {
+    color: #ffffff;
+    background: var(--green);
+  }
+
+  @media (max-width: 900px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 640px) {
-    .publication-stats {
+    .publication-stats,
+    .featured-grid {
       grid-template-columns: 1fr;
     }
 

@@ -30,6 +30,7 @@ const researchSignals = [
 
 const selectedPublications = [
   {
+    slug: "levis",
     authors: "M. Chehade, W. Li, B. W. Bell, R. Bent, S. R. Kazi, H. Zhu",
     title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
     venue: "ICML 2025",
@@ -38,6 +39,7 @@ const selectedPublications = [
     href: "https://doi.org/10.48550/arXiv.2408.08824",
   },
   {
+    slug: "sitalign",
     authors: "M. Chehade, S. S. Ghosal, S. Chakraborty, A. Reddy, D. Manocha, H. Zhu, A. S. Bedi",
     title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
     venue: "ICML 2025",
@@ -46,8 +48,9 @@ const selectedPublications = [
     href: "https://arxiv.org/abs/2505.23729",
   },
   {
+    slug: "tram",
     authors: "M. Chehade, A. S. Bedi, A. Zhang, H. Zhu",
-    title: "CAT: Caution Aware Transfer in Reinforcement Learning via Distributional Risk",
+    title: "TRAM: Test-Time Risk Adaptation with Mixture of Agents",
     venue: "arXiv 2024",
     year: "2024",
     shortVenue: "arXiv",
@@ -150,10 +153,11 @@ const selectedPublications = [
             <span>{paper.year}</span>
             <span>{paper.shortVenue}</span>
           </div>
-          <h3>{paper.title}</h3>
+          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
           <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
           <div class="link-row">
+            <a href={`/publications/${paper.slug}`}>details</a>
             <a href={paper.href} target="_blank" rel="noopener noreferrer">paper</a>
           </div>
         </article>
