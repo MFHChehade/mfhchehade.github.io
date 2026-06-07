@@ -96,12 +96,22 @@ const projects = [
   }
 
   .research-entry {
-    padding-bottom: 0.85rem;
+    padding: 0.85rem 0.9rem;
+    border: 1px solid transparent;
     border-bottom: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition:
+      background 160ms ease,
+      border-color 160ms ease;
   }
 
   .research-entry:last-child {
-    border-bottom: 0;
+    border-bottom-color: transparent;
+  }
+
+  .research-entry:hover {
+    background: #ffffff;
+    border-color: var(--line);
   }
 
   .research-entry h3 {
