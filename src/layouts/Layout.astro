@@ -1,10 +1,23 @@
 ---
 interface Props {
   title: string;
+  description?: string;
 }
 
+const {
+  title,
+  description = "Mohamad Chehade is a Ph.D. student at The University of Texas at Austin working on reliable machine learning, reinforcement learning, and power systems.",
+} = Astro.props;
 
-const { title } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/research", label: "Research" },
+  { href: "/publications", label: "Publications" },
+  { href: "/contact", label: "Contact" },
+];
+
+const isActive = (href: string) => href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 ---
 
 <!doctype html>
@@ -12,25 +25,50 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/profile.jpeg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
     <title>{title}</title>
   </head>
   <body>
-    <nav>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <nav class="site-nav" aria-label="Main navigation">
       <div class="nav-content">
-        <a href="/" class="nav-home">Home</a>
+        <a href="/" class="nav-home" aria-label="Mohamad Chehade home">
+          <span class="nav-mark">MC</span>
+          <span>Mohamad Chehade</span>
+        </a>
         <div class="nav-links">
-          <a href="/publications">Publications</a>
-          <a href="/assets/CV_Mohamad.pdf" target="_blank">CV</a>
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={["nav-link", { active: isActive(link.href) }]}
+              aria-current={isActive(link.href) ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a class="nav-link nav-cv" href="/CV_Mohamad.pdf" target="_blank" rel="noopener noreferrer">
+            CV
+          </a>
         </div>
       </div>
     </nav>
-    <main>
+    <main id="content">
       <slot />
     </main>
     <footer>
+      <div>
+        <strong>Mohamad Chehade</strong>
+        <span>Ph.D. Student, Electrical and Computer Engineering</span>
+      </div>
       <p>&copy; {new Date().getFullYear()} Mohamad Chehade</p>
     </footer>
   </body>
@@ -38,99 +76,355 @@ const { title } = Astro.props;
 
 <style is:global>
   :root {
-    --primary: #2563eb;
-    --text: #333333;
-    --background: #ffffff;
-    --secondary-bg: #f4f4f4;
+    --primary: #0f766e;
+    --primary-dark: #0c4f49;
+    --accent: #a45a10;
+    --ink: #172033;
+    --muted: #5d6778;
+    --background: #fbfcf8;
+    --panel: #ffffff;
+    --soft: #eef6f3;
+    --secondary-bg: #f3f6f2;
+    --line: #dce4de;
+    --shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+    --radius: 8px;
   }
-  
+
   * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
   }
 
   html {
-    font-family: 'Roboto', system-ui, sans-serif;
+    color: var(--ink);
     background: var(--background);
-    color: var(--text);
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    scroll-behavior: smooth;
   }
 
   body {
-    line-height: 1.6;
     min-height: 100vh;
+    margin: 0;
+    line-height: 1.65;
     display: flex;
     flex-direction: column;
+    background:
+      linear-gradient(180deg, rgba(238, 246, 243, 0.9) 0%, rgba(251, 252, 248, 0) 360px),
+      var(--background);
+  }
+
+  body,
+  button,
+  input,
+  textarea {
+    font: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
   }
 
   main {
+    width: min(100% - 2rem, 1040px);
     flex: 1;
-    max-width: 800px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 3rem 0 4.5rem;
   }
 
-  nav {
-    background: var(--text);
-    padding: 1rem;
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.6rem 0.85rem;
+    color: #ffffff;
+    background: var(--ink);
+    border-radius: 6px;
+    transform: translateY(-150%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(251, 252, 248, 0.92);
+    border-bottom: 1px solid rgba(220, 228, 222, 0.92);
+    backdrop-filter: blur(14px);
   }
 
   .nav-content {
-    max-width: 800px;
+    width: min(100% - 2rem, 1040px);
+    min-height: 72px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1.25rem;
+  }
+
+  .nav-home {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 750;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    white-space: nowrap;
+  }
+
+  .nav-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-grid;
+    place-items: center;
+    color: #ffffff;
+    background: var(--primary-dark);
+    border-radius: 6px;
+    font-size: 0.78rem;
+    letter-spacing: 0;
   }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.35rem;
   }
 
-  nav a {
-    color: white;
+  .nav-link {
+    color: var(--muted);
     text-decoration: none;
-    font-weight: 500;
-    transition: opacity 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 650;
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    transition:
+      background 160ms ease,
+      color 160ms ease;
   }
 
-  nav a:hover {
-    opacity: 0.8;
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--primary-dark);
+    background: var(--soft);
+    text-decoration: none;
+  }
+
+  .nav-cv {
+    color: #ffffff;
+    background: var(--ink);
+  }
+
+  .nav-cv:hover {
+    color: #ffffff;
+    background: var(--primary-dark);
   }
 
   footer {
-    text-align: center;
-    padding: 2rem;
-    background: var(--secondary-bg);
+    padding: 2rem 1rem;
+    color: var(--muted);
+    background: #ffffff;
+    border-top: 1px solid var(--line);
   }
 
-  h1, h2, h3 {
-    color: var(--text);
-    line-height: 1.2;
+  footer > div,
+  footer > p {
+    width: min(100%, 1040px);
+    margin: 0 auto;
+  }
+
+  footer > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    margin-top: 0.45rem;
+    font-size: 0.92rem;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--ink);
+    line-height: 1.15;
+    margin: 0;
   }
 
   h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 4.2rem;
+    max-width: 900px;
   }
 
   h2 {
-    font-size: 1.8rem;
-    margin: 2rem 0 1rem;
-    border-bottom: 2px solid var(--text);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.12rem;
+  }
+
+  p {
+    margin: 0;
   }
 
   a {
-    color: var(--primary);
-    text-decoration: none;
+    color: var(--primary-dark);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
   }
 
   a:hover {
-    text-decoration: underline;
+    color: var(--accent);
   }
 
   .section {
-    margin-bottom: 3rem;
+    margin-top: 4.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 1.12rem;
+    line-height: 1.8;
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .button {
+    min-height: 2.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.72rem 1rem;
+    color: #ffffff;
+    background: var(--primary-dark);
+    border: 1px solid var(--primary-dark);
+    border-radius: 6px;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .button:hover {
+    color: #ffffff;
+    background: var(--ink);
+    border-color: var(--ink);
+    text-decoration: none;
+  }
+
+  .button.secondary {
+    color: var(--ink);
+    background: #ffffff;
+    border-color: var(--line);
+  }
+
+  .button.secondary:hover {
+    color: var(--primary-dark);
+    background: var(--soft);
+    border-color: var(--primary);
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.05);
+  }
+
+  .info-card p {
+    color: var(--muted);
+    margin-top: 0.55rem;
+  }
+
+  @media (max-width: 760px) {
+    main {
+      width: min(100% - 1.25rem, 1040px);
+      padding-top: 2rem;
+    }
+
+    .nav-content {
+      width: min(100% - 1rem, 1040px);
+      min-height: auto;
+      padding: 0.7rem 0;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .nav-links {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 0.25rem;
+    }
+
+    .nav-link {
+      padding: 0.45rem 0.55rem;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      margin-top: 3rem;
+    }
+
+    h1 {
+      font-size: 2.7rem;
+    }
+
+    h2 {
+      font-size: 1.65rem;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

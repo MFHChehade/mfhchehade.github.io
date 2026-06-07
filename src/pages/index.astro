@@ -1,211 +1,325 @@
 ---
-import Layout from '../layouts/mergedLayout.astro';
+import Layout from '../layouts/Layout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import NewsItem from '../components/NewsItem.astro';
+
+const researchAreas = [
+  {
+    title: "Reliable learning for energy systems",
+    body: "Designing machine learning methods that respect operational constraints and improve decisions in power and energy applications.",
+  },
+  {
+    title: "Risk-aware reinforcement learning",
+    body: "Studying transfer, adaptation, and safety-aware policies for sequential decision-making under uncertainty.",
+  },
+  {
+    title: "Physics-aware supervision",
+    body: "Combining data-driven models with grid structure, optimization, and verifiability for more dependable predictions.",
+  },
+];
 ---
 
-<Layout title="Mohamad Chehade - PhD Student">
+<Layout
+  title="Mohamad Chehade - Ph.D. Student"
+  description="Mohamad Chehade is a Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin working on risk-aware reinforcement learning, reliable AI, and power systems."
+>
   <header class="hero">
-    <img src="profile.jpeg" alt="Mohamad Chehade" class="profile-img" />
-    <h1>Mohamad Chehade</h1>
-    <p class="subtitle">Ph.D. Student in Electrical and Computer Engineering</p>
-    <SocialLinks />
+    <div class="hero-copy">
+      <p class="eyebrow">Power systems, learning, and reliability</p>
+      <h1>Mohamad Chehade</h1>
+      <p class="hero-subtitle">Ph.D. student in Electrical and Computer Engineering at The University of Texas at Austin.</p>
+      <p class="lead">
+        I work on reliable machine learning for power and energy systems, with a focus on
+        risk-aware transfer in reinforcement learning and physics-aware supervised learning.
+      </p>
+      <div class="button-row">
+        <a class="button" href="/publications">View publications</a>
+        <a class="button secondary" href="/research">Research areas</a>
+        <a class="button secondary" href="/CV_Mohamad.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+      </div>
+      <SocialLinks />
+    </div>
+
+    <aside class="hero-profile" aria-label="Profile summary">
+      <img src="/profile.jpeg" alt="Mohamad Chehade" class="profile-img" />
+      <div class="profile-details">
+        <span>Advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Dr. Hao Zhu</a></span>
+        <span>Energy AI, control, and optimization</span>
+        <span>UT Austin ECE</span>
+      </div>
+    </aside>
   </header>
 
-  <section class="section" id="about">
-    <h2>About</h2>
-
-    <p>
-      Welcome! I am <strong>Mohamad Chehade</strong>, a <strong>Ph.D. student</strong> in
-      <strong>Electrical and Computer Engineering</strong> at
-      <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">
-        The University of Texas at Austin
-      </a>,
-      where I am advised by
-      <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">
-        Dr. Hao Zhu
-      </a>.
-      My research focuses on <strong>Risk-aware Transfer in Reinforcement Learning</strong> and
-      <strong>Physics-aware Supervised Learning</strong>, with applications in power and energy systems.
-    </p>
-
-    <p>
-      I hold a <strong>B.Eng. in Electrical and Computer Engineering</strong> with a minor in Mathematics from the
-      <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">
-        American University of Beirut (AUB)
-      </a>,
-      where I worked with
-      <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
-        Dr. Rabih Jabr
-      </a>
-      and
-      <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
-        Dr. Sami Karaki
-      </a>.
-      In addition, I have interned at the
-      <a href="https://www.lanl.gov/" target="_blank" rel="noopener noreferrer">
-        Los Alamos National Laboratory
-      </a>,
-      where I worked with
-      <a href="https://wendy0601.github.io/" target="_blank" rel="noopener noreferrer">
-        Dr. Wenting Li
-      </a>,
-      <a href="https://sites.google.com/math.arizona.edu/brian-bell/home?authuser=0" target="_blank" rel="noopener noreferrer">
-        Dr. Brian Bell
-      </a>, and
-      <a href="https://lanlexperts.elsevierpure.com/en/persons/russell-whitford-bent" target="_blank" rel="noopener noreferrer">
-        Dr. Russell Bent
-      </a>.
-    </p>
-
-    <p>
-      Outside academia, I enjoy playing and watching sports like soccer, basketball and Formula 1,
-      and I'm an avid participant in related games like Fantasy Premier League and FIFA.
-    </p>
-  </section>
-
-  <section class="section" id="news">
-    <h2>News</h2>
-
-    <div class="custom-news-item">
-      <div class="custom-news-mainline">
-        <strong>Mar 2026:</strong>
-        Two papers accepted to the
-        <strong>2026 IEEE Power &amp; Energy Society General Meeting (PESGM):</strong>
-      </div>
-
-      <div class="custom-news-links">
-        <div class="custom-news-linkline">
-          <a
-            href="https://arxiv.org/abs/2602.15350"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <strong>Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid</strong>
-          </a>
-        </div>
-
-        <div class="custom-news-linkline">
-          <a
-            href="https://arxiv.org/abs/2603.08654"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <strong>Carbon-aware Market Participation for Building Energy Management Systems</strong>
-          </a>
-        </div>
+  <section class="section about-section" id="about">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>Building dependable learning tools for grid operations.</h2>
       </div>
     </div>
 
-    <NewsItem
-      date="Aug 2025"
-      content='Paper <a href="Neo-Grid.pdf"><strong>Neo-Grid</strong></a> accepted to <strong>HICSS 2026</strong>'
-    />
+    <div class="about-grid">
+      <div class="about-copy">
+        <p>
+          Welcome! I am a Ph.D. student in <strong>Electrical and Computer Engineering</strong> at
+          <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">The University of Texas at Austin</a>,
+          where I am advised by
+          <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Dr. Hao Zhu</a>.
+          My research sits at the intersection of reliable AI, reinforcement learning, and power system operations.
+        </p>
+        <p>
+          I earned my <strong>B.Eng. in Electrical and Computer Engineering</strong>, with a minor in Mathematics, from the
+          <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">American University of Beirut</a>.
+          At AUB, I worked with
+          <a href="https://scholar.google.com/citations?user=MUMy5mcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Dr. Rabih Jabr</a>
+          and
+          <a href="https://scholar.google.com/citations?user=P8z1S1YAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Dr. Sami Karaki</a>.
+          I have also interned at
+          <a href="https://www.lanl.gov/" target="_blank" rel="noopener noreferrer">Los Alamos National Laboratory</a>,
+          working with Dr. Wenting Li, Dr. Brian Bell, and Dr. Russell Bent.
+        </p>
+      </div>
 
-    <NewsItem
-      date="May 2025"
-      content='Papers <a href="https://arxiv.org/pdf/2408.08824" target="_blank" rel="noopener noreferrer"><strong>LEVIS</strong></a> and <a href="https://arxiv.org/pdf/2505.23729" target="_blank" rel="noopener noreferrer"><strong>SITAlign</strong></a> accepted to <strong>ICML 2025</strong>'
-    />
+      <div class="quick-facts">
+        <div>
+          <span class="fact-label">Current</span>
+          <strong>Ph.D. student, UT Austin</strong>
+        </div>
+        <div>
+          <span class="fact-label">Focus</span>
+          <strong>Reliable AI for energy systems</strong>
+        </div>
+        <div>
+          <span class="fact-label">Interests</span>
+          <strong>Soccer, basketball, Formula 1</strong>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <NewsItem
-      date="Jan 2025"
-      content='<a href="https://ieeexplore.ieee.org/document/10907217" target="_blank" rel="noopener noreferrer"><strong>BOOST</strong></a> accepted to <strong>TPEC 2025</strong>'
-    />
+  <section class="section" id="research-focus">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Research Focus</p>
+        <h2>Methods that keep performance and reliability in view.</h2>
+      </div>
+      <a href="/research">Read more</a>
+    </div>
 
-    <NewsItem
-      date="Oct 2024"
-      content="Awarded Best Graduate Presentation Award at <strong>NAPS 2024</strong>"
-    />
+    <div class="card-grid">
+      {researchAreas.map((area) => (
+        <article class="info-card">
+          <h3>{area.title}</h3>
+          <p>{area.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
 
-    <NewsItem
-      date="Aug 2024"
-      content='The study <a href="https://ieeexplore.ieee.org/document/10741791" target="_blank" rel="noopener noreferrer"><strong>RLvsMPC</strong></a> for battery control accepted to <strong>NAPS 2024</strong>'
-    />
+  <section class="section" id="news">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">News</p>
+        <h2>Recent updates</h2>
+      </div>
+    </div>
+
+    <div class="news-list">
+      <NewsItem
+        date="Mar 2026"
+        content='Two papers accepted to the <strong>2026 IEEE Power &amp; Energy Society General Meeting</strong>: <a href="https://arxiv.org/abs/2602.15350" target="_blank" rel="noopener noreferrer">Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid</a> and <a href="https://arxiv.org/abs/2603.08654" target="_blank" rel="noopener noreferrer">Carbon-aware Market Participation for Building Energy Management Systems</a>.'
+      />
+      <NewsItem
+        date="Aug 2025"
+        content='<a href="/Neo-Grid.pdf"><strong>NEO-Grid</strong></a> accepted to <strong>HICSS 2026</strong>.'
+      />
+      <NewsItem
+        date="May 2025"
+        content='Papers <a href="https://arxiv.org/pdf/2408.08824" target="_blank" rel="noopener noreferrer"><strong>LEVIS</strong></a> and <a href="https://arxiv.org/pdf/2505.23729" target="_blank" rel="noopener noreferrer"><strong>SITAlign</strong></a> accepted to <strong>ICML 2025</strong>.'
+      />
+      <NewsItem
+        date="Jan 2025"
+        content='<a href="https://ieeexplore.ieee.org/document/10907217" target="_blank" rel="noopener noreferrer"><strong>BOOST</strong></a> accepted to <strong>TPEC 2025</strong>.'
+      />
+      <NewsItem
+        date="Oct 2024"
+        content="Awarded Best Graduate Presentation Award at <strong>NAPS 2024</strong>."
+      />
+    </div>
   </section>
 
   <section class="section" id="education">
-    <h2>Education</h2>
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Education</p>
+        <h2>Academic path</h2>
+      </div>
+    </div>
 
     <div class="education-list">
-      <div class="education-item">
-        <div class="education-content">
+      <article class="education-item">
+        <div>
           <h3>Ph.D. in Electrical and Computer Engineering</h3>
           <p>The University of Texas at Austin</p>
           <p>
             Advisor:
-            <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">
-              Dr. Hao Zhu
-            </a>
+            <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Dr. Hao Zhu</a>
           </p>
         </div>
-        <div class="education-date">Aug. 2023 - Present</div>
-      </div>
+        <span>Aug. 2023 - Present</span>
+      </article>
 
-      <div class="education-item">
-        <div class="education-content">
+      <article class="education-item">
+        <div>
           <h3>B.Eng. in Electrical and Computer Engineering</h3>
           <p>American University of Beirut</p>
           <p>Minor in Mathematics</p>
         </div>
-        <div class="education-date">Aug. 2019 - Jun. 2023</div>
-      </div>
+        <span>Aug. 2019 - Jun. 2023</span>
+      </article>
     </div>
   </section>
 </Layout>
 
 <style>
   .hero {
-    text-align: center;
-    margin: 2rem 0 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+    min-height: calc(100vh - 190px);
+    padding: 1rem 0 3rem;
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .hero-subtitle {
+    color: var(--primary-dark);
+    font-size: 1.35rem;
+    font-weight: 750;
+  }
+
+  .hero-profile {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
   }
 
   .profile-img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    width: min(100%, 340px);
+    aspect-ratio: 1;
     object-fit: cover;
-    margin-bottom: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
   }
 
-  .subtitle {
-    font-size: 1.25rem;
-    color: var(--primary);
-    margin: 0.5rem 0;
-  }
-
-  #about p {
-    margin-bottom: 20px;
-  }
-
-  .custom-news-item {
-    margin-bottom: 1rem;
-    padding: 0.75rem 0.9rem;
+  .profile-details {
+    display: grid;
+    gap: 0.6rem;
+    padding-left: 1rem;
     border-left: 3px solid var(--primary);
-    background: #f5f5f5;
+    color: var(--muted);
+    font-size: 0.98rem;
   }
 
-  .custom-news-mainline {
-    margin-bottom: 0.45rem;
-    line-height: 1.45;
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 2rem;
+    align-items: start;
   }
 
-  .custom-news-links {
-    margin-left: 1.1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
+  .about-copy {
+    display: grid;
+    gap: 1.1rem;
+    font-size: 1.04rem;
   }
 
-  .custom-news-linkline {
-    line-height: 1.4;
+  .quick-facts {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.05);
   }
 
-  .custom-news-linkline a {
-    color: var(--primary);
-    text-decoration: none;
+  .quick-facts div {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--line);
   }
 
-  .custom-news-linkline a:hover {
-    text-decoration: underline;
+  .quick-facts div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .fact-label {
+    display: block;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .news-list {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+
+  .education-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .education-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .education-item p {
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+
+  .education-item span {
+    color: var(--accent);
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 820px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hero-profile {
+      align-items: flex-start;
+    }
+
+    .about-grid,
+    .education-item {
+      grid-template-columns: 1fr;
+    }
+
+    .education-item span {
+      white-space: normal;
+    }
   }
 </style>

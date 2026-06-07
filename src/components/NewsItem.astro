@@ -2,51 +2,48 @@
 interface Props {
   date: string;
   content: string;
-  link?: string;
 }
 
-const { date, content, link } = Astro.props;
-
-
-// Check if the content includes "Paper"
-const hasPaper = content.includes("Paper");
-
-// Split content into parts: before and after "Paper"
-let preText = "";
-let postText = "";
-
-if (hasPaper && link) {
-  const parts = content.split("Paper");
-  preText = parts[0];
-  postText = parts[1];
-}
+const { date, content } = Astro.props;
 ---
-<div class="news-item">
-  <strong>{date}:</strong>
-  {hasPaper && link ? (
-    <>
-      {preText}
-      <a href={link} target="_blank" rel="noopener noreferrer">Paper</a>
-      <span set:html={postText} />
-    </>
-  ) : (
-    <span set:html={content} />
-  )}
-</div>
 
+<article class="news-item">
+  <time>{date}</time>
+  <div set:html={content} />
+</article>
 
 <style>
   .news-item {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border-left: 3px solid var(--primary);
-    background: var(--secondary-bg);
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--line);
   }
-  .news-item a {
-    color: var(--primary);
-    text-decoration: none;
+
+  .news-item:first-child {
+    border-top: 0;
+    padding-top: 0;
   }
-  .news-item a:hover {
-    text-decoration: underline;
+
+  time {
+    color: var(--accent);
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  div {
+    color: var(--ink);
+  }
+
+  a {
+    font-weight: 700;
+  }
+
+  @media (max-width: 620px) {
+    .news-item {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
   }
 </style>
