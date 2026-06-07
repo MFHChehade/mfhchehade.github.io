@@ -1,59 +1,30 @@
 ---
-const socialLinks = [
-  { icon: "fab fa-linkedin", url: "https://lb.linkedin.com/in/mfhchehade", label: "LinkedIn" },
-  { icon: "fas fa-user-graduate", url: "https://scholar.google.com/citations?user=cVUnhukAAAAJ&hl=en", label: "Google Scholar" },
-  { icon: "fab fa-github", url: "https://github.com/MFHChehade", label: "GitHub" },
-  { icon: "fab fa-twitter", url: "https://twitter.com/MFHChehade", label: "Twitter" },
-  { icon: "fas fa-envelope", url: "mailto:chehade@utexas.edu", label: "Email" },
-  { icon: "fas fa-phone", url: "tel:7373400862", label: "Phone" },
+const links = [
+  { label: "Google Scholar", url: "https://scholar.google.com/citations?user=cVUnhukAAAAJ&hl=en" },
+  { label: "GitHub", url: "https://github.com/MFHChehade" },
+  { label: "LinkedIn", url: "https://lb.linkedin.com/in/mfhchehade" },
 ];
 ---
 
-<div class="social-links" aria-label="Social and contact links">
-  {socialLinks.map((link) => {
+<ul class="profile-links plain-list">
+  {links.map((link) => {
     const isExternal = link.url.startsWith("http");
     return (
-      <a
-        href={link.url}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noopener noreferrer" : undefined}
-        aria-label={link.label}
-        title={link.label}
-      >
-        <i class={link.icon} aria-hidden="true"></i>
-      </a>
+      <li>
+        <a
+          href={link.url}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+        >
+          {link.label}
+        </a>
+      </li>
     );
   })}
-</div>
+</ul>
 
 <style>
-  .social-links {
-    display: flex;
-    gap: 0.55rem;
-    flex-wrap: wrap;
-  }
-
-  .social-links a {
-    width: 2.65rem;
-    height: 2.65rem;
-    display: inline-grid;
-    place-items: center;
-    color: var(--ink);
-    background: #ffffff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    text-decoration: none;
-    transition:
-      transform 160ms ease,
-      border-color 160ms ease,
-      color 160ms ease,
-      background 160ms ease;
-  }
-
-  .social-links a:hover {
-    color: var(--primary);
-    background: var(--soft);
-    border-color: var(--primary);
-    transform: translateY(-1px);
+  .profile-links {
+    margin-bottom: 0;
   }
 </style>

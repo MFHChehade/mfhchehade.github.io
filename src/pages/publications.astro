@@ -19,8 +19,8 @@ const peerReviewed = [
     title: "NEO-Grid: A Neural Approximation Framework for Optimization and Control in Distribution Grids",
     venue: "Proceedings of the 59th Hawaii International Conference on System Sciences (HICSS), 2026",
     links: [
-      { label: "Paper", href: "/Neo-Grid.pdf" },
-      { label: "Code", href: "https://github.com/MFHChehade/Neo-Grid" },
+      { label: "paper", href: "/Neo-Grid.pdf" },
+      { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
     ],
   },
   {
@@ -28,7 +28,7 @@ const peerReviewed = [
     title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
     venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
     links: [
-      { label: "Paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
+      { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
     ],
   },
@@ -37,7 +37,7 @@ const peerReviewed = [
     title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
     venue: "Proceedings of the 41st International Conference on Machine Learning (ICML), 2025",
     links: [
-      { label: "Paper", href: "https://arxiv.org/abs/2505.23729" },
+      { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
     ],
   },
@@ -45,13 +45,13 @@ const peerReviewed = [
     authors: "M. Chehade, S. Karaki",
     title: "BOOST: Microgrid Sizing using Ordinal Optimization",
     venue: "2025 Texas Power and Energy Conference (TPEC), IEEE, pp. 1-4, Feb. 2025",
-    links: [{ label: "Paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
+    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
   },
   {
     authors: "M. Chehade, Y. H. Cho, S. Chinchali, H. Zhu",
     title: "Should We Use Model-Free or Model-Based Control? A Case Study of Battery Control",
     venue: "2024 56th North American Power Symposium (NAPS), IEEE, pp. 1-5, Oct. 2024",
-    links: [{ label: "Paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
+    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
   },
 ];
 
@@ -69,31 +69,23 @@ const preprints = [
   title="Publications - Mohamad Chehade"
   description="Peer-reviewed publications and preprints by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
 >
-  <header class="page-hero">
-    <p class="eyebrow">Publications</p>
-    <h1>Research output</h1>
-    <p class="lead">
-      Papers spanning risk-aware machine learning, data-driven reliability, reinforcement learning,
+  <header class="page-heading">
+    <h1>Publications</h1>
+    <p>
+      Peer-reviewed publications and preprints in reliable machine learning, reinforcement learning,
       LLMs, optimization, and power systems applications.
     </p>
   </header>
 
   <section class="section">
-    <div class="section-header">
-      <div>
-        <p class="eyebrow">Peer Reviewed</p>
-        <h2>Conference publications</h2>
-      </div>
-      <span class="count">{peerReviewed.length} papers</span>
-    </div>
-
-    <div class="publications-list">
+    <h2>Peer-Reviewed Publications</h2>
+    <div class="publication-list">
       {peerReviewed.map((paper) => (
-        <article class="publication">
-          <p class="authors">{paper.authors}</p>
+        <article class="publication-entry">
           <h3>{paper.title}</h3>
+          <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
-          <div class="paper-links">
+          <div class="link-row">
             {paper.links.map((link) => {
               const isExternal = link.href.startsWith("http");
               return (
@@ -101,7 +93,6 @@ const preprints = [
                   href={link.href}
                   target={isExternal ? "_blank" : undefined}
                   rel={isExternal ? "noopener noreferrer" : undefined}
-                  class="paper-link"
                 >
                   {link.label}
                 </a>
@@ -114,25 +105,16 @@ const preprints = [
   </section>
 
   <section class="section">
-    <div class="section-header">
-      <div>
-        <p class="eyebrow">Preprints</p>
-        <h2>Working papers</h2>
-      </div>
-      <span class="count">{preprints.length} paper</span>
-    </div>
-
-    <div class="publications-list">
+    <h2>Preprints</h2>
+    <div class="publication-list">
       {preprints.map((paper) => (
-        <article class="publication">
-          <p class="authors">{paper.authors}</p>
+        <article class="publication-entry">
           <h3>{paper.title}</h3>
+          <p class="authors">{paper.authors}</p>
           <p class="venue">{paper.venue}</p>
-          <div class="paper-links">
+          <div class="link-row">
             {paper.links.map((link) => (
-              <a href={link.href} target="_blank" rel="noopener noreferrer" class="paper-link">
-                {link.label}
-              </a>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
             ))}
           </div>
         </article>
@@ -140,77 +122,3 @@ const preprints = [
     </div>
   </section>
 </Layout>
-
-<style>
-  .page-hero {
-    max-width: 760px;
-    padding: 2rem 0 1rem;
-  }
-
-  .page-hero h1 {
-    margin-bottom: 1rem;
-  }
-
-  .count {
-    color: var(--muted);
-    font-weight: 750;
-    white-space: nowrap;
-  }
-
-  .publications-list {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .publication {
-    padding: 1.25rem;
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-left: 4px solid var(--primary);
-    border-radius: var(--radius);
-    box-shadow: 0 10px 30px rgba(51, 63, 72, 0.06);
-  }
-
-  .publication h3 {
-    color: var(--primary-dark);
-    margin: 0.35rem 0 0.55rem;
-    font-size: 1.22rem;
-  }
-
-  .authors {
-    color: var(--ink);
-    font-weight: 700;
-  }
-
-  .venue {
-    color: var(--muted);
-    font-style: italic;
-  }
-
-  .paper-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  .paper-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.25rem;
-    padding: 0.45rem 0.75rem;
-    color: var(--primary);
-    background: var(--soft);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    font-weight: 750;
-    text-decoration: none;
-  }
-
-  .paper-link:hover {
-    color: #ffffff;
-    background: var(--primary);
-    border-color: var(--primary);
-    text-decoration: none;
-  }
-</style>
