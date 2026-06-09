@@ -65,8 +65,8 @@ const selectedPublications = [
 >
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">UT Austin ECE / Reliable learning systems</p>
-      <h1>Mohamad Chehade</h1>
+      <p class="eyebrow">UT Austin ECE · Reliable learning systems</p>
+      <h1>Mohamad <span class="name-accent">Chehade</span></h1>
       <p class="hero-statement">Reliable machine learning for risk, constraints, and decisions.</p>
       <div class="bio-block">
         <p>
@@ -107,7 +107,7 @@ const selectedPublications = [
       </div>
     </aside>
 
-    <div class="signal-rail" aria-label="Research snapshot">
+    <div class="signal-rail" aria-label="Research snapshot" data-reveal>
       {researchSignals.map((signal) => (
         <div>
           <span>{signal.label}</span>
@@ -128,7 +128,7 @@ const selectedPublications = [
 
     <div class="flow-grid">
       {researchPillars.map((area) => (
-        <article class="flow-card">
+        <article class="flow-card" data-reveal>
           <span>{area.index}</span>
           <h3>{area.title}</h3>
           <p>{area.body}</p>
@@ -199,24 +199,33 @@ const selectedPublications = [
 <style>
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
-    gap: 1.15rem 2.4rem;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 350px);
+    gap: 1.4rem 3rem;
     align-items: center;
     position: relative;
-    padding: 2.1rem 0 1.3rem;
+    padding: 3rem 0 1.6rem;
   }
 
   .hero-copy {
     max-width: 800px;
   }
 
+  .name-accent {
+    background: linear-gradient(120deg, var(--burnt-bright), var(--burnt-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--burnt);
+  }
+
   .hero-statement {
     max-width: 720px;
     color: var(--charcoal);
-    font-size: 1.38rem;
-    line-height: 1.36;
-    font-weight: 650;
-    margin: 0.75rem 0 1.05rem;
+    font-family: var(--serif);
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    line-height: 1.32;
+    font-weight: 500;
+    margin: 1rem 0 1.2rem;
   }
 
   .bio-block {
@@ -242,42 +251,54 @@ const selectedPublications = [
 
   .portrait-shell {
     position: relative;
-    padding: 0.65rem;
+    padding: 0.55rem;
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: 18px;
     box-shadow: var(--shadow);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms ease;
   }
 
-  .portrait-shell::before {
+  .portrait-shell::after {
     content: "";
     position: absolute;
-    inset: 0.65rem auto 0.65rem 0.65rem;
-    width: 0.38rem;
-    background: var(--burnt);
-    border-radius: 4px;
+    inset: -1px;
+    border-radius: 18px;
+    padding: 1px;
+    background: linear-gradient(150deg, var(--accent-line), transparent 45%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .portrait-shell:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
   }
 
   .profile-photo {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid var(--line);
+    border-radius: 13px;
   }
 
   .affiliation-strip {
     display: grid;
-    gap: 0.2rem;
-    padding: 0.8rem 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    gap: 0.25rem;
+    padding: 0.9rem 1rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
   }
 
   .affiliation-strip span {
     color: var(--burnt);
-    font-size: 0.8rem;
-    font-weight: 850;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
@@ -294,28 +315,48 @@ const selectedPublications = [
   }
 
   .signal-rail div {
-    min-height: 4.35rem;
+    position: relative;
+    min-height: 4.5rem;
     display: grid;
     align-content: center;
-    gap: 0.18rem;
-    padding: 0.78rem 0.95rem;
+    gap: 0.25rem;
+    padding: 0.9rem 1.05rem;
     background: var(--paper);
     border: 1px solid var(--line);
-    border-left: 4px solid var(--burnt);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .signal-rail div::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(var(--burnt-bright), var(--burnt-dark));
+  }
+
+  .signal-rail div:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow);
   }
 
   .signal-rail span {
     color: var(--burnt);
-    font-size: 0.78rem;
-    font-weight: 850;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
   .signal-rail strong {
-    color: var(--charcoal);
+    color: var(--ink);
     font-size: 1rem;
+    font-weight: 600;
   }
 
   .flow-grid {
@@ -325,26 +366,54 @@ const selectedPublications = [
   }
 
   .flow-card {
-    min-height: 11.5rem;
-    padding: 1.15rem;
+    position: relative;
+    min-height: 12rem;
+    padding: 1.5rem 1.4rem;
     background: var(--paper);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+
+  .flow-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(16rem 10rem at 110% -10%, var(--accent-soft), transparent 70%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .flow-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .flow-card:hover::before {
+    opacity: 1;
   }
 
   .flow-card span {
+    position: relative;
     display: inline-flex;
+    font-family: var(--mono);
     color: var(--burnt);
-    font-weight: 850;
-    margin-bottom: 1.55rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
   }
 
   .flow-card h3 {
-    margin-bottom: 0.5rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+    font-size: 1.15rem;
   }
 
   .flow-card p {
+    position: relative;
     color: var(--muted);
     margin: 0;
   }
