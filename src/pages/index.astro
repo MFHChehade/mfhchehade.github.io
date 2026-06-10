@@ -9,13 +9,6 @@ const researchThemes = topics.map((topic) => ({
   count: getTopicPapers(topic.slug).length,
 }));
 
-const researchSignals = [
-  { label: "Home", value: "UT Austin ECE" },
-  { label: "Recent", value: "ICML 2025" },
-  { label: "Methods", value: "RL / LLMs / Verification" },
-  { label: "Applications", value: "Power systems" },
-];
-
 const selectedPublications = [
   {
     slug: "levis",
@@ -95,14 +88,6 @@ const selectedPublications = [
       </div>
     </aside>
 
-    <div class="signal-rail" aria-label="Research snapshot" data-reveal>
-      {researchSignals.map((signal) => (
-        <div>
-          <span>{signal.label}</span>
-          <strong>{signal.value}</strong>
-        </div>
-      ))}
-    </div>
   </section>
 
   <section class="section flow-section">
@@ -315,59 +300,6 @@ const selectedPublications = [
 
   .affiliation-strip strong {
     color: var(--charcoal);
-  }
-
-  .signal-rail {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.45rem;
-  }
-
-  .signal-rail div {
-    position: relative;
-    min-height: 4.5rem;
-    display: grid;
-    align-content: center;
-    gap: 0.25rem;
-    padding: 0.9rem 1.05rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-  }
-
-  .signal-rail div::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: linear-gradient(var(--burnt-bright), var(--burnt-dark));
-  }
-
-  .signal-rail div:hover {
-    transform: translateY(-3px);
-    border-color: var(--accent-line);
-    box-shadow: var(--shadow);
-  }
-
-  .signal-rail span {
-    color: var(--burnt);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .signal-rail strong {
-    color: var(--ink);
-    font-size: 1rem;
-    font-weight: 600;
   }
 
   .theme-list {
@@ -602,19 +534,11 @@ const selectedPublications = [
       justify-self: center;
       width: min(100%, 340px);
     }
-
-    .signal-rail {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   @media (max-width: 520px) {
     .hero-statement {
       font-size: 1.18rem;
-    }
-
-    .signal-rail {
-      grid-template-columns: 1fr;
     }
 
     .bio-block {
