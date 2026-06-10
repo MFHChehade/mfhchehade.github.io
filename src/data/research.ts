@@ -239,6 +239,8 @@ export const publications: Publication[] = [
       "Highlights the practical role of reliability in controller selection.",
     ],
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
+    image: "/paper-images/battery-control.jpg",
+    imageAlt: "Battery control diagram showing grid price, building demand, and battery charging/discharging actions",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
   },
   {

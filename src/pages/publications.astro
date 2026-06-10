@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { peerReviewed, preprints, publications, topics } from '../data/research';
 
-const featured = publications.filter((paper) => paper.image).slice(0, 6);
+const featured = publications.filter((paper) => paper.image);
 const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?.shortTitle ?? slug;
 ---
 
