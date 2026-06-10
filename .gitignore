@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# IDE / cloud-sandbox artifacts
+.bolt/
+.codesandbox/
+.vscode/

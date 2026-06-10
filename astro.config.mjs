@@ -1,5 +1,7 @@
 import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://mfhchehade.github.io",
+  site: "https://mohamadchehade.com",
+  integrations: [sitemap()],
 });

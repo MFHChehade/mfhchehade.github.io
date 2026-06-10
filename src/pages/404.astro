@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page not found - Mohamad Chehade"
+  description="The page you requested could not be found on mohamadchehade.com."
+>
+  <section class="not-found">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lead">
+      The page you requested is not here. It may have moved, or the link could be stale.
+    </p>
+    <div class="button-row">
+      <a class="button" href="/">Home</a>
+      <a class="button secondary" href="/publications">Publications</a>
+      <a class="button secondary" href="/research">Research</a>
+      <a class="button secondary" href="/contact">Contact</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: start;
+    gap: 0.5rem;
+    padding: 4rem 0 2rem;
+    max-width: 720px;
+  }
+
+  .not-found h1 {
+    margin: 0 0 0.5rem;
+  }
+
+  .not-found .lead {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin: 0 0 1.2rem;
+  }
+</style>

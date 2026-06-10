@@ -13,12 +13,61 @@ const { paper } = Astro.props;
 const relatedTopics = paper.topics
   .map((slug) => topics.find((topic) => topic.slug === slug))
   .filter(Boolean);
+
+const siteOrigin = Astro.site?.origin ?? "https://mohamadchehade.com";
+const pageURL = new URL(Astro.url.pathname, siteOrigin).toString();
+
+const parseAuthors = (raw: string) =>
+  raw
+    .split(/,\s*(?:&|and)\s*|\s*,\s*/)
+    .map((name) => name.replace(/\.$/, "").trim())
+    .filter(Boolean)
+    .map((name) => {
+      const parts = name.split(/\s+/);
+      const given = parts[0];
+      const family = parts.slice(1).join(" ");
+      return { "@type": "Person", givenName: given, familyName: family, name };
+    });
+
+const firstExternalLink = paper.links.find((l) => l.href.startsWith("http"));
+const isPeerReviewed = paper.type === "peer-reviewed";
+
+const scholarlyArticleJsonLd: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": isPeerReviewed ? "ScholarlyArticle" : "Article",
+  headline: paper.title,
+  name: paper.shortTitle,
+  description: paper.summary,
+  url: pageURL,
+  datePublished: `${paper.year}-01-01`,
+  inLanguage: "en",
+  author: parseAuthors(paper.authors),
+  keywords: paper.topics
+    .map((slug) => topics.find((t) => t.slug === slug)?.shortTitle ?? slug)
+    .join(", "),
+  isAccessibleForFree: true,
+  isPartOf: isPeerReviewed
+    ? {
+        "@type": "PublicationIssue",
+        issueNumber: paper.year,
+        datePublished: `${paper.year}-01-01`,
+        isPartOf: {
+          "@type": "Periodical",
+          name: paper.venue,
+        },
+      }
+    : undefined,
+  identifier: firstExternalLink?.href,
+  sameAs: paper.links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
+};
 ---
 
 <Layout
   title={`${paper.shortTitle} - Mohamad Chehade`}
   description={`${paper.title}: ${paper.summary}`}
+  ogType="article"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(scholarlyArticleJsonLd)} />
   <article class="paper-page">
     <header class="paper-hero">
       <div class="paper-copy">

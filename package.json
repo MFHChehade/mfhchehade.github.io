@@ -8,9 +8,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "og:build": "node scripts/make-og-image.mjs && node scripts/make-apple-touch-icon.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "3.1.6",
     "astro": "^4.15.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
   }
 }
