@@ -11,8 +11,13 @@ import { getTopicPapers, topics } from '../data/research';
     <p class="eyebrow">Research</p>
     <h1>Research</h1>
     <p>
-      My work studies reliable learning systems for decisions under uncertainty. The pages below organize
-      projects by research direction and connect each topic to the papers that develop it.
+      My research is organized around one question: how can learning systems make decisions under
+      uncertainty in a way that is risk-aware and verifiable? The four directions below develop
+      complementary pieces of this question — risk-aware learning provides the objective, verification
+      and reliability provide the guarantees, LLM decision systems test the methods on
+      language-driven control, and power-system applications ground the work in a reliability-critical
+      domain. Papers are intentionally cross-tagged across directions, since most of them advance more
+      than one.
     </p>
   </header>
 
@@ -40,8 +45,9 @@ import { getTopicPapers, topics } from '../data/research';
               </div>
               <h3><a href={`/research/${topic.slug}`}>{topic.title}</a></h3>
               <p>{topic.summary}</p>
+              <p class="topic-focus">{topic.focus}</p>
               <div class="mini-paper-list">
-                {topicPapers.slice(0, 3).map((paper) => (
+                {topicPapers.map((paper) => (
                   <a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a>
                 ))}
               </div>
@@ -134,6 +140,15 @@ import { getTopicPapers, topics } from '../data/research';
   .topic-card p {
     color: var(--muted);
     margin: 0;
+  }
+
+  .topic-focus {
+    font-size: 0.95rem;
+    color: var(--charcoal);
+    border-left: 2px solid var(--accent-line);
+    padding-left: 0.7rem;
+    margin-top: 0.1rem;
+    margin-bottom: 0.1rem;
   }
 
   .mini-paper-list {
