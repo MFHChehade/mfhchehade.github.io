@@ -90,6 +90,27 @@ export const topics: ResearchTopic[] = [
 
 export const publications: Publication[] = [
   {
+    slug: "tram",
+    title: "Test-Time Risk Adaptation with Mixture of Agents",
+    shortTitle: "TRAM",
+    authors: "M. Chehade, A. S. Bedi, S. Chakraborty, A. Zhang, H. Zhu",
+    venue: "Advances in Neural Information Processing Systems (NeurIPS), 2026",
+    year: "2026",
+    shortVenue: "NeurIPS",
+    type: "peer-reviewed",
+    summary:
+      "A test-time risk-adaptation method that composes source agents according to deployment-time risk specifications.",
+    contribution: [
+      "Separates source training from deployment-time risk selection.",
+      "Uses mixture-of-agents behavior to adapt policies locally.",
+      "Studies transfer when risk preferences change after training.",
+    ],
+    topics: ["risk-aware-learning", "llm-decision-systems"],
+    image: "/paper-images/tram.jpg",
+    imageAlt: "TRAM paper preview showing test-time source-agent selection under risk specifications",
+    links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
+  },
+  {
     slug: "llm-grid-actions",
     title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
     shortTitle: "Fine-Tuning LLMs for Grid Actions",
@@ -242,27 +263,6 @@ export const publications: Publication[] = [
     image: "/paper-images/battery-control.jpg",
     imageAlt: "Battery control diagram showing grid price, building demand, and battery charging/discharging actions",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
-  },
-  {
-    slug: "tram",
-    title: "TRAM: Test-Time Risk Adaptation with Mixture of Agents",
-    shortTitle: "TRAM",
-    authors: "M. Chehade, A. S. Bedi, A. Zhang, H. Zhu",
-    venue: "arXiv, 2024",
-    year: "2024",
-    shortVenue: "arXiv",
-    type: "preprint",
-    summary:
-      "A test-time risk-adaptation method that composes source agents according to deployment-time risk specifications.",
-    contribution: [
-      "Separates source training from deployment-time risk selection.",
-      "Uses mixture-of-agents behavior to adapt policies locally.",
-      "Studies transfer when risk preferences change after training.",
-    ],
-    topics: ["risk-aware-learning", "llm-decision-systems"],
-    image: "/paper-images/tram.jpg",
-    imageAlt: "TRAM paper preview showing test-time source-agent selection under risk specifications",
-    links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
   },
 ];
 

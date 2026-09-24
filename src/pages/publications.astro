@@ -8,13 +8,13 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
 
 <Layout
   title="Publications - Mohamad Chehade"
-  description="Peer-reviewed publications and preprints by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
+  description="Peer-reviewed publications by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
 >
   <header class="page-heading publications-heading">
     <p class="eyebrow">Publications</p>
     <h1>Publications</h1>
     <p>
-      Peer-reviewed publications and preprints in reliable machine learning, reinforcement learning,
+      Peer-reviewed publications in reliable machine learning, reinforcement learning,
       LLMs, optimization, and power systems applications.
     </p>
     <div class="publication-stats">
@@ -22,10 +22,12 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
         <span>{peerReviewed.length}</span>
         <strong>conference papers</strong>
       </div>
-      <div>
-        <span>{preprints.length}</span>
-        <strong>preprint</strong>
-      </div>
+      {preprints.length > 0 && (
+        <div>
+          <span>{preprints.length}</span>
+          <strong>{preprints.length === 1 ? 'preprint' : 'preprints'}</strong>
+        </div>
+      )}
       <div>
         <span>{publications.length}</span>
         <strong>paper pages</strong>
@@ -104,38 +106,40 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
     </div>
   </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Preprints</p>
-        <h2>Working papers</h2>
+  {preprints.length > 0 && (
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Preprints</p>
+          <h2>Working papers</h2>
+        </div>
       </div>
-    </div>
-    <div class="publication-list rich-list">
-      {preprints.map((paper) => (
-        <article class="publication-entry">
-          <div class="pub-topline">
-            <span>{paper.year}</span>
-            <span>{paper.shortVenue}</span>
-          </div>
-          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-          <p class="authors">{paper.authors}</p>
-          <p class="venue">{paper.venue}</p>
-          <div class="topic-row">
-            {paper.topics.map((slug) => (
-              <a href={`/research/${slug}`}>{topicName(slug)}</a>
-            ))}
-          </div>
-          <div class="link-row">
-            <a href={`/publications/${paper.slug}`}>details</a>
-            {paper.links.map((link) => (
-              <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-            ))}
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
+      <div class="publication-list rich-list">
+        {preprints.map((paper) => (
+          <article class="publication-entry">
+            <div class="pub-topline">
+              <span>{paper.year}</span>
+              <span>{paper.shortVenue}</span>
+            </div>
+            <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+            <p class="authors">{paper.authors}</p>
+            <p class="venue">{paper.venue}</p>
+            <div class="topic-row">
+              {paper.topics.map((slug) => (
+                <a href={`/research/${slug}`}>{topicName(slug)}</a>
+              ))}
+            </div>
+            <div class="link-row">
+              <a href={`/publications/${paper.slug}`}>details</a>
+              {paper.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
 </Layout>
 
 <style>
