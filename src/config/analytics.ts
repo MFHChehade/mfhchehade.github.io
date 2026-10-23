@@ -7,7 +7,7 @@
  * Leave it as an empty string to turn tracking off completely -- nothing
  * is injected into the page and no requests are made.
  */
-export const UMAMI_WEBSITE_ID = "";
+export const UMAMI_WEBSITE_ID = "52e4ed77-b1bb-418f-a615-794f7dede27c";
 
 /* The hosted script. Only change this if you self-host Umami. */
 export const UMAMI_SCRIPT_URL = "https://cloud.umami.is/script.js";
