@@ -23,6 +23,11 @@ const {
   noindex = false,
 } = Astro.props;
 
+import { UMAMI_WEBSITE_ID, UMAMI_SCRIPT_URL, UMAMI_DOMAINS } from "../config/analytics";
+
+// Analytics only ship in a production build, and only once an ID is set.
+const enableAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
+
 const siteOrigin = Astro.site?.origin ?? "https://mohamadchehade.com";
 const canonicalURL = new URL(Astro.url.pathname, siteOrigin).toString();
 const ogImageURL = new URL(ogImage, siteOrigin).toString();
@@ -124,6 +129,18 @@ const personJsonLd = {
         } catch (e) {}
       })();
     </script>
+
+    {
+      enableAnalytics && (
+        <script
+          is:inline
+          defer
+          src={UMAMI_SCRIPT_URL}
+          data-website-id={UMAMI_WEBSITE_ID}
+          data-domains={UMAMI_DOMAINS}
+        />
+      )
+    }
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
