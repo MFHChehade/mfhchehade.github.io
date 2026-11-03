@@ -47,26 +47,10 @@ import SocialLinks from '../components/SocialLinks.astro';
       <section>
         <h2>Current focus</h2>
         <ul class="plain-list focus-list">
-          <li>
-            <strong>Large-scale optimization.</strong> Learned first-order (PDHG) solvers,
-            from optimal power flow on networks with thousands of buses to general linear programs.
-          </li>
-          <li>
-            <strong>Decision-aware time-series foundation models.</strong> Using foundation-model
-            forecasts to make better downstream decisions, judged by the cost of those decisions
-            rather than forecast error.
-          </li>
-          <li>
-            <strong>Agents for power-grid analysis.</strong> LLM agents that run grid studies
-            (power flow, OPF, contingency analysis) and diagnose hidden faults such as bad
-            measurements or topology errors by choosing which tests to run.
-          </li>
-          <li>
-            <strong>Robustness as certified volume.</strong> Training networks so the certified-safe
-            region of inputs is large in volume, building on
-            <a href="https://arxiv.org/abs/2408.09262" target="_blank" rel="noopener noreferrer">PREMAP</a>
-            preimage approximation, rather than certifying a single radius.
-          </li>
+          <li>Large-scale optimization</li>
+          <li>Decision-aware time-series foundation models</li>
+          <li>Agents for power-grid analysis</li>
+          <li>Robustness as certified volume</li>
         </ul>
       </section>
       <section>
@@ -141,20 +125,14 @@ import SocialLinks from '../components/SocialLinks.astro';
 
   .focus-list {
     display: grid;
-    gap: 0.65rem;
+    gap: 0.4rem;
     margin: 0;
-    color: var(--muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
+    color: var(--charcoal);
+    line-height: 1.4;
   }
 
   .focus-list li {
     margin: 0;
-  }
-
-  .focus-list strong {
-    color: var(--ink);
-    font-weight: 600;
   }
 
   @media (max-width: 760px) {
