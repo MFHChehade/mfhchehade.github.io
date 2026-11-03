@@ -215,7 +215,7 @@ export const publications: Publication[] = [
     ],
     topics: ["llm-decision-systems", "risk-aware-learning"],
     figureCaption:
-      String.raw`Share of responses GPT-4 judges harmless, by harmlessness-reward bin (values from the paper&rsquo;s Figure 1). Past a reward of $-12$ the share levels off near 90%, which motivates maximizing helpfulness $Q^{*}_{1}$ subject to a harmlessness threshold $\beta_2$ on $Q^{*}_{2}$.`,
+      "Share of responses GPT-4 judges harmless, by reward score (the paper&rsquo;s Figure 1). Once the reward is above &minus;12, about 90% of responses are harmless, so SITAlign only asks harmlessness to clear a threshold and maximizes helpfulness.",
     links: [
       { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
