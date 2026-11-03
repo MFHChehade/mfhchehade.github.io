@@ -48,28 +48,23 @@ const featured = getPublication(topic.featured);
     <div class="topic-paper-grid">
       {papers.map((paper) => (
         <article class="topic-paper">
-          <a class="paper-thumb" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
-            <PaperFigure name={paper.slug} />
-          </a>
-          <div>
-            <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
-            <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-            <p>{paper.summary}</p>
-            <div class="link-row">
-              <a href={`/publications/${paper.slug}`}>details</a>
-              {paper.links.map((link) => {
-                const isExternal = link.href.startsWith("http");
-                return (
-                  <a
-                    href={link.href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noopener noreferrer" : undefined}
-                  >
-                    {link.label}
-                  </a>
-                );
-              })}
-            </div>
+          <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
+          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+          <p>{paper.summary}</p>
+          <div class="link-row">
+            <a href={`/publications/${paper.slug}`}>details</a>
+            {paper.links.map((link) => {
+              const isExternal = link.href.startsWith("http");
+              return (
+                <a
+                  href={link.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </div>
         </article>
       ))}
@@ -134,28 +129,8 @@ const featured = getPublication(topic.featured);
   }
 
   .topic-paper {
-    display: grid;
-    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
-    gap: 1.6rem;
-    align-items: start;
-    padding: 1.5rem 0;
+    padding: 1.3rem 0;
     border-bottom: 1px solid var(--line);
-  }
-
-  .paper-thumb {
-    display: block;
-    padding: 0.75rem;
-    color: inherit;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    transition: border-color 160ms ease, box-shadow 160ms ease;
-  }
-
-  .paper-thumb:hover {
-    border-color: var(--accent-line);
-    box-shadow: var(--shadow-soft);
   }
 
   .topic-paper h3 {
@@ -186,15 +161,6 @@ const featured = getPublication(topic.featured);
   }
 
   @media (max-width: 820px) {
-    .topic-paper {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .paper-thumb {
-      max-width: 520px;
-    }
-
     .topic-hero {
       padding-top: 2rem;
     }

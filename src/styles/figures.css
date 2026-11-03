@@ -57,6 +57,7 @@
 .fig .t-b { font-weight: 600; fill: var(--f-ink); }
 .fig .t-sm { font-size: 11.5px; }
 .fig .t-xs { font-size: 10.5px; }
+.fig .t-md { font-size: 14px; }
 .fig .t-lg { font-size: 15px; }
 .fig .t-accent { fill: var(--f-orange); }
 .fig .t-num { font-variant-numeric: tabular-nums; }

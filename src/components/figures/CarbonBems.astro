@@ -28,20 +28,20 @@ const curve = points.map((p) => `${sx(p.cost).toFixed(1)},${sy(p.co2).toFixed(1)
 
 <svg
   class="fig"
-  viewBox="0 0 640 312"
+  viewBox="0 0 640 316"
   role="img"
   aria-label="Scatter plot from the carbon-aware EMS paper: daily energy cost against daily carbon emissions. With no carbon tax the EMS costs about 652.7 dollars per day and emits 20.5 tonnes. Taxes of 10, 20 and 30 dollars per tonne cut emissions to about 16.6, 16.2 and 16.1 tonnes per day while cost rises to 659.0, 660.3 and 662.6 dollars. The unmanaged baseline costs 676.8 dollars and emits 20.3 tonnes per day."
 >
   {yTicks.map((t) => (
     <g>
       <line x1={x0} x2={x1} y1={sy(t)} y2={sy(t)} class="grid"></line>
-      {t > yMin && <text x={x0 - 8} y={sy(t) + 4} class="t-sm t-muted t-num" text-anchor="end">{t}</text>}
+      {t > yMin && <text x={x0 - 10} y={sy(t) + 4.5} class="t-muted t-num" text-anchor="end">{t}</text>}
     </g>
   ))}
   {xTicks.map((t) => (
     <g>
       <line x1={sx(t)} x2={sx(t)} y1={y1} y2={y0} class="grid"></line>
-      <text x={sx(t)} y={y0 + 18} class="t-sm t-muted t-num" text-anchor="middle">{t}</text>
+      <text x={sx(t)} y={y0 + 21} class="t-muted t-num" text-anchor="middle">{t}</text>
     </g>
   ))}
   <line x1={x0} x2={x1} y1={y0} y2={y0} class="ln" stroke-width="1"></line>
@@ -54,7 +54,7 @@ const curve = points.map((p) => `${sx(p.cost).toFixed(1)},${sy(p.co2).toFixed(1)
       <circle cx={sx(p.cost)} cy={sy(p.co2)} r="5.5" class="f-blue" stroke="var(--f-bg)" stroke-width="1.5">
         <title>{`Carbon tax ${p.tax}: $${p.cost.toFixed(1)}/day, ${p.co2.toFixed(2)} t CO2/day`}</title>
       </circle>
-      <text x={sx(p.cost) + p.label.dx} y={sy(p.co2) + p.label.dy} class="t-sm" text-anchor={p.label.anchor}>{p.tax}</text>
+      <text x={sx(p.cost) + p.label.dx} y={sy(p.co2) + p.label.dy} class="t-md" text-anchor={p.label.anchor}>{p.tax}</text>
     </g>
   ))}
 
@@ -62,8 +62,8 @@ const curve = points.map((p) => `${sx(p.cost).toFixed(1)},${sy(p.co2).toFixed(1)
   <circle cx={sx(baseline.cost)} cy={sy(baseline.co2)} r="5.5" class="f-bg" stroke="var(--f-ink)" stroke-width="1.6">
     <title>{`Baseline (no EMS): $${baseline.cost.toFixed(1)}/day, ${baseline.co2.toFixed(2)} t CO2/day`}</title>
   </circle>
-  <text x={sx(baseline.cost)} y={sy(baseline.co2) + 22} class="t-sm" text-anchor="middle">baseline (no EMS)</text>
+  <text x={sx(baseline.cost)} y={sy(baseline.co2) + 23} class="t-md" text-anchor="middle">baseline (no EMS)</text>
 
-  <text x={(x0 + x1) / 2} y={y0 + 46} class="t-sm" text-anchor="middle">Energy cost ($/day)</text>
-  <text x="0" y="0" class="t-sm" text-anchor="middle" transform={`translate(18 ${(y0 + y1) / 2}) rotate(-90)`}>Carbon emissions (t CO₂/day)</text>
+  <text x={(x0 + x1) / 2} y={y0 + 50} class="t-md" text-anchor="middle">Energy cost ($/day)</text>
+  <text x="0" y="0" class="t-md" text-anchor="middle" transform={`translate(22 ${(y0 + y1) / 2}) rotate(-90)`}>Carbon emissions (t CO₂/day)</text>
 </svg>

@@ -215,7 +215,7 @@ export const publications: Publication[] = [
     ],
     topics: ["llm-decision-systems", "risk-aware-learning"],
     figureCaption:
-      "Share of responses GPT-4 judges harmless, by reward score (the paper&rsquo;s Figure 1). Once the reward is above &minus;12, about 90% of responses are harmless, so SITAlign only asks harmlessness to clear a threshold and maximizes helpfulness.",
+      "GPT-4 win-tie rates against the base model (Zephyr-7B-&beta;) on PKU-SafeRLHF, read from the paper&rsquo;s Figure 2. Decoding for helpfulness alone falls below the 50% harmlessness threshold. Decoding for harmlessness alone, or with MOD, clears it but gives up helpfulness. SITAlign stays above the threshold and is the most helpful of the four, about 22 points ahead of MOD.",
     links: [
       { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
