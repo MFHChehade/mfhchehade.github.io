@@ -1,0 +1,104 @@
+---
+// One square icon per research direction, in the same language as the site
+// mark: ink lines on the figure panel, a single burnt-orange accent, no text.
+// Decorative (aria-hidden); the direction title always sits next to it.
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const pts = (p: number[][]) => p.map((q) => q.map((v) => v.toFixed(2)).join(",")).join(" ");
+
+// Risk-aware learning: a loss density with a heavy right tail; the tail past
+// the threshold (the risk the objective prices in) is filled.
+const base = 61, top = 17, x0 = 10, x1 = 70, xv = 49;
+const g = (x: number, m: number, s: number) => Math.exp(-(((x - m) / s) ** 2) / 2);
+const raw = (x: number) => g(x, 31, 8) + 0.3 * g(x, 52, 9);
+const dens = (x: number) => raw(x) - raw(x0) - ((raw(x1) - raw(x0)) * (x - x0)) / (x1 - x0);
+let dmax = 0;
+for (let x = x0; x <= x1; x += 0.1) dmax = Math.max(dmax, dens(x));
+const dy = (x: number) => base - (base - top) * dens(x) / dmax;
+const curve: number[][] = [];
+for (let x = x0; x <= x1 + 1e-9; x += 0.5) curve.push([x, dy(x)]);
+const tail = [[xv, base], ...curve.filter(([x]) => x >= xv), [x1, base]];
+
+// Reliability and verification: an input region and the largest ball that
+// fits inside it (its Chebyshev centre), the certified set.
+const region = [[11, 33], [27, 13], [58, 12], [70, 40], [56, 67], [22, 64]];
+function edgeDist(p: number[], a: number[], b: number[]) {
+  const [ax, ay] = a, [bx, by] = b;
+  const t = Math.max(0, Math.min(1, ((p[0] - ax) * (bx - ax) + (p[1] - ay) * (by - ay)) / ((bx - ax) ** 2 + (by - ay) ** 2)));
+  return Math.hypot(p[0] - (ax + t * (bx - ax)), p[1] - (ay + t * (by - ay)));
+}
+let ball = { x: 40, y: 40, r: 0 };
+for (let x = 20; x <= 62; x += 0.5) {
+  for (let y = 18; y <= 62; y += 0.5) {
+    const r = Math.min(...region.map((a, i) => edgeDist([x, y], a, region[(i + 1) % region.length])));
+    if (r > ball.r) ball = { x, y, r };
+  }
+}
+const ballR = ball.r - 3.2;
+const tangent = region
+  .map((a, i) => {
+    const b = region[(i + 1) % region.length];
+    const d = edgeDist([ball.x, ball.y], a, b);
+    return { a, b, d };
+  })
+  .sort((p, q) => p.d - q.d)[0];
+// Point on the ball toward its nearest edge, for the dashed radius.
+const nx = tangent.b[1] - tangent.a[1], ny = -(tangent.b[0] - tangent.a[0]);
+const nl = Math.hypot(nx, ny);
+const side = (tangent.a[0] - ball.x) * nx + (tangent.a[1] - ball.y) * ny > 0 ? 1 : -1;
+const rEnd = [ball.x + (side * nx / nl) * ballR, ball.y + (side * ny / nl) * ballR];
+
+// Power systems: a small meshed grid; the generator bus is the accent.
+const bus = { a: [20, 22], b: [46, 14], c: [66, 30], d: [17, 57], e: [44, 45], f: [63, 62] };
+const lines = [["a", "b"], ["b", "c"], ["a", "d"], ["b", "e"], ["c", "e"], ["d", "e"], ["e", "f"], ["d", "f"]] as const;
+---
+
+<svg class="fig dir-icon" viewBox="0 0 80 80" aria-hidden="true" focusable="false">
+  <rect width="80" height="80" class="panel" />
+
+  {name === "risk-aware-learning" && (
+    <>
+      <path d={`M${pts(tail).replace(/ /g, "L")}Z`} class="f-orange" />
+      <line x1={xv} y1={dy(xv) - 6} x2={xv} y2={base} class="ln-muted dash" style="stroke-width:1.8" />
+      <polyline points={pts(curve)} class="ln" style="stroke-width:2.8" />
+      <line x1={x0} y1={base} x2={x1} y2={base} class="ln" style="stroke-width:2.8" />
+    </>
+  )}
+
+  {name === "data-driven-reliability" && (
+    <>
+      <polygon points={pts(region)} class="ln" style="stroke-width:2.6" />
+      <circle cx={ball.x} cy={ball.y} r={ballR} class="w-orange s-orange" style="stroke-width:2.6" />
+      <line x1={ball.x} y1={ball.y} x2={rEnd[0]} y2={rEnd[1]} class="ln-muted dash" style="stroke-width:1.8" />
+      <circle cx={ball.x} cy={ball.y} r="3" class="head" />
+    </>
+  )}
+
+  {name === "llm-decision-systems" && (
+    <>
+      <path d="M18 11H44a7 7 0 0 1 7 7V31a7 7 0 0 1-7 7H28L17 47L19.5 38H18a7 7 0 0 1-7-7V18a7 7 0 0 1 7-7Z" class="ln" style="stroke-width:2.6" />
+      <line x1="19" y1="21" x2="43" y2="21" class="ln-muted" style="stroke-width:2.6" />
+      <line x1="19" y1="28.5" x2="35" y2="28.5" class="ln-muted" style="stroke-width:2.6" />
+      <path d="M53 25C62 25 64 32 62 42" class="ln" style="stroke-width:2.2" />
+      <path d="M57.6 39.6L62 46.4L66.2 39.8Z" class="head" />
+      <rect x="39" y="50" width="31" height="20" rx="3" class="ln-muted dash" style="stroke-width:1.8" />
+      <circle cx="56" cy="60" r="5" class="f-orange" />
+    </>
+  )}
+
+  {name === "power-systems-applications" && (
+    <>
+      {lines.map(([p, q]) => (
+        <line x1={bus[p][0]} y1={bus[p][1]} x2={bus[q][0]} y2={bus[q][1]} class="ln" style="stroke-width:2.4" />
+      ))}
+      {(["b", "c", "d", "e", "f"] as const).map((k) => (
+        <circle cx={bus[k][0]} cy={bus[k][1]} r="4.2" class="head" />
+      ))}
+      <circle cx={bus.a[0]} cy={bus.a[1]} r="9.5" class="f-orange" />
+      <path d={`M${bus.a[0] - 5.2} ${bus.a[1]}c1.3-3.6 3.9-3.6 5.2 0s3.9 3.6 5.2 0`} style="stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round" />
+    </>
+  )}
+</svg>

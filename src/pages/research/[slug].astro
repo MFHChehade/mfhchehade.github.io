@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
 import PaperThumb from '../../components/figures/PaperThumb.astro';
+import DirectionIcon from '../../components/figures/DirectionIcon.astro';
 import { withTex } from '../../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../../data/research';
 
@@ -24,7 +25,10 @@ const featured = getPublication(topic.featured);
   <header class="topic-hero">
     <div class="topic-copy">
       <a class="back-link" href="/research">Research</a>
-      <h1>{topic.title}</h1>
+      <div class="topic-title">
+        <span class="topic-icon"><DirectionIcon name={topic.slug} /></span>
+        <h1>{topic.title}</h1>
+      </div>
       <p class="lead">{topic.summary}</p>
       <p>{topic.focus}</p>
     </div>
@@ -87,8 +91,25 @@ const featured = getPublication(topic.featured);
     max-width: 780px;
   }
 
-  .topic-copy h1 {
+  .topic-title {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
     margin-bottom: 0.9rem;
+  }
+
+  .topic-icon {
+    flex: none;
+    width: 4.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  @media (max-width: 520px) {
+    .topic-icon {
+      width: 3.4rem;
+    }
   }
 
   .topic-copy p {
