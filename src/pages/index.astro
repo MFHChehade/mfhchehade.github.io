@@ -2,42 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import NewsItem from '../components/NewsItem.astro';
-import { topics, getTopicPapers } from '../data/research';
+import PublicationEntry from '../components/PublicationEntry.astro';
+import { getPublication, getTopicPapers, topics } from '../data/research';
 
 const researchThemes = topics.map((topic) => ({
   ...topic,
   count: getTopicPapers(topic.slug).length,
 }));
 
-const selectedPublications = [
-  {
-    slug: "tram",
-    authors: "M. Chehade, A. S. Bedi, S. Chakraborty, A. Zhang, H. Zhu",
-    title: "Test-Time Risk Adaptation with Mixture of Agents",
-    venue: "NeurIPS 2026",
-    year: "2026",
-    shortVenue: "NeurIPS",
-    href: "https://doi.org/10.48550/arXiv.2408.08812",
-  },
-  {
-    slug: "levis",
-    authors: "M. Chehade, W. Li, B. W. Bell, R. Bent, S. R. Kazi, H. Zhu",
-    title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
-    venue: "ICML 2025",
-    year: "2025",
-    shortVenue: "ICML",
-    href: "https://doi.org/10.48550/arXiv.2408.08824",
-  },
-  {
-    slug: "sitalign",
-    authors: "M. Chehade, S. S. Ghosal, S. Chakraborty, A. Reddy, D. Manocha, H. Zhu, A. S. Bedi",
-    title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
-    venue: "ICML 2025",
-    year: "2025",
-    shortVenue: "ICML",
-    href: "https://arxiv.org/abs/2505.23729",
-  },
-];
+const selectedPublications = ["tram", "levis", "sitalign"]
+  .map((slug) => getPublication(slug))
+  .filter((paper) => paper !== undefined);
 ---
 
 <Layout
@@ -57,8 +32,9 @@ const selectedPublications = [
           optimization, and power systems, and develop forecasts that improve downstream decisions.
         </p>
         <p>
-          I am a Ph.D. student in Electrical and Computer Engineering at The University of Texas at
-          Austin, advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Prof. Hao Zhu</a>.
+          I am a Ph.D. student in Electrical and Computer Engineering at
+          <a href="https://www.utexas.edu/" target="_blank" rel="noopener noreferrer">The University of Texas at Austin</a>,
+          advised by <a href="https://sites.utexas.edu/haozhu/" target="_blank" rel="noopener noreferrer">Prof. Hao Zhu</a>.
           I received my B.Eng. in ECE with a minor in Mathematics from the
           <a href="https://www.aub.edu.lb/" target="_blank" rel="noopener noreferrer">American University of Beirut</a>,
           where I worked with
@@ -129,21 +105,7 @@ const selectedPublications = [
     </div>
 
     <div class="publication-list">
-      {selectedPublications.map((paper) => (
-        <article class="publication-entry">
-          <div class="pub-topline">
-            <span>{paper.year}</span>
-            <span>{paper.shortVenue}</span>
-          </div>
-          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-          <p class="authors">{paper.authors}</p>
-          <p class="venue">{paper.venue}</p>
-          <div class="link-row">
-            <a href={`/publications/${paper.slug}`}>details</a>
-            <a href={paper.href} target="_blank" rel="noopener noreferrer">paper</a>
-          </div>
-        </article>
-      ))}
+      {selectedPublications.map((paper) => <PublicationEntry paper={paper} />)}
     </div>
   </section>
 
@@ -192,7 +154,7 @@ const selectedPublications = [
 <style>
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+    grid-template-columns: minmax(0, 1fr) minmax(200px, 240px);
     gap: 1.4rem 2.4rem;
     align-items: center;
     position: relative;
@@ -235,7 +197,7 @@ const selectedPublications = [
     gap: 0.75rem;
     align-self: stretch;
     justify-self: end;
-    width: min(100%, 280px);
+    width: min(100%, 240px);
   }
 
   .portrait-shell {
@@ -291,32 +253,10 @@ const selectedPublications = [
     grid-template-columns: minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 1.5rem;
-    padding: 1.5rem 0.4rem 1.5rem 0.2rem;
+    padding: 1.2rem 0;
     border-bottom: 1px solid var(--line);
     text-decoration: none;
     color: inherit;
-    transition: padding 220ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .theme-row::before {
-    content: "";
-    position: absolute;
-    left: -1.4rem;
-    right: -1.4rem;
-    top: 0;
-    bottom: -1px;
-    background: var(--paper);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    opacity: 0;
-    transform: scale(0.98);
-    transition: opacity 220ms ease, transform 220ms ease;
-    z-index: 0;
-  }
-
-  .theme-row:hover::before {
-    opacity: 1;
-    transform: scale(1);
   }
 
   .theme-row > * {
@@ -324,10 +264,6 @@ const selectedPublications = [
     z-index: 1;
   }
 
-  .theme-row:hover {
-    padding-left: 1.6rem;
-    padding-right: 1.4rem;
-  }
 
   .theme-body h3 {
     font-family: var(--sans);
@@ -349,14 +285,8 @@ const selectedPublications = [
   }
 
   .theme-count {
-    color: var(--burnt);
-    background: var(--accent-soft);
-    border: 1px solid var(--accent-line);
-    border-radius: 999px;
-    padding: 0.25rem 0.7rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    font-family: var(--sans);
+    color: var(--muted);
+    font-size: 0.92rem;
     white-space: nowrap;
   }
 

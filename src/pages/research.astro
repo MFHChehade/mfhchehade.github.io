@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PaperFigure from '../components/figures/PaperFigure.astro';
+import { withTex } from '../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../data/research';
 ---
 
@@ -8,7 +9,7 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
   title="Research - Mohamad Chehade"
   description="Research areas for Mohamad Chehade, including risk-aware machine learning, data-driven reliability, reinforcement learning, LLMs, and power systems applications."
 >
-  <header class="page-heading research-heading">
+  <header class="page-heading">
     <h1>Research</h1>
     <p>
       My research is organized around one question: how can learning systems make decisions under
@@ -21,168 +22,50 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
     </p>
   </header>
 
-  <ul class="research-map" aria-label="How the four directions fit together">
-    {topics.map((topic) => (
-      <li>
-        <a href={`#${topic.slug}`}>
-          <span class="map-role">{topic.role}</span>
-          <strong>{topic.shortTitle}</strong>
-        </a>
-      </li>
-    ))}
-  </ul>
+  {topics.map((topic) => {
+    const topicPapers = getTopicPapers(topic.slug);
+    const featured = getPublication(topic.featured);
+    return (
+      <section class="direction" id={topic.slug}>
+        <h2><a href={`/research/${topic.slug}`}>{topic.title}</a></h2>
+        <p>{topic.summary} {topic.focus}</p>
 
-  <section class="directions" aria-label="Research directions">
-    {topics.map((topic) => {
-      const topicPapers = getTopicPapers(topic.slug);
-      const featured = getPublication(topic.featured);
-      return (
-        <article class="direction" id={topic.slug} data-reveal>
-          <figure class="figure-frame direction-figure">
-            <a href={`/publications/${topic.featured}`} aria-label={`Open ${featured?.shortTitle}`}>
-              <PaperFigure name={topic.featured} />
-            </a>
-            <figcaption>
-              <strong>{featured?.shortTitle}</strong> · {featured?.shortVenue} {featured?.year}
-            </figcaption>
-          </figure>
+        <figure class="figure-frame">
+          <a href={`/publications/${topic.featured}`} aria-label={`Open ${featured?.shortTitle}`}>
+            <PaperFigure name={topic.featured} />
+          </a>
+          <figcaption>
+            <strong><a href={`/publications/${topic.featured}`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
+            {" "}<span set:html={withTex(featured?.figureCaption ?? "")} />
+          </figcaption>
+        </figure>
 
-          <div class="direction-body">
-            <p class="direction-role">{topic.role}</p>
-            <h2><a href={`/research/${topic.slug}`}>{topic.title}</a></h2>
-            <p class="direction-summary">{topic.summary}</p>
-            <p class="direction-focus">{topic.focus}</p>
-            <p class="paper-count">{topicPapers.length} papers</p>
-            <div class="mini-paper-list">
-              {topicPapers.map((paper) => (
-                <a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a>
-              ))}
-            </div>
-            <a class="direction-link" href={`/research/${topic.slug}`}>
-              Explore this direction
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6"></path>
-              </svg>
-            </a>
-          </div>
-        </article>
-      );
-    })}
-  </section>
+        <p class="direction-papers">
+          Papers:{" "}
+          {topicPapers.map((paper, i) => (
+            <>
+              <a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a>{i < topicPapers.length - 1 ? ", " : ""}
+            </>
+          ))}
+          {" · "}
+          <a href={`/research/${topic.slug}`}>more on this direction</a>
+        </p>
+      </section>
+    );
+  })}
 </Layout>
 
 <style>
-  .research-heading {
-    max-width: 860px;
-    padding-bottom: 1.2rem;
-  }
-
-  .research-heading p:last-child {
-    margin-bottom: 0;
-  }
-
-  /* How the directions relate, as one strip */
-  .research-map {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: 0 0 1rem;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .research-map li {
-    margin: 0;
-  }
-
-  .research-map li + li {
-    border-left: 1px solid var(--line);
-  }
-
-  .research-map a {
-    height: 100%;
-    display: grid;
-    align-content: start;
-    gap: 0.2rem;
-    padding: 1rem 1.1rem 1.05rem;
-    color: inherit;
-    text-decoration: none;
-    transition: background 160ms ease;
-  }
-
-  .research-map a:hover {
-    background: var(--paper-2);
-  }
-
-  .map-role {
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-
-  .research-map strong {
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 1.12rem;
-    font-weight: 600;
-    line-height: 1.25;
-  }
-
-  .research-map a:hover strong {
-    color: var(--burnt);
-  }
-
-  /* One block per direction, figure and text side by side */
-  .directions {
-    display: grid;
-  }
-
   .direction {
     display: grid;
-    grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
-    gap: clamp(1.5rem, 3.6vw, 3rem);
-    align-items: center;
-    padding: clamp(2.2rem, 5vw, 3.4rem) 0;
-    scroll-margin-top: 5rem;
-  }
-
-  .direction + .direction {
+    gap: 1rem;
+    padding: 2.4rem 0;
     border-top: 1px solid var(--line);
-  }
-
-  .direction:nth-child(even) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr);
-  }
-
-  .direction:nth-child(even) .direction-figure {
-    order: 2;
-  }
-
-  .direction-figure > a {
-    display: block;
-    color: inherit;
-  }
-
-  .direction-figure figcaption {
-    font-size: 0.86rem;
-  }
-
-  .direction-body {
-    display: grid;
-    align-content: center;
-    gap: 0.85rem;
-  }
-
-  .direction-role {
-    color: var(--burnt);
-    font-size: 0.95rem;
-    font-weight: 600;
+    scroll-margin-top: 5rem;
   }
 
   .direction h2 {
     margin: 0;
-    font-size: clamp(1.4rem, 2.3vw, 1.75rem);
-    line-height: 1.18;
   }
 
   .direction h2 a {
@@ -194,117 +77,31 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
     color: var(--burnt);
   }
 
-  .direction-body p {
+  .direction p {
     margin: 0;
-  }
-
-  .direction-summary {
     color: var(--charcoal);
-    font-size: 1.06rem;
-    line-height: 1.6;
   }
 
-  .direction-focus {
-    color: var(--muted);
-    border-left: 2px solid var(--accent-line);
-    padding-left: 0.85rem;
+  .direction figcaption a {
+    color: inherit;
+    text-decoration-color: var(--line-strong);
   }
 
-  .paper-count {
-    margin-top: 0.2rem !important;
-    color: var(--muted);
-    font-size: 0.92rem;
+  .direction-papers {
+    font-size: 0.95rem;
   }
 
-  .mini-paper-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: -0.35rem;
-  }
-
-  .mini-paper-list a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.85rem;
+  .direction-papers a {
     color: var(--blue);
-    background: var(--blue-soft);
-    border: 1px solid var(--blue-line);
-    border-radius: 999px;
-    padding: 0.15rem 0.7rem;
-    font-size: 0.86rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
-  }
-
-  .mini-paper-list a:hover {
-    color: var(--on-accent);
-    background: var(--burnt);
-    border-color: var(--burnt);
-  }
-
-  .direction-link {
-    justify-self: start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.2rem;
-    color: var(--burnt);
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  .direction-link svg {
-    transition: transform 180ms ease;
-  }
-
-  .direction-link:hover {
-    color: var(--burnt-dark);
-  }
-
-  .direction-link:hover svg {
-    transform: translateX(4px);
-  }
-
-  @media (max-width: 900px) {
-    .research-map {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .research-map li:nth-child(3) {
-      border-left: 0;
-    }
-
-    .research-map li:nth-child(n + 3) {
-      border-top: 1px solid var(--line);
-    }
-
-    .direction,
-    .direction:nth-child(even) {
-      grid-template-columns: 1fr;
-    }
-
-    .direction:nth-child(even) .direction-figure {
-      order: 0;
-    }
   }
 
   @media (max-width: 520px) {
-    .research-map a {
-      padding: 0.8rem 0.75rem 0.85rem;
-    }
-
-    .research-map strong {
-      font-size: 1.02rem;
-    }
-
-    .map-role {
-      font-size: 0.84rem;
+    .direction {
+      padding: 1.8rem 0;
     }
 
     .figure-frame {
-      padding: 0.7rem;
+      padding: 0.6rem;
     }
   }
 </style>

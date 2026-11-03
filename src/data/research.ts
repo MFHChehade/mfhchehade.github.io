@@ -125,7 +125,7 @@ export const publications: Publication[] = [
     ],
     topics: ["llm-decision-systems", "power-systems-applications", "data-driven-reliability"],
     figureCaption:
-      String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time.`,
+      String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time. On IEEE 118-bus PSPS scenarios, AC power-flow failures drop from 50% (zero-shot) to single digits.`,
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
   },
   {
@@ -146,7 +146,7 @@ export const publications: Publication[] = [
     ],
     topics: ["power-systems-applications"],
     figureCaption:
-      "Forecasts of PJM prices and marginal carbon intensity drive an MPC-wrapped MILP that trades energy cost against a carbon price across grid imports, battery storage, and flexible demand.",
+      "Forecasts of PJM prices and marginal carbon intensity drive an MPC-wrapped MILP that trades energy cost against a carbon price across grid imports, battery storage, and flexible demand. On PJM data, a modest carbon price cuts emissions by 22.5% for a 1.7% cost increase.",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
   },
   {

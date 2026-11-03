@@ -1,279 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PaperFigure from '../components/figures/PaperFigure.astro';
-import { peerReviewed, preprints, publications, topics } from '../data/research';
-
-const featured = publications.filter((paper) => paper.figureCaption);
-const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?.shortTitle ?? slug;
+import PublicationEntry from '../components/PublicationEntry.astro';
+import { peerReviewed, preprints } from '../data/research';
 ---
 
 <Layout
   title="Publications - Mohamad Chehade"
   description="Peer-reviewed publications by Mohamad Chehade on risk-aware machine learning, reliable AI, reinforcement learning, LLMs, and power systems applications."
 >
-  <header class="page-heading publications-heading">
+  <header class="page-heading">
     <h1>Publications</h1>
     <p>
       Peer-reviewed publications in reliable machine learning, reinforcement learning,
       LLMs, optimization, and power systems applications.
     </p>
-    <div class="publication-stats">
-      <div>
-        <span>{peerReviewed.length}</span>
-        <strong>conference papers</strong>
-      </div>
-      {preprints.length > 0 && (
-        <div>
-          <span>{preprints.length}</span>
-          <strong>{preprints.length === 1 ? 'preprint' : 'preprints'}</strong>
-        </div>
-      )}
-      <div>
-        <span>{publications.length}</span>
-        <strong>paper pages</strong>
-      </div>
-    </div>
   </header>
 
   <section class="section">
-    <div class="section-heading">
-      <div>
-        <h2>Paper previews</h2>
-      </div>
-      <p>One redrawn figure per paper, showing the core idea.</p>
-    </div>
-
-    <div class="featured-grid">
-      {featured.map((paper) => (
-        <article class="featured-paper">
-          <a class="featured-image" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
-            <PaperFigure name={paper.slug} />
-          </a>
-          <div class="featured-body">
-            <div class="pub-topline">
-              <span>{paper.year}</span>
-              <span>{paper.shortVenue}</span>
-            </div>
-            <h3><a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a></h3>
-            <p>{paper.summary}</p>
-          </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-heading">
-      <div>
-        <h2>Conference publications</h2>
-      </div>
-      <p>{peerReviewed.length} papers</p>
-    </div>
-    <div class="publication-list rich-list">
-      {peerReviewed.map((paper) => (
-        <article class="publication-entry">
-          <div class="pub-topline">
-            <span>{paper.year}</span>
-            <span>{paper.shortVenue}</span>
-          </div>
-          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-          <p class="authors">{paper.authors}</p>
-          <p class="venue">{paper.venue}</p>
-          <div class="topic-row">
-            {paper.topics.map((slug) => (
-              <a href={`/research/${slug}`}>{topicName(slug)}</a>
-            ))}
-          </div>
-          <div class="link-row">
-            <a href={`/publications/${paper.slug}`}>details</a>
-            {paper.links.map((link) => {
-              const isExternal = link.href.startsWith("http");
-              return (
-                <a
-                  href={link.href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
-          </div>
-        </article>
-      ))}
+    <h2>Conference papers</h2>
+    <div class="publication-list">
+      {peerReviewed.map((paper) => <PublicationEntry paper={paper} />)}
     </div>
   </section>
 
   {preprints.length > 0 && (
     <section class="section">
-      <div class="section-heading">
-        <div>
-          <h2>Working papers</h2>
-        </div>
-      </div>
-      <div class="publication-list rich-list">
-        {preprints.map((paper) => (
-          <article class="publication-entry">
-            <div class="pub-topline">
-              <span>{paper.year}</span>
-              <span>{paper.shortVenue}</span>
-            </div>
-            <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-            <p class="authors">{paper.authors}</p>
-            <p class="venue">{paper.venue}</p>
-            <div class="topic-row">
-              {paper.topics.map((slug) => (
-                <a href={`/research/${slug}`}>{topicName(slug)}</a>
-              ))}
-            </div>
-            <div class="link-row">
-              <a href={`/publications/${paper.slug}`}>details</a>
-              {paper.links.map((link) => (
-                <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-              ))}
-            </div>
-          </article>
-        ))}
+      <h2>Preprints</h2>
+      <div class="publication-list">
+        {preprints.map((paper) => <PublicationEntry paper={paper} />)}
       </div>
     </section>
   )}
 </Layout>
-
-<style>
-  .publications-heading {
-    max-width: 940px;
-  }
-
-  .publication-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin-top: 1.35rem;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .publication-stats div {
-    display: grid;
-    gap: 0.1rem;
-    padding: 0.9rem 1rem;
-    border-right: 1px solid var(--line);
-  }
-
-  .publication-stats div:last-child {
-    border-right: 0;
-  }
-
-  .publication-stats span {
-    color: var(--burnt);
-    font-family: var(--sans);
-    font-size: 1.6rem;
-    font-weight: 600;
-    line-height: 1.1;
-  }
-
-  .publication-stats strong {
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-
-  .featured-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.1rem;
-  }
-
-  .featured-paper {
-    display: grid;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-  }
-
-  .featured-paper {
-    align-content: start;
-  }
-
-  .featured-image {
-    display: block;
-    padding: 1.1rem 1.1rem 0.9rem;
-    color: inherit;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .featured-body {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0.95rem;
-  }
-
-  .featured-paper h3 {
-    font-size: 1.06rem;
-  }
-
-  .featured-paper h3 a,
-  .publication-entry h3 a {
-    color: var(--charcoal);
-    text-decoration: none;
-  }
-
-  .featured-paper h3 a:hover,
-  .publication-entry h3 a:hover {
-    color: var(--burnt);
-  }
-
-  .featured-paper p {
-    color: var(--muted);
-    margin: 0;
-  }
-
-  .topic-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-top: 0.5rem;
-  }
-
-  .topic-row a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 1.7rem;
-    color: var(--green);
-    background: var(--green-soft);
-    border: 1px solid color-mix(in srgb, var(--green) 22%, transparent);
-    border-radius: 999px;
-    padding: 0.12rem 0.65rem;
-    font-size: 0.84rem;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  .topic-row a:hover {
-    color: var(--on-accent);
-    background: var(--green);
-  }
-
-  @media (max-width: 900px) {
-    .featured-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .publication-stats,
-    .featured-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .publication-stats div {
-      border-right: 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .publication-stats div:last-child {
-      border-bottom: 0;
-    }
-  }
-</style>

@@ -1,0 +1,88 @@
+---
+// One publication in a list: figure thumbnail, title, authors (own name in
+// bold), venue, and plain links. The thumbnail is optional.
+import PaperFigure from "./figures/PaperFigure.astro";
+import type { Publication } from "../data/research";
+
+interface Props {
+  paper: Publication;
+  thumb?: boolean;
+}
+
+const { paper, thumb = true } = Astro.props;
+const SELF = "M. Chehade";
+const [before, ...rest] = paper.authors.split(SELF);
+const after = rest.join(SELF);
+const hasSelf = rest.length > 0;
+---
+
+<article class:list={["publication-entry", { "with-thumb": thumb }]}>
+  {thumb && (
+    <a class="pub-thumb" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
+      <PaperFigure name={paper.slug} />
+    </a>
+  )}
+  <div class="pub-text">
+    <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+    <p class="authors">
+      {hasSelf ? (
+        <>{before}<strong>{SELF}</strong>{after}</>
+      ) : (
+        paper.authors
+      )}
+    </p>
+    <p class="venue">{paper.venue}</p>
+    <div class="link-row">
+      {paper.links.map((link) => {
+        const isExternal = link.href.startsWith("http");
+        return (
+          <a
+            href={link.href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+      <a href={`/publications/${paper.slug}`}>details</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .with-thumb {
+    grid-template-columns: minmax(0, 210px) minmax(0, 1fr);
+    gap: 1.4rem;
+    align-items: start;
+  }
+
+  .pub-thumb {
+    display: block;
+    padding: 0.5rem;
+    color: inherit;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .pub-thumb:hover {
+    border-color: var(--line-strong);
+  }
+
+  .authors strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .with-thumb {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .pub-thumb {
+      max-width: 420px;
+    }
+  }
+</style>

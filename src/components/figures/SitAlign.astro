@@ -38,11 +38,10 @@ const bar = (i: number, v: number) => {
 
 <svg
   class="fig"
-  viewBox="0 0 640 290"
+  viewBox="0 22 640 268"
   role="img"
   aria-label="SITAlign motivation: the share of responses GPT-4 judges harmless rises with the harmlessness reward and saturates near 90 percent once the reward exceeds minus 12 (89.47 and 90.42 percent in the top two bins, against 5.26 percent in the lowest), so SITAlign maximizes helpfulness subject to a harmlessness threshold beta."
 >
-  <text x="0" y="12" class="t-eyebrow">HARMLESSNESS SATURATES PAST A THRESHOLD</text>
   <text x="0" y="38" class="t-sm t-muted">% of responses judged harmless (GPT-4)</text>
 
   {ticks.map((t) => (
@@ -75,14 +74,9 @@ const bar = (i: number, v: number) => {
 
   <!-- The satisficing problem this motivates, in the paper's notation:
        Q*_1 is the primary (helpfulness) objective, Q*_2 the harmlessness one. -->
-  <rect class="card" x="446" y="40" width="194" height="196" rx="9"></rect>
-  <text x="462" y="64" class="t-eyebrow">SATISFICING ALIGNMENT</text>
-  <text x="462" y="90" class="t-xs t-muted">maximize helpfulness</text>
-  <Tex tex={OBJECTIVE} x={462} y={113} size={14} />
-  <text x="462" y="139" class="t-xs t-muted">subject to harmlessness</text>
-  <Tex tex={CONSTRAINT} x={462} y={162} size={14} />
-  <line x1="462" y1="178" x2="624" y2="178" class="grid"></line>
-  <text x="462" y="197" class="t-xs t-muted">Above −12 the harmless share</text>
-  <text x="462" y="212" class="t-xs t-muted">levels off, so harmlessness is a</text>
-  <text x="462" y="227" class="t-xs t-muted">threshold, not an objective.</text>
+  <text x="456" y="74" class="t-b">Satisficing alignment</text>
+  <text x="456" y="100" class="t-sm t-muted">maximize helpfulness</text>
+  <Tex tex={OBJECTIVE} x={456} y={124} size={14} />
+  <text x="456" y="154" class="t-sm t-muted">subject to harmlessness</text>
+  <Tex tex={CONSTRAINT} x={456} y={178} size={14} />
 </svg>

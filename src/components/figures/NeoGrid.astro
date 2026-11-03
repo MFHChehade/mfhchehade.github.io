@@ -40,8 +40,8 @@ const tex = {
   role="img"
   aria-label="NEO-Grid: in the physical feeder, power flow maps reactive power to voltages and a volt-var rule maps voltages back to reactive power. NEO-Grid learns both maps as ReLU networks and solves the closed loop directly as a deep equilibrium fixed point, trained with implicit gradients at constant memory."
 >
-  <text x="0" y="12" class="t-eyebrow">PHYSICAL FEEDER</text>
-  <text x="252" y="12" class="t-eyebrow">NEO-GRID DIGITAL TWIN</text>
+  <text x="0" y="13" class="t-b">Physical feeder</text>
+  <text x="252" y="13" class="t-b">NEO-Grid: a neural digital twin</text>
 
   <!-- Physical feeder and its local volt-var control -->
   <rect class="panel" x="0" y="24" width="232" height="266" rx="7"></rect>
@@ -78,12 +78,12 @@ const tex = {
   <rect class="panel" x="252" y="24" width="388" height="266" rx="7"></rect>
 
   <rect class="card" x="268" y="42" width="176" height="78" rx="9"></rect>
-  <text x="356" y="62" class="t-eyebrow" text-anchor="middle">POWER-FLOW SURROGATE</text>
+  <text x="356" y="63" class="t-b t-sm" text-anchor="middle">Power-flow surrogate</text>
   <Tex tex={tex.surrogate} x={356} y={90} size={15} anchor="middle" />
   <text x="356" y="108" class="t-xs t-muted" text-anchor="middle">piecewise-linear ReLU network</text>
 
   <rect class="card" x="268" y="194" width="176" height="78" rx="9"></rect>
-  <text x="356" y="214" class="t-eyebrow" text-anchor="middle">LEARNED VOLT-VAR RULE</text>
+  <text x="356" y="215" class="t-b t-sm" text-anchor="middle">Learned volt-var rule</text>
   <Tex tex={tex.rule} x={356} y={242} size={15} anchor="middle" />
   <text x="356" y="260" class="t-xs t-muted" text-anchor="middle">ReLU form, learned parameters</text>
 
@@ -100,8 +100,7 @@ const tex = {
   <polygon points="474,157 466,152.5 466,161.5" class="head"></polygon>
 
   <rect class="card" x="478" y="42" width="148" height="230" rx="9"></rect>
-  <text x="492" y="62" class="t-eyebrow">DEQ SOLVER</text>
-  <text x="492" y="84" class="t-b t-sm">Fixed point of the loop</text>
+  <text x="492" y="66" class="t-b t-sm">DEQ fixed-point solver</text>
   <Tex tex={tex.fixedPoint} x={492} y={115} size={16} />
   <Tex tex={tex.composed} x={492} y={140} size={13} tone="text" />
   <line x1="492" y1="156" x2="612" y2="156" class="grid"></line>

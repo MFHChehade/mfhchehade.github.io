@@ -11,20 +11,20 @@ const tex = {
   forecast: String.raw`\hat{\mathbf{p}},\ \hat{\mathbf{c}}`,
 };
 const boxes = [
-  { x: 176, w: 132, eyebrow: "FORECAST", title: "Transformer", lines: ["next 24 hours"], tex: tex.forecast },
-  { x: 334, w: 148, eyebrow: "CARBON-AWARE EMS", title: "MPC + MILP", lines: ["min energy cost", "+ carbon price × emissions"] },
+  { x: 176, w: 132, title: "Forecaster", lines: ["Transformer,", "next 24 hours"], tex: tex.forecast },
+  { x: 334, w: 148, title: "Carbon-aware EMS", lines: ["MPC over a MILP:", "min energy cost", "+ carbon price × emissions"] },
 ];
 ---
 
 <svg
   class="fig"
-  viewBox="0 26 640 246"
+  viewBox="0 26 640 194"
   role="img"
   aria-label="Carbon-aware EMS: PJM day-ahead and real-time prices and marginal carbon intensities feed a Transformer forecaster; a model predictive controller solves a MILP that minimizes energy cost plus a carbon price times emissions, dispatching grid imports, battery storage and flexible demand. On PJM data a modest carbon price cuts emissions by 22.5 percent for a 1.7 percent cost increase."
 >
   <!-- Market signals -->
   <rect class="panel" x="0" y="34" width="150" height="150" rx="9"></rect>
-  <text x="14" y="56" class="t-eyebrow">PJM MARKETS</text>
+  <text x="14" y="58" class="t-b">PJM markets</text>
   <text x="14" y="76" class="t-xs t-muted">day-ahead + real-time</text>
   <line x1="14" y1="104" x2="32" y2="104" class="s-blue" stroke-width="3" stroke-linecap="round"></line>
   <text x="40" y="108" class="t-sm">price</text>
@@ -37,18 +37,17 @@ const boxes = [
   {boxes.map((b) => (
     <g>
       <rect class="card" x={b.x} y="34" width={b.w} height="150" rx="9"></rect>
-      <text x={b.x + 14} y="56" class="t-eyebrow">{b.eyebrow}</text>
-      <text x={b.x + 14} y="84" class="t-b t-lg">{b.title}</text>
+      <text x={b.x + 14} y="58" class="t-b">{b.title}</text>
       {b.lines.map((line, i) => (
-        <text x={b.x + 14} y={110 + i * 17} class="t-xs t-muted">{line}</text>
+        <text x={b.x + 14} y={82 + i * 17} class="t-xs t-muted">{line}</text>
       ))}
-      {b.tex && <Tex tex={b.tex} x={b.x + 14} y={136} size={16} />}
+      {b.tex && <Tex tex={b.tex} x={b.x + 14} y={140} size={16} />}
     </g>
   ))}
 
   <!-- Building and its three levers -->
   <rect x="508" y="34" width="132" height="150" rx="9" class="w-orange s-orange" stroke-width="1.4"></rect>
-  <text x="522" y="56" class="t-eyebrow">BUILDING</text>
+  <text x="522" y="58" class="t-b">Building</text>
   <g class="ln" stroke-width="1.5">
     <line x1="522" y1="86" x2="536" y2="86"></line>
   </g>
@@ -74,8 +73,4 @@ const boxes = [
   <polygon points="408,186 403.5,194 412.5,194" class="head-muted"></polygon>
   <text x="491" y="204" class="t-xs t-muted" text-anchor="middle">re-plan each step (MPC)</text>
 
-  <!-- Headline result -->
-  <rect x="0" y="230" width="640" height="34" rx="8" class="w-orange"></rect>
-  <circle cx="18" cy="247" r="4" class="f-orange"></circle>
-  <text x="30" y="251.5" class="t-sm"><tspan class="t-b">PJM data:</tspan> a modest carbon price cuts emissions 22.5% for a 1.7% cost increase</text>
 </svg>

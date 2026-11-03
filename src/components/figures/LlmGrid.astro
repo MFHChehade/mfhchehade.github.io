@@ -7,9 +7,9 @@ import { texWidth } from "./tex";
 
 const N = String.raw`N`;
 const stages = [
-  { x: 118, eyebrow: "STAGE 1", title: "SFT", sub: "imitate the oracle" },
-  { x: 252, eyebrow: "STAGE 2", title: "DPO", sub: "prefer safe voltages" },
-  { x: 386, eyebrow: "INFERENCE", title: "Best-of-", titleTex: N, sub: "keep best feasible" },
+  { x: 118, title: "SFT", sub: "imitate the oracle" },
+  { x: 252, title: "DPO", sub: "prefer safe voltages" },
+  { x: 386, title: "Best-of-", titleTex: N, sub: "keep best feasible" },
 ];
 const signals = [
   { x: 118, a: "DC-OPF MILP oracle", b: "optimal plans" },
@@ -36,36 +36,33 @@ const lines = [
 
 <svg
   class="fig"
-  viewBox="0 32 640 250"
+  viewBox="0 32 640 228"
   role="img"
   aria-label="Multi-stage pipeline: a PSPS scenario summary prompts an instruction-tuned LLM; supervised fine-tuning imitates a DC-OPF MILP oracle; direct preference optimization uses AC power-flow evaluations ranked by voltage penalty; best-of-N selection over N sampled plans keeps the best feasible one; the output is an open-only switching plan within budget."
 >
   <!-- Row 1: the model as it is adapted -->
   <rect class="card" x="0" y="40" width="100" height="70" rx="9"></rect>
-  <text x="50" y="58" class="t-eyebrow" text-anchor="middle">BASE</text>
-  <text x="50" y="80" class="t-b t-lg" text-anchor="middle">LLM</text>
-  <text x="50" y="98" class="t-xs t-muted" text-anchor="middle">instruction-tuned</text>
+  <text x="50" y="72" class="t-b t-lg" text-anchor="middle">LLM</text>
+  <text x="50" y="92" class="t-xs t-muted" text-anchor="middle">instruction-tuned</text>
 
   {stages.map((s) => (
     <g>
       <rect class="card" x={s.x} y="40" width="116" height="70" rx="9"></rect>
-      <text x={s.x + 58} y="58" class="t-eyebrow" text-anchor="middle">{s.eyebrow}</text>
       {s.titleTex ? (
         <>
-          <text x={s.x + 58 + texWidth(s.titleTex, 16) / 2} y="80" class="t-b t-lg" text-anchor="end">{s.title}</text>
-          <Tex tex={s.titleTex} x={s.x + 59 + texWidth(s.titleTex, 16) / 2} y={80} size={16} />
+          <text x={s.x + 58 + texWidth(s.titleTex, 16) / 2} y="72" class="t-b t-lg" text-anchor="end">{s.title}</text>
+          <Tex tex={s.titleTex} x={s.x + 59 + texWidth(s.titleTex, 16) / 2} y={72} size={16} />
         </>
       ) : (
-        <text x={s.x + 58} y="80" class="t-b t-lg" text-anchor="middle">{s.title}</text>
+        <text x={s.x + 58} y="72" class="t-b t-lg" text-anchor="middle">{s.title}</text>
       )}
-      <text x={s.x + 58} y="98" class="t-xs t-muted" text-anchor="middle">{s.sub}</text>
+      <text x={s.x + 58} y="92" class="t-xs t-muted" text-anchor="middle">{s.sub}</text>
     </g>
   ))}
 
   <rect x="520" y="40" width="120" height="70" rx="9" class="w-orange s-orange" stroke-width="1.4"></rect>
-  <text x="580" y="58" class="t-eyebrow" text-anchor="middle">OUTPUT</text>
-  <text x="580" y="80" class="t-b" text-anchor="middle">Switching plan</text>
-  <text x="580" y="98" class="t-xs t-muted" text-anchor="middle">open-only, budgeted</text>
+  <text x="580" y="72" class="t-b" text-anchor="middle">Switching plan</text>
+  <text x="580" y="92" class="t-xs t-muted" text-anchor="middle">open-only, budgeted</text>
 
   {[100, 234, 368, 502].map((x) => (
     <g>
@@ -110,8 +107,4 @@ const lines = [
   <text x="50" y="240" class="t-xs t-b" text-anchor="middle">PSPS scenario</text>
   <text x="50" y="253" class="t-xs t-muted" text-anchor="middle">prompt</text>
 
-  <!-- Headline result -->
-  <rect x="118" y="238" width="522" height="34" rx="8" class="w-orange"></rect>
-  <circle cx="134" cy="255" r="4" class="f-orange"></circle>
-  <text x="146" y="259.5" class="t-sm"><tspan class="t-b">IEEE 118-bus:</tspan> AC power-flow failures drop from 50% (zero-shot) to single digits</text>
 </svg>

@@ -48,16 +48,11 @@ const obstacles = [
   [566, 252],
   [232, 190],
 ];
-const steps = [
-  { n: "1", title: "Score every source", sub: "value − risk penalty" },
-  { n: "2", title: "Select the maximum", sub: "best source–action pair" },
-  { n: "3", title: "Act, then repeat", sub: "re-score at the next state" },
-];
 ---
 
 <svg
   class="fig"
-  viewBox="0 0 640 372"
+  viewBox="0 0 640 304"
   role="img"
   aria-label="TRAM: three risk-neutral source policies are trained once. At deployment a new hazard is specified; TRAM follows source 1, switches to source 2 at state 2 and to source 3 at state 3, reaching the goal while avoiding the hazard that source 1 alone would enter."
 >
@@ -68,10 +63,10 @@ const steps = [
   </defs>
 
   <!-- Headers -->
-  <text x="0" y="12" class="t-eyebrow">TRAINING</text>
-  <text x="0" y="31" class="t-b">Source library</text>
-  <text x="178" y="12" class="t-eyebrow">DEPLOYMENT · RISK SPECIFIED, NO WEIGHT UPDATES</text>
-  <text x="178" y="31" class="t-b">Compose sources state by state</text>
+  <text x="0" y="13" class="t-b">(a) Source library</text>
+  <text x="0" y="33" class="t-sm t-muted">trained once, risk unknown</text>
+  <text x="178" y="13" class="t-b">(b) Deployment-time composition</text>
+  <text x="178" y="33" class="t-sm t-muted">a new hazard is specified; no weight updates</text>
 
   <!-- (a) Source library: one risk-neutral policy per panel -->
   {sources.map((s, i) => (
@@ -134,16 +129,4 @@ const steps = [
   <circle cx="600" cy="78" r="5" class="dot"></circle>
   <text x="590" y="74" class="t-sm" text-anchor="end">goal</text>
 
-  <!-- Decision rule TRAM repeats at every deployment state -->
-  {steps.map((step, i) => (
-    <g transform={`translate(${i * 220} 316)`}>
-      <rect class="card" width="200" height="50" rx="8"></rect>
-      <circle cx="22" cy="25" r="10.5" class="head"></circle>
-      <text x="22" y="29.5" class="t-sm" text-anchor="middle" style="fill: var(--f-bg); font-weight: 600">{step.n}</text>
-      <text x="42" y="21" class="t-b" font-size="12.5">{step.title}</text>
-      <text x="42" y="38" class="t-sm t-muted">{step.sub}</text>
-    </g>
-  ))}
-  <polygon points="217,341 209,336.5 209,345.5" class="head-muted"></polygon>
-  <polygon points="437,341 429,336.5 429,345.5" class="head-muted"></polygon>
 </svg>
