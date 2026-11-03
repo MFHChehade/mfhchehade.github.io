@@ -1,0 +1,290 @@
+---
+// Small-size versions of the paper figures for publication lists. Each one
+// keeps the paper figure's main shapes and colours but drops every label,
+// since text from the full figures shrinks to ~4px at thumbnail width.
+// All thumbnails share a 320 x 200 tile and are decorative (aria-hidden).
+import { uid } from "./uid";
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const hatch = uid("thumb-hatch");
+
+// A plot area shared by the two data thumbnails.
+const plot = { x0: 34, x1: 296, y0: 178, y1: 22 };
+const scale = (lo: number, hi: number, a: number, b: number) => (v: number) => a + ((v - lo) / (hi - lo)) * (b - a);
+
+// SITAlign: the same win-tie rates as the full figure (paper Fig. 2).
+const sx = scale(42, 72, plot.x0, plot.x1);
+const sy = scale(42, 74, plot.y0, plot.y1);
+const sitBaselines = [
+  [65.3, 46.6],
+  [45.3, 70.3],
+  [46.3, 68.3],
+];
+const sitOurs = [68.3, 65.3];
+
+// Carbon-aware BEMS: the same cost-emissions points as the full figure.
+const cx = scale(650, 680, plot.x0, plot.x1);
+const cy = scale(15, 21, plot.y0, plot.y1);
+const taxes = [
+  [652.73, 20.47],
+  [659.04, 16.62],
+  [660.29, 16.21],
+  [662.61, 16.12],
+];
+const carbonBase = [676.78, 20.3];
+
+// TRAM: a regular heptagon stands in for the new hazard.
+const heptagon = Array.from({ length: 7 }, (_, i) => {
+  const a = -Math.PI / 2 + (i * 2 * Math.PI) / 7;
+  return `${(168 + 34 * Math.cos(a)).toFixed(1)},${(88 + 34 * Math.sin(a)).toFixed(1)}`;
+}).join(" ");
+const tramObstacles = [
+  [70, 96],
+  [122, 38],
+  [248, 104],
+  [294, 164],
+];
+
+// LEVIS: the full figure's region and balls, scaled into the left of the tile.
+const levisRegion =
+  "M 69 100 C 69 60, 100 40, 130 38 C 165 36, 181 65, 181 100 C 181 130, 170 150, 152 160 C 138 168, 130 185, 115 205 C 100 225, 78 232, 66 220 C 54 208, 62 192, 74 180 C 84 170, 88 160, 80 150 C 72 140, 69 120, 69 100 Z";
+const nn = [
+  { x: 180, ys: [74, 100, 126] },
+  { x: 204, ys: [74, 100, 126] },
+  { x: 228, ys: [87, 113] },
+];
+const nnEdges: number[][] = [];
+for (let c = 0; c < nn.length - 1; c++) {
+  for (const y1 of nn[c].ys) for (const y2 of nn[c + 1].ys) nnEdges.push([nn[c].x, y1, nn[c + 1].x, y2]);
+}
+
+// LLM grid actions: a small network; lines through the wildfire-risk zone are
+// switched off (dashed), the rest stay energized.
+const buses = [
+  [40, 50],
+  [100, 34],
+  [168, 46],
+  [238, 30],
+  [288, 64],
+  [60, 118],
+  [126, 104],
+  [196, 112],
+  [264, 132],
+  [92, 170],
+  [170, 170],
+  [240, 180],
+];
+const lines: [number, number, boolean][] = [
+  [0, 1, false],
+  [1, 2, false],
+  [2, 3, false],
+  [3, 4, false],
+  [0, 5, false],
+  [1, 6, false],
+  [2, 6, false],
+  [2, 7, true],
+  [3, 7, true],
+  [4, 8, false],
+  [5, 6, false],
+  [6, 7, false],
+  [7, 8, false],
+  [5, 9, false],
+  [6, 10, false],
+  [9, 10, false],
+  [10, 11, false],
+  [7, 11, false],
+  [8, 11, false],
+];
+
+// NEO-Grid: radial feeder (substation at left) and the volt-var rule.
+const feederMain = [52, 82, 112, 142];
+const inverters = [
+  [112, 76],
+  [82, 150],
+  [142, 116],
+];
+
+// Battery control: building windows.
+const windows: number[][] = [];
+for (let r = 0; r < 4; r++) for (let c = 0; c < 2; c++) windows.push([220 + c * 14, 36 + r * 13]);
+
+// BOOST: candidates, crude ranking, best design; the top three are orange.
+const candidates: number[][] = [];
+for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) candidates.push([26 + c * 20, 60 + r * 20]);
+const topCandidates = new Set([3, 11, 22]);
+const bars = [96, 88, 80, 68, 56, 46, 36];
+---
+
+<svg class="fig thumb" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
+  <rect width="320" height="200" class="panel"></rect>
+
+  {(name === "sitalign" || name === "carbon-aware-bems") && (
+    <>
+      <rect x={plot.x0} y={plot.y1} width={plot.x1 - plot.x0} height={plot.y0 - plot.y1} rx="3" class="f-bg"></rect>
+      <line x1={plot.x0} x2={plot.x1} y1={plot.y0} y2={plot.y0} class="ln-muted" style="stroke-width:1.6"></line>
+      <line x1={plot.x0} x2={plot.x0} y1={plot.y1} y2={plot.y0} class="ln-muted" style="stroke-width:1.6"></line>
+    </>
+  )}
+
+  {name === "sitalign" && (
+    <>
+      <rect x={plot.x0 + 1} y={sy(50)} width={plot.x1 - plot.x0 - 1} height={plot.y0 - sy(50) - 1} style="fill:var(--f-node)"></rect>
+      {[50, 60, 70].map((t) => <line x1={sx(t)} x2={sx(t)} y1={plot.y1} y2={plot.y0} class="grid"></line>)}
+      {[60, 70].map((t) => <line x1={plot.x0} x2={plot.x1} y1={sy(t)} y2={sy(t)} class="grid"></line>)}
+      <line x1={plot.x0} x2={plot.x1} y1={sy(50)} y2={sy(50)} class="ln-muted dash" style="stroke-width:2"></line>
+      {sitBaselines.map(([h, s]) => (
+        <circle cx={sx(h)} cy={sy(s)} r="8" class="f-gray" stroke="var(--f-bg)" style="stroke-width:2"></circle>
+      ))}
+      <circle cx={sx(sitOurs[0])} cy={sy(sitOurs[1])} r="11.5" class="f-orange" stroke="var(--f-bg)" style="stroke-width:2.5"></circle>
+    </>
+  )}
+
+  {name === "carbon-aware-bems" && (
+    <>
+      {[660, 670].map((t) => <line x1={cx(t)} x2={cx(t)} y1={plot.y1} y2={plot.y0} class="grid"></line>)}
+      {[17, 19].map((t) => <line x1={plot.x0} x2={plot.x1} y1={cy(t)} y2={cy(t)} class="grid"></line>)}
+      <polyline
+        points={taxes.map(([c, e]) => `${cx(c).toFixed(1)},${cy(e).toFixed(1)}`).join(" ")}
+        class="s-blue"
+        fill="none"
+        style="stroke-width:3"
+        stroke-linejoin="round"
+      ></polyline>
+      {taxes.map(([c, e]) => (
+        <circle cx={cx(c)} cy={cy(e)} r="8" class="f-blue" stroke="var(--f-bg)" style="stroke-width:2"></circle>
+      ))}
+      <circle cx={cx(carbonBase[0])} cy={cy(carbonBase[1])} r="8" class="f-bg" stroke="var(--f-ink)" style="stroke-width:2.8"></circle>
+    </>
+  )}
+
+  {name === "tram" && (
+    <>
+      <defs>
+        <pattern id={hatch} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="7" class="s-orange" style="stroke-width:2"></line>
+        </pattern>
+      </defs>
+      {tramObstacles.map(([x, y]) => <circle cx={x} cy={y} r="8" class="obstacle"></circle>)}
+      <polygon points={heptagon} fill={`url(#${hatch})`} class="s-orange" style="stroke-width:2.4" stroke-linejoin="round"></polygon>
+      <!-- one source kept throughout runs into the hazard -->
+      <path d="M38 166 C 96 146, 140 116, 214 44" class="s-blue dash path" style="stroke-width:2.4"></path>
+      <circle cx="214" cy="44" r="4.5" class="f-bg s-blue" style="stroke-width:2.2"></circle>
+      <!-- the composed policy switches sources and goes around it -->
+      <path d="M38 166 C 90 184, 160 182, 214 160" class="s-pink path" style="stroke-width:3.4"></path>
+      <path d="M214 160 C 250 146, 278 92, 286 30" class="s-green path" style="stroke-width:3.4"></path>
+      <rect x="209" y="155" width="10" height="10" class="f-bg s-green" style="stroke-width:2.2"></rect>
+      <circle cx="38" cy="166" r="7" class="f-bg" stroke="var(--f-ink)" style="stroke-width:2.6"></circle>
+      <circle cx="286" cy="30" r="7" class="dot"></circle>
+    </>
+  )}
+
+  {name === "levis" && (
+    <>
+      <g transform="translate(24 22) scale(0.8) translate(-54 -36)">
+        <path d={levisRegion} class="w-orange s-orange" style="stroke-width:3"></path>
+        <circle cx="125" cy="100" r="56" fill="none" class="s-blue" style="stroke-width:3.2"></circle>
+        <circle cx="104" cy="180" r="20" fill="none" class="s-blue" style="stroke-width:3"></circle>
+        <circle cx="84" cy="212" r="10" fill="none" class="s-blue" style="stroke-width:3"></circle>
+        <circle cx="125" cy="100" r="5" class="f-blue"></circle>
+      </g>
+      <line x1="144" y1="100" x2="160" y2="100" class="ln-muted" style="stroke-width:2"></line>
+      <polygon points="166,100 158,95.5 158,104.5" class="head-muted"></polygon>
+      {nnEdges.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} class="ln-faint" style="stroke-width:1.6"></line>)}
+      {nn.map((col) => col.ys.map((y) => <circle cx={col.x} cy={y} r="6.5" class="node" style="stroke-width:1.8"></circle>))}
+      <line x1="240" y1="100" x2="254" y2="100" class="ln-muted" style="stroke-width:2"></line>
+      <polygon points="260,100 252,95.5 252,104.5" class="head-muted"></polygon>
+      <rect x="266" y="46" width="40" height="108" rx="3" class="card" style="stroke-width:1.6"></rect>
+      <polygon points="266.8,46.8 305.2,46.8 305.2,112 266.8,140" class="w-blue"></polygon>
+      <ellipse cx="286" cy="82" rx="11" ry="17" class="w-orange s-orange" style="stroke-width:2.4"></ellipse>
+    </>
+  )}
+
+  {name === "llm-grid-actions" && (
+    <>
+      <ellipse cx="204" cy="80" rx="46" ry="36" class="w-orange"></ellipse>
+      {lines.map(([a, b, off]) => (
+        <line
+          x1={buses[a][0]}
+          y1={buses[a][1]}
+          x2={buses[b][0]}
+          y2={buses[b][1]}
+          class:list={[off ? "s-orange dash" : "ln-muted"]}
+          style={`stroke-width:${off ? 2.6 : 2}`}
+        ></line>
+      ))}
+      {buses.map(([x, y]) => <circle cx={x} cy={y} r="6.5" class="node" style="stroke-width:1.8"></circle>)}
+    </>
+  )}
+
+  {name === "neo-grid" && (
+    <>
+      <!-- physical feeder -->
+      <rect x="22" y="70" width="12" height="12" class="head"></rect>
+      <line x1="34" y1="76" x2="142" y2="76" class="ln" style="stroke-width:2.2"></line>
+      <line x1="82" y1="76" x2="82" y2="150" class="ln" style="stroke-width:2.2"></line>
+      <line x1="142" y1="76" x2="142" y2="116" class="ln" style="stroke-width:2.2"></line>
+      {feederMain.map((x) => <circle cx={x} cy="76" r="6" class="node" style="stroke-width:1.8"></circle>)}
+      <circle cx="82" cy="114" r="6" class="node" style="stroke-width:1.8"></circle>
+      {inverters.map(([x, y]) => <circle cx={x} cy={y} r="7" class="f-green" stroke="var(--f-bg)" style="stroke-width:2"></circle>)}
+      <!-- learned volt-var rule -->
+      <rect x="190" y="40" width="108" height="120" rx="4" class="f-bg" stroke="var(--f-line)" style="stroke-width:1.4"></rect>
+      <line x1="202" y1="100" x2="288" y2="100" class="ln-faint" style="stroke-width:1.4"></line>
+      <line x1="245" y1="52" x2="245" y2="148" class="ln-faint" style="stroke-width:1.4"></line>
+      <path d="M202 64 L222 64 L236 100 L254 100 L268 136 L288 136" class="s-blue path" style="stroke-width:3"></path>
+      <!-- the closed loop solved as a fixed point -->
+      <path d="M128 50 Q 158 14 186 38" class="ln-muted" style="stroke-width:2"></path>
+      <polygon points="190,42 180.6,40.3 186.3,33.2" class="head-muted"></polygon>
+      <path d="M186 162 Q 158 190 130 160" class="ln-muted" style="stroke-width:2"></path>
+      <polygon points="126,156 135.4,157.4 129.9,164.6" class="head-muted"></polygon>
+    </>
+  )}
+
+  {name === "battery-control" && (
+    <>
+      <!-- grid tower -->
+      <g class="ln" style="stroke-width:2.6">
+        <path d="M44 170 L64 52 L84 170"></path>
+        <path d="M36 74 H92 M44 102 H84"></path>
+        <path d="M56 102 L77 140 M72 102 L51 140"></path>
+      </g>
+      {[[36, 74], [92, 74], [44, 102], [84, 102]].map(([x, y]) => <circle cx={x} cy={y} r="3.6" class="head"></circle>)}
+      <!-- building -->
+      <rect x="212" y="28" width="36" height="66" class="ln" style="stroke-width:2.4"></rect>
+      <rect x="248" y="50" width="22" height="44" class="ln" style="stroke-width:2.4"></rect>
+      {windows.map(([x, y]) => <rect x={x} y={y} width="7" height="7" class="ln" style="stroke-width:1.8"></rect>)}
+      <!-- battery -->
+      <rect x="218" y="136" width="44" height="46" rx="6" class="ln" style="stroke-width:2.4"></rect>
+      <rect x="232" y="129" width="16" height="7" rx="1.5" class="head"></rect>
+      <path d="M245 144 L232 162 H241 L235 177 L250 156 H241 Z" class="f-orange"></path>
+      <!-- energy flows: buy, charge, discharge -->
+      <line x1="102" y1="78" x2="194" y2="62" class="s-blue" style="stroke-width:3" stroke-linecap="round"></line>
+      <polygon points="204,60.3 193.4,57.1 195.1,67.0" class="f-blue"></polygon>
+      <line x1="102" y1="132" x2="198" y2="154" class="s-blue" style="stroke-width:3" stroke-linecap="round"></line>
+      <polygon points="208,156.3 198.2,149.0 196.0,158.7" class="f-blue"></polygon>
+      <line x1="240" y1="122" x2="240" y2="108" class="s-orange" style="stroke-width:3" stroke-linecap="round"></line>
+      <polygon points="240,99 234.5,109 245.5,109" class="f-orange"></polygon>
+    </>
+  )}
+
+  {name === "boost" && (
+    <>
+      {candidates.map(([x, y], i) => (
+        <circle cx={x} cy={y} r="5.5" class={topCandidates.has(i) ? "f-orange" : "f-gray"}></circle>
+      ))}
+      <line x1="122" y1="100" x2="134" y2="100" class="ln-muted" style="stroke-width:2"></line>
+      <polygon points="140,100 132,95.5 132,104.5" class="head-muted"></polygon>
+      {bars.map((h, i) => (
+        <rect x={148 + i * 14} y={150 - h} width="10" height={h} rx="2" class={i < 3 ? "f-orange" : "f-gray"}></rect>
+      ))}
+      <line x1="146" y1="150.5" x2="242" y2="150.5" class="ln-muted" style="stroke-width:1.6"></line>
+      <line x1="250" y1="100" x2="260" y2="100" class="ln-muted" style="stroke-width:2"></line>
+      <polygon points="266,100 258,95.5 258,104.5" class="head-muted"></polygon>
+      <circle cx="288" cy="100" r="17" class="f-orange"></circle>
+      <path d="M280 100.5 L286 107 L297 93" fill="none" stroke="var(--f-bg)" style="stroke-width:3.4" stroke-linecap="round" stroke-linejoin="round"></path>
+    </>
+  )}
+</svg>

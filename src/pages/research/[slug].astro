@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
+import PaperThumb from '../../components/figures/PaperThumb.astro';
 import { withTex } from '../../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../../data/research';
 
@@ -48,23 +49,28 @@ const featured = getPublication(topic.featured);
     <div class="topic-paper-grid">
       {papers.map((paper) => (
         <article class="topic-paper">
-          <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
-          <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
-          <p>{paper.summary}</p>
-          <div class="link-row">
-            <a href={`/publications/${paper.slug}`}>details</a>
-            {paper.links.map((link) => {
-              const isExternal = link.href.startsWith("http");
-              return (
-                <a
-                  href={link.href}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noopener noreferrer" : undefined}
-                >
-                  {link.label}
-                </a>
-              );
-            })}
+          <a class="pub-thumb" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
+            <PaperThumb name={paper.slug} />
+          </a>
+          <div>
+            <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
+            <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+            <p>{paper.summary}</p>
+            <div class="link-row">
+              <a href={`/publications/${paper.slug}`}>details</a>
+              {paper.links.map((link) => {
+                const isExternal = link.href.startsWith("http");
+                return (
+                  <a
+                    href={link.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </article>
       ))}
@@ -129,6 +135,10 @@ const featured = getPublication(topic.featured);
   }
 
   .topic-paper {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 1.4rem;
+    align-items: start;
     padding: 1.3rem 0;
     border-bottom: 1px solid var(--line);
   }
@@ -158,6 +168,17 @@ const featured = getPublication(topic.featured);
     color: var(--burnt);
     font-size: 0.9rem;
     font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .topic-paper {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+
+    .topic-paper .pub-thumb {
+      max-width: 320px;
+    }
   }
 
   @media (max-width: 820px) {
