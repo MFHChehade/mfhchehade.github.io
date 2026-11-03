@@ -9,7 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "og:build": "node scripts/make-og-image.mjs && node scripts/make-apple-touch-icon.mjs"
+    "og:build": "node scripts/make-logo.mjs && node scripts/make-og-image.mjs && node scripts/make-apple-touch-icon.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.1.6",

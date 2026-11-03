@@ -1,0 +1,39 @@
+---
+// The site mark: a capital M traced by a two-peaked probability density, with
+// its right tail (the risk region) in burnt orange over a faint tint. Path data
+// comes from scripts/make-logo.mjs, which also writes the favicon.
+import mark from "../data/logo-mark.json";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg class:list={["logo-mark", className]} viewBox={mark.viewBox} aria-hidden="true" focusable="false">
+  <path class="lm-tail" d={mark.tail} opacity={mark.tailOpacity} />
+  <g fill="none" stroke-width={mark.stroke} stroke-linecap="round" stroke-linejoin="round">
+    <path class="lm-ink" d={mark.ink} />
+    <path class="lm-accent" d={mark.accent} />
+  </g>
+</svg>
+
+<style>
+  .logo-mark {
+    display: block;
+    flex: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    overflow: visible;
+  }
+
+  .logo-mark.small {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .lm-tail { fill: var(--burnt); }
+  .lm-ink { stroke: var(--ink); }
+  .lm-accent { stroke: var(--burnt); }
+</style>
