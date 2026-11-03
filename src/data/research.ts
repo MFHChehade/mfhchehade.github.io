@@ -66,7 +66,7 @@ export const topics: ResearchTopic[] = [
     focus:
       "The goal is not only better text generation, but more reliable decisions when language models interact with structured domains.",
     role: "Language-driven control",
-    featured: "llm-grid-actions",
+    featured: "sitalign",
     paperSlugs: ["sitalign", "llm-grid-actions", "tram"],
   },
   {
@@ -281,6 +281,12 @@ export function getTopic(slug: string) {
   return topics.find((topic) => topic.slug === slug);
 }
 
+/** Papers in a direction, with the direction's featured paper first. */
 export function getTopicPapers(topicSlug: string) {
-  return publications.filter((paper) => paper.topics.includes(topicSlug));
+  const featured = getTopic(topicSlug)?.featured;
+  const papers = publications.filter((paper) => paper.topics.includes(topicSlug));
+  return [
+    ...papers.filter((paper) => paper.slug === featured),
+    ...papers.filter((paper) => paper.slug !== featured),
+  ];
 }
