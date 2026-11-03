@@ -5,8 +5,10 @@ export type ResearchTopic = {
   shortTitle: string;
   summary: string;
   focus: string;
-  image: string;
-  imageAlt: string;
+  /** What this direction contributes to the overall question. */
+  role: string;
+  /** Paper whose figure represents the direction. */
+  featured: string;
   paperSlugs: string[];
 };
 
@@ -22,8 +24,8 @@ export type Publication = {
   summary: string;
   contribution: string[];
   topics: string[];
-  image?: string;
-  imageAlt?: string;
+  /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed. */
+  figureCaption?: string;
   links: Array<{ label: string; href: string }>;
 };
 
@@ -37,8 +39,8 @@ export const topics: ResearchTopic[] = [
       "Methods for learning decisions under uncertainty, distribution shift, and explicit risk specifications.",
     focus:
       "This thread asks how policies should adapt when the cost of failure changes across environments, users, or operating regimes.",
-    image: "/paper-images/tram.jpg",
-    imageAlt: "TRAM paper figure illustrating deployment-time risk adaptation",
+    role: "The objective",
+    featured: "tram",
     paperSlugs: ["tram", "battery-control", "levis", "sitalign"],
   },
   {
@@ -50,8 +52,8 @@ export const topics: ResearchTopic[] = [
       "Stress testing, verification, and input-space construction for learned models used in constrained settings.",
     focus:
       "This direction focuses on making model behavior inspectable before learned components enter reliability-critical workflows.",
-    image: "/paper-images/levis.jpg",
-    imageAlt: "LEVIS paper figure showing verifiable input spaces for neural networks",
+    role: "The guarantees",
+    featured: "levis",
     paperSlugs: ["levis", "neo-grid", "llm-grid-actions", "battery-control"],
   },
   {
@@ -63,8 +65,8 @@ export const topics: ResearchTopic[] = [
       "Fine-tuning and inference-time methods for language models that propose technical actions under constraints.",
     focus:
       "The goal is not only better text generation, but more reliable decisions when language models interact with structured domains.",
-    image: "/paper-images/sitalign.jpg",
-    imageAlt: "SITAlign paper figure showing satisficing alignment reward behavior",
+    role: "Language-driven control",
+    featured: "llm-grid-actions",
     paperSlugs: ["sitalign", "llm-grid-actions", "tram"],
   },
   {
@@ -76,8 +78,8 @@ export const topics: ResearchTopic[] = [
       "Power-system testbeds for studying learning, optimization, reliability, market participation, and control.",
     focus:
       "These projects use power systems as a concrete domain where uncertainty, constraints, and model reliability matter immediately.",
-    image: "/paper-images/neo-grid.jpg",
-    imageAlt: "NEO-Grid paper figure showing a neural digital twin for grid control",
+    role: "A reliability-critical domain",
+    featured: "neo-grid",
     paperSlugs: [
       "llm-grid-actions",
       "carbon-aware-bems",
@@ -106,8 +108,8 @@ export const publications: Publication[] = [
       "Studies transfer when risk preferences change after training.",
     ],
     topics: ["risk-aware-learning", "llm-decision-systems"],
-    image: "/paper-images/tram.jpg",
-    imageAlt: "TRAM paper preview showing test-time source-agent selection under risk specifications",
+    figureCaption:
+      "Risk-neutral source policies are trained once. When a new hazard <em>S&#772;</em> is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.",
     links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
   },
   {
@@ -127,8 +129,8 @@ export const publications: Publication[] = [
       "Uses power systems as a constrained decision-making testbed for LLMs.",
     ],
     topics: ["llm-decision-systems", "power-systems-applications", "data-driven-reliability"],
-    image: "/paper-images/llm-grid-actions.jpg",
-    imageAlt: "Paper preview showing the multi-stage LLM adaptation pipeline for PSPS corrective switching",
+    figureCaption:
+      "Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-N keeps the best feasible plan at inference time.",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
   },
   {
@@ -148,8 +150,8 @@ export const publications: Publication[] = [
       "Studies realistic market and emissions signals from power-system data.",
     ],
     topics: ["power-systems-applications"],
-    image: "/paper-images/carbon-aware-bems.jpg",
-    imageAlt: "Carbon-aware market participation paper preview with price and emission time-series plots",
+    figureCaption:
+      "Forecasts of PJM prices and marginal carbon intensity drive an MPC-wrapped MILP that trades energy cost against a carbon price across grid imports, battery storage, and flexible demand.",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
   },
   {
@@ -169,8 +171,8 @@ export const publications: Publication[] = [
       "Connects data-driven models with interpretable control rules.",
     ],
     topics: ["power-systems-applications", "data-driven-reliability"],
-    image: "/paper-images/neo-grid.jpg",
-    imageAlt: "NEO-Grid paper preview showing neural approximation for distribution-grid control",
+    figureCaption:
+      "The feeder&rsquo;s volt-var loop (power flow maps reactive power to voltage, a local rule maps voltage back) is learned as two ReLU networks and solved directly as a deep-equilibrium fixed point.",
     links: [
       { label: "paper", href: "/Neo-Grid.pdf" },
       { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
@@ -193,8 +195,8 @@ export const publications: Publication[] = [
       "Connects verification with deployment-time reliability questions.",
     ],
     topics: ["data-driven-reliability", "risk-aware-learning"],
-    image: "/paper-images/levis.jpg",
-    imageAlt: "LEVIS paper preview showing verifiable neural-network input regions",
+    figureCaption:
+      "The verifiable region <em>C</em> holds every input whose output satisfies <em>f</em>(<em>x</em>) &gt; 0. LEVIS-&alpha; finds the largest verifiable ball, which touches two boundaries of <em>C</em>; LEVIS-&beta; covers the rest of <em>C</em> with a union of balls.",
     links: [
       { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
@@ -217,8 +219,8 @@ export const publications: Publication[] = [
       "Studies trade-offs among helpfulness, harmlessness, and other response objectives.",
     ],
     topics: ["llm-decision-systems", "risk-aware-learning"],
-    image: "/paper-images/sitalign.jpg",
-    imageAlt: "SITAlign paper preview showing satisficing reward thresholds",
+    figureCaption:
+      "Share of responses GPT-4 judges harmless, by harmlessness-reward bin (values from the paper&rsquo;s Figure 1). Past a reward of &minus;12 the share levels off near 90%, which motivates maximizing helpfulness subject to a harmlessness threshold.",
     links: [
       { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
@@ -241,6 +243,8 @@ export const publications: Publication[] = [
       "Connects optimization methodology with energy-system planning.",
     ],
     topics: ["power-systems-applications"],
+    figureCaption:
+      "Ordinal optimization ranks many candidate microgrid sizings with a cheap model, then evaluates only the top few exactly, returning a good-enough design with high probability.",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
   },
   {
@@ -260,8 +264,8 @@ export const publications: Publication[] = [
       "Highlights the practical role of reliability in controller selection.",
     ],
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
-    image: "/paper-images/battery-control.jpg",
-    imageAlt: "Battery control diagram showing grid price, building demand, and battery charging/discharging actions",
+    figureCaption:
+      "The building buys energy at price <em>&rho;<sub>t</sub></em> and a battery shifts it in time through actions <em>a<sub>t</sub></em>; the paper compares model-free and model-based controllers for choosing <em>a<sub>t</sub></em>.",
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
   },
 ];

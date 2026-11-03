@@ -1,0 +1,139 @@
+/*
+  Shared look for the hand-drawn research figures (src/components/figures).
+
+  Every figure is inline SVG, so it inherits the page fonts and switches with
+  the theme toggle. Series hues follow an Okabe-Ito-derived set that passes the
+  dataviz CVD validator on the white and dark figure surfaces:
+    light  #1f6fb2 #cc79a7 #0e7a57 #bf5700   (worst all-pairs CVD dE 7.3)
+    dark   #3a86cc #c86f9f #178a64 #dd6f1c   (worst all-pairs CVD dE 7.0)
+  Both sit in the 6-8 band, so every coloured mark also carries a direct label.
+*/
+
+.fig {
+  --f-bg: var(--paper);
+  --f-panel: #f6f5f2;
+  --f-ink: var(--ink);
+  --f-text: var(--charcoal);
+  --f-muted: var(--muted);
+  --f-line: #c9c4bb;
+  --f-grid: var(--line);
+  --f-node: #e9e7e2;
+
+  --f-blue: #1f6fb2;
+  --f-pink: #cc79a7;
+  --f-green: #0e7a57;
+  --f-orange: #bf5700;
+  --f-gray: #a3a8af;
+
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--sans);
+  color: var(--f-ink);
+}
+
+:root[data-theme="dark"] .fig {
+  --f-panel: #22262c;
+  --f-line: #4a515b;
+  --f-node: #343941;
+
+  --f-blue: #3a86cc;
+  --f-pink: #c86f9f;
+  --f-green: #178a64;
+  --f-orange: #dd6f1c;
+  --f-gray: #6b727c;
+}
+
+/* Text */
+.fig text {
+  fill: var(--f-text);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.fig .t-ink { fill: var(--f-ink); }
+.fig .t-muted { fill: var(--f-muted); }
+.fig .t-b { font-weight: 600; fill: var(--f-ink); }
+.fig .t-sm { font-size: 11.5px; }
+.fig .t-xs { font-size: 10.5px; }
+.fig .t-lg { font-size: 15px; }
+.fig .t-eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  fill: var(--f-muted);
+}
+.fig .t-accent { fill: var(--f-orange); }
+.fig .math {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  fill: var(--f-ink);
+}
+.fig .math-up {
+  font-family: var(--serif);
+  font-style: normal;
+  font-size: 15px;
+  fill: var(--f-ink);
+}
+.fig .t-num { font-variant-numeric: tabular-nums; }
+
+/* Surfaces and strokes */
+.fig .panel { fill: var(--f-panel); stroke: none; }
+.fig .card { fill: var(--f-bg); stroke: var(--f-line); stroke-width: 1; }
+.fig .rule { stroke: var(--f-line); stroke-width: 1; fill: none; }
+.fig .grid { stroke: var(--f-grid); stroke-width: 1; fill: none; }
+.fig .ln { stroke: var(--f-ink); stroke-width: 1.6; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.fig .ln-muted { stroke: var(--f-muted); stroke-width: 1.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.fig .ln-faint { stroke: var(--f-line); stroke-width: 1.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.fig .dash { stroke-dasharray: 5 4; }
+.fig .head { fill: var(--f-ink); stroke: none; }
+.fig .head-muted { fill: var(--f-muted); stroke: none; }
+.fig .node { fill: var(--f-node); stroke: var(--f-muted); stroke-width: 1.2; }
+.fig .dot { fill: var(--f-ink); stroke: var(--f-bg); stroke-width: 2; }
+.fig .obstacle { fill: var(--f-gray); opacity: 0.55; }
+
+/* Series: stroke, fill, and soft wash per hue */
+.fig .s-blue { stroke: var(--f-blue); }
+.fig .s-pink { stroke: var(--f-pink); }
+.fig .s-green { stroke: var(--f-green); }
+.fig .s-orange { stroke: var(--f-orange); }
+.fig .f-blue { fill: var(--f-blue); }
+.fig .f-pink { fill: var(--f-pink); }
+.fig .f-green { fill: var(--f-green); }
+.fig .f-orange { fill: var(--f-orange); }
+.fig .f-gray { fill: var(--f-gray); }
+.fig .f-bg { fill: var(--f-bg); }
+.fig .w-blue { fill: color-mix(in srgb, var(--f-blue) 13%, var(--f-bg)); }
+.fig .w-pink { fill: color-mix(in srgb, var(--f-pink) 16%, var(--f-bg)); }
+.fig .w-green { fill: color-mix(in srgb, var(--f-green) 13%, var(--f-bg)); }
+.fig .w-orange { fill: color-mix(in srgb, var(--f-orange) 12%, var(--f-bg)); }
+.fig .band-blue { stroke: color-mix(in srgb, var(--f-blue) 22%, transparent); }
+.fig .band-pink { stroke: color-mix(in srgb, var(--f-pink) 26%, transparent); }
+.fig .band-green { stroke: color-mix(in srgb, var(--f-green) 22%, transparent); }
+.fig .path { fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.fig .band { fill: none; stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Figure frame used across pages */
+.figure-frame {
+  margin: 0;
+  padding: clamp(0.9rem, 2.2vw, 1.5rem);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.figure-frame figcaption {
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.figure-frame figcaption strong {
+  color: var(--ink);
+  font-weight: 600;
+}

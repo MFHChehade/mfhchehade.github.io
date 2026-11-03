@@ -1,0 +1,145 @@
+---
+// TRAM (NeurIPS 2026), redrawn from the camera-ready Figure 1:
+// risk-neutral sources trained once, composed state by state at deployment.
+import { uid } from "./uid";
+
+const hatch = uid("tram-hatch");
+
+const sources = [
+  {
+    name: "1",
+    hue: "blue",
+    path: "M16 62 C 52 62, 86 58, 104 40 S 124 16, 132 14",
+    start: [16, 62],
+    goal: [132, 14],
+    label: [12, 24],
+  },
+  {
+    name: "2",
+    hue: "pink",
+    path: "M16 30 C 48 52, 92 62, 134 46",
+    start: [16, 30],
+    goal: [134, 46],
+    label: [12, 72],
+  },
+  {
+    name: "3",
+    hue: "green",
+    path: "M96 70 C 110 52, 118 34, 128 12",
+    start: [96, 70],
+    goal: [128, 12],
+    label: [12, 24],
+  },
+];
+const statesDots = [
+  [50, 20],
+  [84, 22],
+  [70, 40],
+  [124, 70],
+];
+const obstacles = [
+  [240, 120],
+  [310, 92],
+  [488, 124],
+  [566, 252],
+  [232, 190],
+];
+const steps = [
+  { n: "1", title: "Score every source", sub: "value − risk penalty" },
+  { n: "2", title: "Select the maximum", sub: "best source–action pair" },
+  { n: "3", title: "Act, then repeat", sub: "re-score at the next state" },
+];
+---
+
+<svg
+  class="fig"
+  viewBox="0 0 640 372"
+  role="img"
+  aria-label="TRAM: three risk-neutral source policies are trained once. At deployment a new hazard is specified; TRAM follows source 1, switches to source 2 at state 2 and to source 3 at state 3, reaching the goal while avoiding the hazard that source 1 alone would enter."
+>
+  <defs>
+    <pattern id={hatch} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" class="s-orange" stroke-width="1.3"></line>
+    </pattern>
+  </defs>
+
+  <!-- Headers -->
+  <text x="0" y="12" class="t-eyebrow">TRAINING</text>
+  <text x="0" y="31" class="t-b">Source library</text>
+  <text x="178" y="12" class="t-eyebrow">DEPLOYMENT · RISK SPECIFIED, NO WEIGHT UPDATES</text>
+  <text x="178" y="31" class="t-b">Compose sources state by state</text>
+
+  <!-- (a) Source library: one risk-neutral policy per panel -->
+  {sources.map((s, i) => (
+    <g transform={`translate(0 ${44 + i * 88})`}>
+      <rect class="panel" width="150" height="80" rx="7"></rect>
+      {statesDots.map(([x, y]) => <circle cx={x} cy={y} r="2.2" class="f-gray"></circle>)}
+      <path d={s.path} class={`band band-${s.hue}`}></path>
+      <path d={s.path} class={`path s-${s.hue}`}></path>
+      <circle cx={s.start[0]} cy={s.start[1]} r="4" class="f-bg" stroke="currentColor" stroke-width="1.6"></circle>
+      <circle cx={s.goal[0]} cy={s.goal[1]} r="4.2" class={`f-${s.hue}`}></circle>
+      <text x={s.label[0]} y={s.label[1]} class="math" font-size="14">π<tspan dy="3" font-size="10">{s.name}</tspan></text>
+    </g>
+  ))}
+
+  <!-- library feeds deployment -->
+  <line x1="156" y1="172" x2="168" y2="172" class="ln"></line>
+  <polygon points="173,172 165,167.5 165,176.5" class="head"></polygon>
+
+  <!-- (b) Deployment-time composition -->
+  <rect class="panel" x="178" y="44" width="462" height="256" rx="7"></rect>
+
+  {obstacles.map(([x, y]) => <circle cx={x} cy={y} r="8" class="obstacle"></circle>)}
+  <text x="566" y="279" class="t-sm t-muted" text-anchor="middle">obstacle</text>
+
+  <polygon
+    points="352,118 384,96 428,100 446,134 440,176 396,190 360,170"
+    fill={`url(#${hatch})`}
+    class="s-orange"
+    stroke-width="1.6"
+    stroke-linejoin="round"
+  ></polygon>
+  <circle cx="400" cy="146" r="15" class="f-bg"></circle>
+  <text x="400" y="153.5" class="math" font-size="21" text-anchor="middle">S</text>
+  <line x1="393.5" y1="135.5" x2="407.5" y2="135.5" class="ln" stroke-width="1.5"></line>
+  <text x="454" y="112" class="t-sm t-muted">new hazard</text>
+
+  <!-- what a single source would do: keep pi_1 and walk into the hazard -->
+  <path d="M304 240 C 344 222, 384 170, 412 76" class="ln-muted dash s-blue" stroke-width="1.8"></path>
+  <circle cx="412" cy="76" r="3.4" class="f-bg s-blue" stroke-width="1.6"></circle>
+  <text x="420" y="73" class="t-sm t-muted">keeping π<tspan dy="3" font-size="9">1</tspan></text>
+
+  <!-- TRAM's path: pi_1 -> pi_2 -> pi_3 -->
+  <path d="M206 262 C 240 258, 274 250, 304 240" class="path s-blue"></path>
+  <path d="M304 240 C 352 272, 430 272, 478 246" class="path s-pink"></path>
+  <path d="M478 246 C 534 214, 580 150, 600 78" class="path s-green"></path>
+
+  <text x="252" y="242" class="math" text-anchor="middle">π<tspan dy="3" font-size="10.5">1</tspan></text>
+  <text x="392" y="292" class="math" text-anchor="middle">π<tspan dy="3" font-size="10.5">2</tspan></text>
+  <text x="586" y="176" class="math">π<tspan dy="3" font-size="10.5">3</tspan></text>
+
+  <!-- states where TRAM re-scores; 2 and 3 are switches -->
+  <circle cx="206" cy="262" r="5.5" class="f-bg s-blue" stroke-width="2.2"></circle>
+  <rect x="298.5" y="234.5" width="11" height="11" class="f-bg s-pink" stroke-width="2.2"></rect>
+  <rect x="472" y="240" width="12" height="12" class="f-bg s-green" stroke-width="2.2" transform="rotate(45 478 246)"></rect>
+  <text x="206" y="287" class="t-sm t-muted" text-anchor="middle">1</text>
+  <text x="304" y="226" class="t-sm t-muted" text-anchor="middle">2</text>
+  <text x="478" y="232" class="t-sm t-muted" text-anchor="middle">3</text>
+  <text x="196" y="246" class="t-sm" text-anchor="end">start</text>
+
+  <circle cx="600" cy="78" r="5" class="dot"></circle>
+  <text x="590" y="74" class="t-sm" text-anchor="end">goal</text>
+
+  <!-- Decision rule TRAM repeats at every deployment state -->
+  {steps.map((step, i) => (
+    <g transform={`translate(${i * 220} 316)`}>
+      <rect class="card" width="200" height="50" rx="8"></rect>
+      <circle cx="22" cy="25" r="10.5" class="head"></circle>
+      <text x="22" y="29.5" class="t-sm" text-anchor="middle" style="fill: var(--f-bg); font-weight: 600">{step.n}</text>
+      <text x="42" y="21" class="t-b" font-size="12.5">{step.title}</text>
+      <text x="42" y="38" class="t-sm t-muted">{step.sub}</text>
+    </g>
+  ))}
+  <polygon points="217,341 209,336.5 209,345.5" class="head-muted"></polygon>
+  <polygon points="437,341 429,336.5 429,345.5" class="head-muted"></polygon>
+</svg>

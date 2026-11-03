@@ -1,0 +1,65 @@
+---
+// BOOST (TPEC 2025): ordinal optimization for microgrid sizing. Rank many
+// candidate sizings with a cheap model, then evaluate only the top few exactly.
+const grid = [];
+for (let r = 0; r < 6; r++) {
+  for (let c = 0; c < 6; c++) {
+    grid.push([8 + c * 18, 46 + r * 18]);
+  }
+}
+const ranked = [118, 108, 100, 88, 76, 66, 54, 44, 34];
+const topS = 3;
+const columns = [
+  { cx: 59, title: "Candidates", sub: "N microgrid sizings" },
+  { cx: 236, title: "Crude ranking", sub: "cheap model, by order" },
+  { cx: 402, title: "Exact evaluation", sub: "only the top s" },
+  { cx: 574, title: "Good-enough design", sub: "with high probability" },
+];
+const arrows = [
+  { x1: 124, x2: 168, label: "rank" },
+  { x1: 302, x2: 352, label: "keep top s" },
+  { x1: 452, x2: 512, label: "pick best" },
+];
+---
+
+<svg
+  class="fig"
+  viewBox="0 0 640 226"
+  role="img"
+  aria-label="Ordinal optimization for microgrid sizing: many candidate sizings are ranked with a cheap, crude model; only the top s are evaluated exactly; the best of those is a good-enough design with high probability."
+>
+  <text x="0" y="14" class="t-eyebrow">ORDINAL OPTIMIZATION</text>
+
+  <!-- N candidates -->
+  {grid.map(([x, y]) => <rect x={x} y={y} width="12" height="12" rx="2.5" class="f-gray" opacity="0.6"></rect>)}
+
+  <!-- crude ranking: order matters, not exact values -->
+  {ranked.map((w, i) => (
+    <rect x="176" y={46 + i * 11.5} width={w} height="7" rx="2" class={i < topS ? "f-orange" : "f-gray"} opacity={i < topS ? 1 : 0.6}></rect>
+  ))}
+  <line x1="172" y1="46" x2="172" y2="149" class="rule"></line>
+
+  <!-- exact evaluation of the selected few -->
+  {[0, 1, 2].map((i) => (
+    <rect x="390" y={50 + i * 32} width="24" height="24" rx="4" class="w-orange s-orange" stroke-width="1.6"></rect>
+  ))}
+
+  <!-- the chosen design -->
+  <rect x="552" y="72" width="44" height="44" rx="7" class="f-orange"></rect>
+  <path d="M563 94 l8 8 l15 -17" fill="none" stroke="var(--f-bg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  {arrows.map((a) => (
+    <g>
+      <line x1={a.x1} y1="96" x2={a.x2 - 6} y2="96" class="ln"></line>
+      <polygon points={`${a.x2},96 ${a.x2 - 8},91.5 ${a.x2 - 8},100.5`} class="head"></polygon>
+      <text x={(a.x1 + a.x2) / 2} y="86" class="t-xs t-muted" text-anchor="middle">{a.label}</text>
+    </g>
+  ))}
+
+  {columns.map((c) => (
+    <g>
+      <text x={c.cx} y="184" class="t-sm t-b" text-anchor="middle">{c.title}</text>
+      <text x={c.cx} y="201" class="t-xs t-muted" text-anchor="middle">{c.sub}</text>
+    </g>
+  ))}
+</svg>

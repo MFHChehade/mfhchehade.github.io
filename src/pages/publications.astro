@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PaperFigure from '../components/figures/PaperFigure.astro';
 import { peerReviewed, preprints, publications, topics } from '../data/research';
 
-const featured = publications.filter((paper) => paper.image);
+const featured = publications.filter((paper) => paper.figureCaption);
 const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?.shortTitle ?? slug;
 ---
 
@@ -41,14 +42,14 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
         <p class="eyebrow">Visual Index</p>
         <h2>Paper previews</h2>
       </div>
-      <p>Selected papers with visuals cropped from their PDFs.</p>
+      <p>One redrawn figure per paper, showing the core idea.</p>
     </div>
 
     <div class="featured-grid">
       {featured.map((paper) => (
         <article class="featured-paper">
-          <a class="featured-image" href={`/publications/${paper.slug}`}>
-            <img src={paper.image} alt={paper.imageAlt} />
+          <a class="featured-image" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
+            <PaperFigure name={paper.slug} />
           </a>
           <div class="featured-body">
             <div class="pub-topline">
@@ -169,8 +170,10 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
 
   .publication-stats span {
     color: var(--burnt);
-    font-size: 1.25rem;
-    font-weight: 850;
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 560;
+    line-height: 1.1;
   }
 
   .publication-stats strong {
@@ -180,8 +183,8 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
 
   .featured-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
   }
 
   .featured-paper {
@@ -193,15 +196,15 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
     overflow: hidden;
   }
 
-  .featured-image {
-    display: block;
-    background: var(--soft);
+  .featured-paper {
+    align-content: start;
   }
 
-  .featured-image img {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
+  .featured-image {
+    display: block;
+    padding: 1.1rem 1.1rem 0.9rem;
+    color: inherit;
+    border-bottom: 1px solid var(--line);
   }
 
   .featured-body {
@@ -242,23 +245,23 @@ const topicName = (slug: string) => topics.find((topic) => topic.slug === slug)?
     align-items: center;
     min-height: 1.7rem;
     color: var(--green);
-    background: #edf5ef;
-    border: 1px solid rgba(36, 112, 95, 0.14);
-    border-radius: 6px;
-    padding: 0.12rem 0.5rem;
-    font-size: 0.86rem;
-    font-weight: 700;
+    background: var(--green-soft);
+    border: 1px solid color-mix(in srgb, var(--green) 22%, transparent);
+    border-radius: 999px;
+    padding: 0.12rem 0.65rem;
+    font-size: 0.84rem;
+    font-weight: 500;
     text-decoration: none;
   }
 
   .topic-row a:hover {
-    color: #ffffff;
+    color: var(--on-accent);
     background: var(--green);
   }
 
   @media (max-width: 900px) {
     .featured-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
     }
   }
 

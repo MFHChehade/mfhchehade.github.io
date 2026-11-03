@@ -1,0 +1,99 @@
+---
+// Fine-tuning LLMs for grid actions (PESGM 2026), Fig. 1 redrawn: the
+// multi-stage adaptation pipeline for PSPS corrective switching, with the
+// signal that supervises each stage drawn underneath it.
+const stages = [
+  { x: 118, eyebrow: "STAGE 1", title: "SFT", sub: "imitate the oracle" },
+  { x: 252, eyebrow: "STAGE 2", title: "DPO", sub: "prefer safe voltages" },
+  { x: 386, eyebrow: "INFERENCE", title: "Best-of-N", sub: "keep best feasible" },
+];
+const signals = [
+  { x: 118, a: "DC-OPF MILP oracle", b: "optimal plans" },
+  { x: 252, a: "AC power flow", b: "voltage-ranked pairs" },
+  { x: 386, a: "N sampled plans", b: "feasibility + metric" },
+];
+// small transmission network for the scenario card; dashed = shut off
+const buses = [
+  [32, 186],
+  [60, 176],
+  [86, 190],
+  [44, 212],
+  [76, 214],
+];
+const lines = [
+  [0, 1, false],
+  [1, 2, true],
+  [0, 3, false],
+  [3, 4, false],
+  [2, 4, false],
+  [1, 4, true],
+];
+---
+
+<svg
+  class="fig"
+  viewBox="0 32 640 250"
+  role="img"
+  aria-label="Multi-stage pipeline: a PSPS scenario summary prompts an instruction-tuned LLM; supervised fine-tuning imitates a DC-OPF MILP oracle; direct preference optimization uses AC power-flow evaluations ranked by voltage penalty; best-of-N selection keeps the best feasible plan; the output is an open-only switching plan within budget."
+>
+  <!-- Row 1: the model as it is adapted -->
+  <rect class="card" x="0" y="40" width="100" height="70" rx="9"></rect>
+  <text x="50" y="58" class="t-eyebrow" text-anchor="middle">BASE</text>
+  <text x="50" y="80" class="t-b t-lg" text-anchor="middle">LLM</text>
+  <text x="50" y="98" class="t-xs t-muted" text-anchor="middle">instruction-tuned</text>
+
+  {stages.map((s) => (
+    <g>
+      <rect class="card" x={s.x} y="40" width="116" height="70" rx="9"></rect>
+      <text x={s.x + 58} y="58" class="t-eyebrow" text-anchor="middle">{s.eyebrow}</text>
+      <text x={s.x + 58} y="80" class="t-b t-lg" text-anchor="middle">{s.title}</text>
+      <text x={s.x + 58} y="98" class="t-xs t-muted" text-anchor="middle">{s.sub}</text>
+    </g>
+  ))}
+
+  <rect x="520" y="40" width="120" height="70" rx="9" class="w-orange s-orange" stroke-width="1.4"></rect>
+  <text x="580" y="58" class="t-eyebrow" text-anchor="middle">OUTPUT</text>
+  <text x="580" y="80" class="t-b" text-anchor="middle">Switching plan</text>
+  <text x="580" y="98" class="t-xs t-muted" text-anchor="middle">open-only, budgeted</text>
+
+  {[100, 234, 368, 502].map((x) => (
+    <g>
+      <line x1={x + 3} y1="75" x2={x + 10} y2="75" class="ln"></line>
+      <polygon points={`${x + 15},75 ${x + 8},71 ${x + 8},79`} class="head"></polygon>
+    </g>
+  ))}
+
+  <!-- Row 2: what supervises each stage -->
+  {signals.map((s) => (
+    <g>
+      <line x1={s.x + 58} y1="160" x2={s.x + 58} y2="121" class="s-green" stroke-width="2" stroke-linecap="round"></line>
+      <polygon points={`${s.x + 58},114 ${s.x + 53.5},122 ${s.x + 62.5},122`} class="f-green"></polygon>
+      <rect class="panel" x={s.x} y="164" width="116" height="58" rx="8"></rect>
+      <text x={s.x + 58} y="187" class="t-sm t-b" text-anchor="middle">{s.a}</text>
+      <text x={s.x + 58} y="205" class="t-xs t-muted" text-anchor="middle">{s.b}</text>
+    </g>
+  ))}
+
+  <!-- Scenario card: prompts the base model -->
+  <rect class="panel" x="10" y="164" width="80" height="58" rx="8"></rect>
+  {lines.map(([a, b, off]) => (
+    <line
+      x1={buses[a as number][0]}
+      y1={buses[a as number][1]}
+      x2={buses[b as number][0]}
+      y2={buses[b as number][1]}
+      class={off ? "ln-muted dash" : "ln"}
+      stroke-width={off ? 1.2 : 1.4}
+    ></line>
+  ))}
+  {buses.map(([x, y]) => <circle cx={x} cy={y} r="3.4" class="dot" stroke-width="1.5"></circle>)}
+  <line x1="50" y1="160" x2="50" y2="121" class="ln"></line>
+  <polygon points="50,114 45.5,122 54.5,122" class="head"></polygon>
+  <text x="50" y="240" class="t-xs t-b" text-anchor="middle">PSPS scenario</text>
+  <text x="50" y="253" class="t-xs t-muted" text-anchor="middle">prompt</text>
+
+  <!-- Headline result -->
+  <rect x="118" y="238" width="522" height="34" rx="8" class="w-orange"></rect>
+  <circle cx="134" cy="255" r="4" class="f-orange"></circle>
+  <text x="146" y="259.5" class="t-sm"><tspan class="t-b">IEEE 118-bus:</tspan> AC power-flow failures drop from 50% (zero-shot) to single digits</text>
+</svg>

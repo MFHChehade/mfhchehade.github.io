@@ -1,0 +1,30 @@
+---
+// Renders the hand-drawn figure for a paper by its slug.
+import Tram from "./Tram.astro";
+import Levis from "./Levis.astro";
+import SitAlign from "./SitAlign.astro";
+import LlmGrid from "./LlmGrid.astro";
+import NeoGrid from "./NeoGrid.astro";
+import CarbonBems from "./CarbonBems.astro";
+import Battery from "./Battery.astro";
+import Boost from "./Boost.astro";
+
+interface Props {
+  name: string;
+}
+
+const registry: Record<string, (props: Record<string, never>) => unknown> = {
+  tram: Tram,
+  levis: Levis,
+  sitalign: SitAlign,
+  "llm-grid-actions": LlmGrid,
+  "neo-grid": NeoGrid,
+  "carbon-aware-bems": CarbonBems,
+  "battery-control": Battery,
+  boost: Boost,
+};
+
+const Figure = registry[Astro.props.name];
+---
+
+{Figure && <Figure />}

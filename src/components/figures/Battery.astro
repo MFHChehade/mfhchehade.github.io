@@ -1,0 +1,69 @@
+---
+// Battery control (NAPS 2024), redrawn from the paper's system figure, with
+// the question the paper asks: which controller should choose a_t?
+const windows = [];
+for (let r = 0; r < 4; r++) {
+  for (let c = 0; c < 2; c++) {
+    windows.push([242 + c * 13, 42 + r * 13]);
+  }
+}
+---
+
+<svg
+  class="fig"
+  viewBox="0 0 640 270"
+  role="img"
+  aria-label="Battery control: the grid sells energy at price rho t to a building with demand d t. A battery charges from the grid when a t is positive and discharges to the building when a t is negative, with state of charge SOC t plus 1 equal to SOC t plus a t. The paper compares a model-free controller, which learns a policy from data, with a model-based controller, which optimizes with a system model."
+>
+  <!-- Grid -->
+  <g class="ln" stroke-width="1.6">
+    <path d="M60 64 L44 196 M60 64 L76 196 M32 92 H88 M26 120 H94 M50 150 H70 M50 150 L76 196 M70 150 L44 196 M52 92 L68 120 M68 92 L52 120"></path>
+  </g>
+  <text x="60" y="222" class="t-b" text-anchor="middle">Grid</text>
+  <text x="60" y="242" class="t-sm" text-anchor="middle">price <tspan class="math" font-size="15">ρ</tspan><tspan class="math" dy="3" font-size="10.5">t</tspan></text>
+
+  <!-- Building -->
+  <rect x="236" y="34" width="32" height="68" class="ln" stroke-width="1.6"></rect>
+  <rect x="268" y="56" width="16" height="46" class="ln" stroke-width="1.6"></rect>
+  {windows.map(([x, y]) => <rect x={x} y={y} width="7" height="7" class="ln" stroke-width="1.2"></rect>)}
+  <text x="296" y="62" class="t-b">Building</text>
+  <text x="296" y="82" class="t-sm">demand <tspan class="math" font-size="15">d</tspan><tspan class="math" dy="3" font-size="10.5">t</tspan></text>
+
+  <!-- Battery -->
+  <rect x="240" y="188" width="40" height="52" rx="6" class="ln" stroke-width="1.6"></rect>
+  <rect x="252" y="182" width="16" height="6" rx="1.5" class="head"></rect>
+  <path d="M264 198 L253 216 H262 L256 232 L270 210 H261 Z" class="f-orange"></path>
+  <text x="296" y="204" class="t-b">Battery</text>
+  <text x="296" y="228" class="math" font-size="14"><tspan class="math-up">SOC</tspan><tspan dy="3" font-size="10">t+1</tspan><tspan dy="-3" class="math-up"> = SOC</tspan><tspan dy="3" font-size="10">t</tspan><tspan dy="-3" class="math-up"> + </tspan>a<tspan dy="3" font-size="10">t</tspan></text>
+
+  <!-- Energy flows -->
+  <line x1="100" y1="106" x2="222" y2="74" class="s-blue" stroke-width="2" stroke-linecap="round"></line>
+  <polygon points="229,72 220.4,69.6 222.6,78.3" class="f-blue"></polygon>
+  <text x="156" y="78" class="t-sm" text-anchor="middle">buy</text>
+
+  <line x1="100" y1="148" x2="224" y2="203" class="s-blue" stroke-width="2" stroke-linecap="round"></line>
+  <polygon points="231,206 224.8,198.5 221.1,206.7" class="f-blue"></polygon>
+  <text x="204" y="226" class="t-sm" text-anchor="end">charge, <tspan class="math" font-size="14">a</tspan><tspan class="math" dy="3" font-size="10">t</tspan><tspan dy="-3"> &gt; 0</tspan></text>
+
+  <line x1="260" y1="174" x2="260" y2="117" class="s-orange" stroke-width="2" stroke-linecap="round"></line>
+  <polygon points="260,110 255.5,118 264.5,118" class="f-orange"></polygon>
+  <text x="250" y="138" class="t-sm" text-anchor="end">discharge,</text>
+  <text x="250" y="156" class="t-sm" text-anchor="end"><tspan class="math" font-size="14">a</tspan><tspan class="math" dy="3" font-size="10">t</tspan><tspan dy="-3"> &lt; 0</tspan></text>
+
+  <!-- The question the paper asks -->
+  <line x1="456" y1="150" x2="278" y2="150" class="ln-muted dash" stroke-width="1.4"></line>
+  <polygon points="272,150 280,145.5 280,154.5" class="head-muted"></polygon>
+  <text x="366" y="142" class="t-xs t-muted" text-anchor="middle">chooses <tspan class="math" font-size="13">a</tspan><tspan class="math" dy="3" font-size="9">t</tspan></text>
+
+  <rect class="card" x="460" y="34" width="180" height="214" rx="9"></rect>
+  <text x="476" y="56" class="t-eyebrow">CONTROLLER</text>
+  <text x="476" y="86" class="t-b">Model-free</text>
+  <text x="476" y="104" class="t-xs t-muted">learns a policy</text>
+  <text x="476" y="119" class="t-xs t-muted">directly from data</text>
+  <line x1="476" y1="140" x2="540" y2="140" class="grid"></line>
+  <text x="550" y="144" class="t-sm t-muted" text-anchor="middle">or</text>
+  <line x1="560" y1="140" x2="624" y2="140" class="grid"></line>
+  <text x="476" y="176" class="t-b">Model-based</text>
+  <text x="476" y="194" class="t-xs t-muted">optimizes actions with</text>
+  <text x="476" y="209" class="t-xs t-muted">a model of the system</text>
+</svg>

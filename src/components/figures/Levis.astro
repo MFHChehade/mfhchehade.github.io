@@ -1,0 +1,94 @@
+---
+// LEVIS (ICML 2025), redrawn from Figures 1, 2 and 4 of the paper: the
+// verifiable region C, LEVIS-alpha's largest ball touching two boundaries,
+// LEVIS-beta's union of balls, and the output condition f(x) > 0.
+import { uid } from "./uid";
+
+const safeClip = uid("levis-safe");
+const region =
+  "M 69 100 C 69 60, 100 40, 130 38 C 165 36, 181 65, 181 100 C 181 130, 170 150, 152 160 C 138 168, 130 185, 115 205 C 100 225, 78 232, 66 220 C 54 208, 62 192, 74 180 C 84 170, 88 160, 80 150 C 72 140, 69 120, 69 100 Z";
+const nnCols = [
+  { x: 304, ys: [128, 154, 180] },
+  { x: 321, ys: [128, 154, 180] },
+  { x: 338, ys: [141, 167] },
+];
+const edges = [];
+for (let c = 0; c < nnCols.length - 1; c++) {
+  for (const y1 of nnCols[c].ys) {
+    for (const y2 of nnCols[c + 1].ys) {
+      edges.push([nnCols[c].x, y1, nnCols[c + 1].x, y2]);
+    }
+  }
+}
+---
+
+<svg
+  class="fig"
+  viewBox="0 0 640 300"
+  role="img"
+  aria-label="LEVIS: inside the input space, the verifiable region C contains every input whose network output satisfies f(x) > 0. LEVIS-alpha finds the largest verifiable ball, which touches two boundaries of C; LEVIS-beta covers the rest of C with a union of smaller balls."
+>
+  <defs>
+    <clipPath id={safeClip}>
+      <rect x="378" y="24" width="262" height="262" rx="7"></rect>
+    </clipPath>
+  </defs>
+
+  <text x="0" y="12" class="t-eyebrow">INPUT SPACE</text>
+  <text x="320" y="12" class="t-eyebrow" text-anchor="middle">NETWORK</text>
+  <text x="640" y="12" class="t-eyebrow" text-anchor="end">OUTPUT SPACE</text>
+
+  <!-- Input space with the verifiable region C -->
+  <rect class="panel" x="0" y="24" width="262" height="262" rx="7"></rect>
+  <g transform="translate(13 21)">
+    <path d={region} class="w-orange s-orange" stroke-width="1.6"></path>
+
+    <!-- LEVIS-alpha: one large ball, tangent to C at two points -->
+    <circle cx="125" cy="100" r="56" fill="none" class="s-blue" stroke-width="2.2"></circle>
+    <line x1="69" y1="100" x2="181" y2="100" class="ln-muted dash" stroke-width="1.2"></line>
+    <circle cx="69" cy="100" r="3.6" class="dot"></circle>
+    <circle cx="181" cy="100" r="3.6" class="dot"></circle>
+    <circle cx="125" cy="100" r="3.2" class="f-blue"></circle>
+    <text x="125" y="78" class="t-b t-sm" text-anchor="middle">LEVIS-α</text>
+    <text x="125" y="122" class="t-xs t-muted" text-anchor="middle">largest ball</text>
+
+    <!-- LEVIS-beta: a union of balls fills the rest of C -->
+    <circle cx="104" cy="180" r="20" fill="none" class="s-blue" stroke-width="1.6"></circle>
+    <circle cx="84" cy="212" r="10" fill="none" class="s-blue" stroke-width="1.6"></circle>
+    <circle cx="104" cy="180" r="2.4" class="f-blue"></circle>
+    <circle cx="84" cy="212" r="2" class="f-blue"></circle>
+  </g>
+  <text x="12" y="44" class="t-sm t-muted">all inputs</text>
+  <line x1="58" y1="243" x2="82" y2="233" class="ln-muted" stroke-width="1"></line>
+  <text x="12" y="250" class="t-b t-sm">LEVIS-β</text>
+  <text x="12" y="265" class="t-xs t-muted">union of balls</text>
+  <text x="250" y="250" class="t-sm" text-anchor="end">verifiable</text>
+  <text x="250" y="266" class="t-sm" text-anchor="end">region <tspan class="math" font-size="14">C</tspan></text>
+  <line x1="196" y1="246" x2="150" y2="214" class="ln-muted" stroke-width="1"></line>
+
+  <!-- Network -->
+  <line x1="266" y1="155" x2="280" y2="155" class="ln"></line>
+  <polygon points="285,155 277,150.5 277,159.5" class="head"></polygon>
+  <rect class="card" x="290" y="108" width="62" height="94" rx="8"></rect>
+  {edges.map(([x1, y1, x2, y2]) => <line x1={x1} y1={y1} x2={x2} y2={y2} class="ln-faint" stroke-width="1"></line>)}
+  {nnCols.map((col) => col.ys.map((y) => <circle cx={col.x} cy={y} r="5.5" class="node"></circle>))}
+  <line x1="356" y1="155" x2="368" y2="155" class="ln"></line>
+  <polygon points="373,155 365,150.5 365,159.5" class="head"></polygon>
+
+  <!-- Output space: the image of C stays on the safe side of f(x) = 0 -->
+  <rect class="panel" x="378" y="24" width="262" height="262" rx="7"></rect>
+  <g clip-path={`url(#${safeClip})`}>
+    <polygon points="378,24 470,24 640,200 640,286 378,286" class="w-blue"></polygon>
+  </g>
+  <line x1="470" y1="24" x2="640" y2="200" class="ln" stroke-width="1.8"></line>
+  <path
+    d="M 410 120 C 440 96, 520 104, 560 140 C 590 168, 572 210, 532 226 C 490 242, 430 240, 408 214 C 388 190, 392 140, 410 120 Z"
+    class="w-orange s-orange"
+    stroke-width="1.6"
+  ></path>
+  <text x="486" y="170" class="t-sm" text-anchor="middle">outputs of</text>
+  <text x="486" y="187" class="t-sm" text-anchor="middle">inputs in <tspan class="math" font-size="14">C</tspan></text>
+  <text x="392" y="272" class="math" font-size="15">f<tspan class="math-up">(</tspan>x<tspan class="math-up">) &gt; 0</tspan></text>
+  <text x="438" y="272" class="t-sm t-muted" dx="12">safe</text>
+  <text x="626" y="56" class="math" font-size="15" text-anchor="end">f<tspan class="math-up">(</tspan>x<tspan class="math-up">) ≤ 0</tspan></text>
+</svg>
