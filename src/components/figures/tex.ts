@@ -47,9 +47,9 @@ export const texWidth = (src: string, size: number) => (texBox(src).width * size
 const r = (n: number) => Math.round(n * 1000) / 1000;
 const escapeAttr = (s: string) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
-// TeX's x-height (0.431 em) is smaller than IBM Plex Sans's (~0.516 em), so
+// TeX's x-height (0.431 em) is smaller than Source Sans 3's (~0.486 em), so
 // inline math is scaled up to sit evenly with the surrounding text.
-const INLINE_SCALE = 1.15;
+const INLINE_SCALE = 1.12;
 
 /** Inline formula for HTML text, sized in em so it scales with the surrounding font. */
 export function texInline(src: string): string {

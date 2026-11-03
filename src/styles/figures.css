@@ -65,18 +65,6 @@
   fill: var(--f-muted);
 }
 .fig .t-accent { fill: var(--f-orange); }
-.fig .math {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 15px;
-  fill: var(--f-ink);
-}
-.fig .math-up {
-  font-family: var(--serif);
-  font-style: normal;
-  font-size: 15px;
-  fill: var(--f-ink);
-}
 .fig .t-num { font-variant-numeric: tabular-nums; }
 
 /* TeX typeset at build time by MathJax (src/components/figures/tex.ts);

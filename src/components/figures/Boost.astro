@@ -24,8 +24,8 @@ const arrows = [
   { x1: 452, x2: 512, label: "pick best" },
 ];
 // Mixed text + TeX labels: TeX widths are exact, sans text widths are
-// estimated (IBM Plex Sans averages ~0.55 em per character).
-const textW = (t: string, size: number) => t.length * size * 0.55;
+// estimated (Source Sans 3 averages ~0.5 em per character).
+const textW = (t: string, size: number) => t.length * size * 0.5;
 const mixed = (cx: number, text: string, size: number, tex: string, texSize: number, texFirst: boolean) => {
   const tw = textW(text, size);
   const mw = texWidth(tex, texSize);
