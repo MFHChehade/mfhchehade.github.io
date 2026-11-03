@@ -23,7 +23,6 @@ const featured = getPublication(topic.featured);
   <header class="topic-hero">
     <div class="topic-copy">
       <a class="back-link" href="/research">Research</a>
-      <p class="eyebrow">{topic.index} · {topic.role}</p>
       <h1>{topic.title}</h1>
       <p class="lead">{topic.summary}</p>
       <p>{topic.focus}</p>
@@ -41,8 +40,7 @@ const featured = getPublication(topic.featured);
   <section class="section">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Papers</p>
-        <h2>Related work in this direction</h2>
+        <h2>Papers in this direction</h2>
       </div>
       <p>{papers.length} papers connected to this topic.</p>
     </div>

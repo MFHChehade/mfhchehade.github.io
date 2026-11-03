@@ -1,6 +1,5 @@
 export type ResearchTopic = {
   slug: string;
-  index: string;
   title: string;
   shortTitle: string;
   summary: string;
@@ -32,7 +31,6 @@ export type Publication = {
 export const topics: ResearchTopic[] = [
   {
     slug: "risk-aware-learning",
-    index: "01",
     title: "Risk-Aware Learning and Reinforcement Learning",
     shortTitle: "Risk-aware learning",
     summary:
@@ -45,7 +43,6 @@ export const topics: ResearchTopic[] = [
   },
   {
     slug: "data-driven-reliability",
-    index: "02",
     title: "Data-Driven Reliability and Verification",
     shortTitle: "Reliability and verification",
     summary:
@@ -58,7 +55,6 @@ export const topics: ResearchTopic[] = [
   },
   {
     slug: "llm-decision-systems",
-    index: "03",
     title: "LLMs for Constrained Decision Systems",
     shortTitle: "LLMs for decisions",
     summary:
@@ -71,7 +67,6 @@ export const topics: ResearchTopic[] = [
   },
   {
     slug: "power-systems-applications",
-    index: "04",
     title: "Power Systems Applications",
     shortTitle: "Power systems",
     summary:

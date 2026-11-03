@@ -11,13 +11,13 @@
 
 .fig {
   --f-bg: var(--paper);
-  --f-panel: #f6f5f2;
+  --f-panel: #f5f6f7;
   --f-ink: var(--ink);
   --f-text: var(--charcoal);
   --f-muted: var(--muted);
-  --f-line: #c9c4bb;
+  --f-line: #c7ccd2;
   --f-grid: var(--line);
-  --f-node: #e9e7e2;
+  --f-node: #e7e9ec;
 
   --f-blue: #1f6fb2;
   --f-pink: #cc79a7;

@@ -111,7 +111,6 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
 
     <section class="section paper-grid">
       <div class="paper-panel">
-        <p class="eyebrow">Contribution</p>
         <h2>What this paper adds</h2>
         <ul>
           {paper.contribution.map((item) => (
@@ -121,12 +120,10 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
       </div>
 
       <aside class="paper-panel">
-        <p class="eyebrow">Research Topics</p>
-        <h2>Where it fits</h2>
+        <h2>Research directions</h2>
         <div class="topic-list">
           {relatedTopics.map((topic) => (
             <a href={`/research/${topic.slug}`}>
-              <span>{topic.index}</span>
               <strong>{topic.shortTitle}</strong>
             </a>
           ))}
@@ -205,28 +202,18 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
   }
 
   .topic-list a {
-    display: grid;
-    grid-template-columns: 2.4rem minmax(0, 1fr);
-    align-items: center;
-    gap: 0.55rem;
+    display: block;
     color: var(--charcoal);
     background: var(--soft);
     border: 1px solid var(--line);
     border-radius: 6px;
-    padding: 0.55rem;
+    padding: 0.6rem 0.8rem;
     text-decoration: none;
   }
 
   .topic-list a:hover {
     color: var(--burnt);
     background: var(--warm);
-  }
-
-  .topic-list span {
-    color: var(--burnt);
-    font-family: var(--sans);
-    font-size: 0.82rem;
-    font-weight: 600;
   }
 
   @media (max-width: 820px) {

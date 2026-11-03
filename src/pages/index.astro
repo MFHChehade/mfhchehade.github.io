@@ -46,7 +46,6 @@ const selectedPublications = [
 >
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">UT Austin ECE · Ph.D. student</p>
       <h1>Mohamad <span class="name-accent">Chehade</span></h1>
       <p class="hero-statement">AI you can trust with consequential decisions.</p>
       <div class="bio-block">
@@ -98,7 +97,6 @@ const selectedPublications = [
   <section class="section flow-section">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Research</p>
         <h2>Research directions</h2>
       </div>
       <a href="/research">Explore all research</a>
@@ -107,7 +105,6 @@ const selectedPublications = [
     <div class="theme-list">
       {researchThemes.map((theme) => (
         <a class="theme-row" href={`/research/${theme.slug}`} data-reveal>
-          <span class="theme-index">{theme.index}</span>
           <div class="theme-body">
             <h3>{theme.shortTitle}</h3>
             <p>{theme.summary}</p>
@@ -126,8 +123,7 @@ const selectedPublications = [
   <section class="section">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Selected Publications</p>
-        <h2>Recent papers</h2>
+        <h2>Selected publications</h2>
       </div>
       <a href="/publications">View all publications</a>
     </div>
@@ -155,7 +151,6 @@ const selectedPublications = [
     <div>
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Recent activity</p>
           <h2>Recent activity</h2>
         </div>
       </div>
@@ -276,11 +271,8 @@ const selectedPublications = [
   }
 
   .affiliation-strip span {
-    color: var(--burnt);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    color: var(--muted);
+    font-size: 0.9rem;
   }
 
   .affiliation-strip strong {
@@ -296,7 +288,7 @@ const selectedPublications = [
   .theme-row {
     position: relative;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 1.5rem;
     padding: 1.5rem 0.4rem 1.5rem 0.2rem;
@@ -335,20 +327,6 @@ const selectedPublications = [
   .theme-row:hover {
     padding-left: 1.6rem;
     padding-right: 1.4rem;
-  }
-
-  .theme-index {
-    font-family: var(--sans);
-    font-size: 2.1rem;
-    font-weight: 500;
-    line-height: 1;
-    color: var(--line-strong);
-    transition: color 220ms ease;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .theme-row:hover .theme-index {
-    color: var(--burnt);
   }
 
   .theme-body h3 {
@@ -396,23 +374,19 @@ const selectedPublications = [
 
   @media (max-width: 720px) {
     .theme-row {
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 0.9rem 1rem;
     }
 
     .theme-count {
-      grid-column: 2 / 3;
+      grid-column: 1 / 2;
       grid-row: 2;
       justify-self: start;
     }
 
     .theme-arrow {
-      grid-column: 3;
+      grid-column: 2;
       grid-row: 1 / 3;
-    }
-
-    .theme-index {
-      font-size: 1.6rem;
     }
 
     .theme-body h3 {
@@ -436,10 +410,6 @@ const selectedPublications = [
     border-left: 3px solid var(--burnt);
     border-radius: var(--radius);
     box-shadow: var(--shadow-soft);
-  }
-
-  .thesis-section .eyebrow {
-    margin-bottom: 1rem;
   }
 
   .thesis-statement {
