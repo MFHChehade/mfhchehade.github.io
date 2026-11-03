@@ -146,7 +146,7 @@ export const publications: Publication[] = [
     ],
     topics: ["power-systems-applications"],
     figureCaption:
-      "Forecasts of PJM prices and marginal carbon intensity drive an MPC-wrapped MILP that trades energy cost against a carbon price across grid imports, battery storage, and flexible demand. On PJM data, a modest carbon price cuts emissions by 22.5% for a 1.7% cost increase.",
+      "Daily energy cost and carbon emissions on PJM data for carbon taxes of &#36;0 to &#36;30 per tonne, plus an unmanaged baseline (points read from the paper&rsquo;s Fig. 3). Cost-only dispatch (&#36;0/t) is cheapest but emits slightly more than the baseline; at &#36;30/t emissions fall by about 21% for about 1.5% more cost.",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
   },
   {

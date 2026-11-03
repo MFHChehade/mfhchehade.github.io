@@ -1,76 +1,69 @@
 ---
-// Carbon-aware BEMS (PESGM 2026): the CAEMS loop described in the paper.
-// PJM day-ahead and real-time signals feed a Transformer forecaster, and an
-// MPC-wrapped MILP co-optimizes grid imports, storage, and flexible demand.
-import Tex from "./Tex.astro";
-
-// Notation from the paper's forecasting setup (Fig. 2): price p, carbon c.
-const tex = {
-  p: String.raw`p_t`,
-  c: String.raw`c_t`,
-  forecast: String.raw`\hat{\mathbf{p}},\ \hat{\mathbf{c}}`,
-};
-const boxes = [
-  { x: 176, w: 132, title: "Forecaster", lines: ["Transformer,", "next 24 hours"], tex: tex.forecast },
-  { x: 334, w: 148, title: "Carbon-aware EMS", lines: ["MPC over a MILP:", "min energy cost", "+ carbon price × emissions"] },
+// Carbon-aware BEMS (PESGM 2026), Fig. 3 of the paper redrawn: daily energy
+// cost vs. carbon emissions for four carbon-tax levels and the unmanaged
+// baseline. Point positions were read off the paper's figure image
+// (calibrated to its axes; accurate to about 0.02 $/day and 0.015 t/day).
+const points = [
+  { tax: "$0/t", cost: 652.73, co2: 20.47, label: { dx: 12, dy: 5, anchor: "start" } },
+  { tax: "$10/t", cost: 659.04, co2: 16.62, label: { dx: 9, dy: -9, anchor: "start" } },
+  { tax: "$20/t", cost: 660.29, co2: 16.21, label: { dx: 0, dy: 22, anchor: "middle" } },
+  { tax: "$30/t", cost: 662.61, co2: 16.12, label: { dx: 11, dy: 5, anchor: "start" } },
 ];
+const baseline = { cost: 676.78, co2: 20.3 };
+
+const x0 = 76;
+const x1 = 624;
+const y0 = 252; // bottom of the plot area
+const y1 = 16; // top
+const xMin = 650;
+const xMax = 680;
+const yMin = 15;
+const yMax = 21;
+const sx = (v: number) => x0 + ((v - xMin) / (xMax - xMin)) * (x1 - x0);
+const sy = (v: number) => y0 - ((v - yMin) / (yMax - yMin)) * (y0 - y1);
+const xTicks = [650, 655, 660, 665, 670, 675, 680];
+const yTicks = [15, 16, 17, 18, 19, 20, 21];
+const curve = points.map((p) => `${sx(p.cost).toFixed(1)},${sy(p.co2).toFixed(1)}`).join(" ");
 ---
 
 <svg
   class="fig"
-  viewBox="0 26 640 194"
+  viewBox="0 0 640 312"
   role="img"
-  aria-label="Carbon-aware EMS: PJM day-ahead and real-time prices and marginal carbon intensities feed a Transformer forecaster; a model predictive controller solves a MILP that minimizes energy cost plus a carbon price times emissions, dispatching grid imports, battery storage and flexible demand. On PJM data a modest carbon price cuts emissions by 22.5 percent for a 1.7 percent cost increase."
+  aria-label="Scatter plot from the carbon-aware EMS paper: daily energy cost against daily carbon emissions. With no carbon tax the EMS costs about 652.7 dollars per day and emits 20.5 tonnes. Taxes of 10, 20 and 30 dollars per tonne cut emissions to about 16.6, 16.2 and 16.1 tonnes per day while cost rises to 659.0, 660.3 and 662.6 dollars. The unmanaged baseline costs 676.8 dollars and emits 20.3 tonnes per day."
 >
-  <!-- Market signals -->
-  <rect class="panel" x="0" y="34" width="150" height="150" rx="9"></rect>
-  <text x="14" y="58" class="t-b">PJM markets</text>
-  <text x="14" y="76" class="t-xs t-muted">day-ahead + real-time</text>
-  <line x1="14" y1="104" x2="32" y2="104" class="s-blue" stroke-width="3" stroke-linecap="round"></line>
-  <text x="40" y="108" class="t-sm">price</text>
-  <Tex tex={tex.p} x={82} y={108} size={15} />
-  <line x1="14" y1="134" x2="32" y2="134" class="s-green" stroke-width="3" stroke-linecap="round"></line>
-  <text x="40" y="138" class="t-sm">carbon</text>
-  <Tex tex={tex.c} x={92} y={138} size={15} />
-  <text x="14" y="168" class="t-xs t-muted">marginal intensity, hourly</text>
-
-  {boxes.map((b) => (
+  {yTicks.map((t) => (
     <g>
-      <rect class="card" x={b.x} y="34" width={b.w} height="150" rx="9"></rect>
-      <text x={b.x + 14} y="58" class="t-b">{b.title}</text>
-      {b.lines.map((line, i) => (
-        <text x={b.x + 14} y={82 + i * 17} class="t-xs t-muted">{line}</text>
-      ))}
-      {b.tex && <Tex tex={b.tex} x={b.x + 14} y={140} size={16} />}
+      <line x1={x0} x2={x1} y1={sy(t)} y2={sy(t)} class="grid"></line>
+      {t > yMin && <text x={x0 - 8} y={sy(t) + 4} class="t-sm t-muted t-num" text-anchor="end">{t}</text>}
+    </g>
+  ))}
+  {xTicks.map((t) => (
+    <g>
+      <line x1={sx(t)} x2={sx(t)} y1={y1} y2={y0} class="grid"></line>
+      <text x={sx(t)} y={y0 + 18} class="t-sm t-muted t-num" text-anchor="middle">{t}</text>
+    </g>
+  ))}
+  <line x1={x0} x2={x1} y1={y0} y2={y0} class="ln" stroke-width="1"></line>
+  <line x1={x0} x2={x0} y1={y1} y2={y0} class="ln" stroke-width="1"></line>
+
+  <!-- carbon-tax dispatches, in order of increasing tax -->
+  <polyline points={curve} class="s-blue" fill="none" stroke-width="1.4"></polyline>
+  {points.map((p) => (
+    <g>
+      <circle cx={sx(p.cost)} cy={sy(p.co2)} r="5.5" class="f-blue" stroke="var(--f-bg)" stroke-width="1.5">
+        <title>{`Carbon tax ${p.tax}: $${p.cost.toFixed(1)}/day, ${p.co2.toFixed(2)} t CO2/day`}</title>
+      </circle>
+      <text x={sx(p.cost) + p.label.dx} y={sy(p.co2) + p.label.dy} class="t-sm" text-anchor={p.label.anchor}>{p.tax}</text>
     </g>
   ))}
 
-  <!-- Building and its three levers -->
-  <rect x="508" y="34" width="132" height="150" rx="9" class="w-orange s-orange" stroke-width="1.4"></rect>
-  <text x="522" y="58" class="t-b">Building</text>
-  <g class="ln" stroke-width="1.5">
-    <line x1="522" y1="86" x2="536" y2="86"></line>
-  </g>
-  <polygon points="540,86 533,82 533,90" class="head"></polygon>
-  <text x="546" y="90" class="t-sm">grid imports</text>
-  <rect x="522" y="112" width="15" height="9" rx="1.5" class="ln" stroke-width="1.4"></rect>
-  <rect x="537.5" y="114.5" width="2.5" height="4" class="head"></rect>
-  <text x="546" y="121" class="t-sm">battery storage</text>
-  <line x1="523" y1="148" x2="539" y2="148" class="ln" stroke-width="1.4"></line>
-  <polygon points="520,148 525,144.5 525,151.5" class="head"></polygon>
-  <polygon points="542,148 537,144.5 537,151.5" class="head"></polygon>
-  <text x="546" y="152" class="t-sm">flexible demand</text>
+  <!-- unmanaged baseline: imports follow demand, no storage or flexibility -->
+  <circle cx={sx(baseline.cost)} cy={sy(baseline.co2)} r="5.5" class="f-bg" stroke="var(--f-ink)" stroke-width="1.6">
+    <title>{`Baseline (no EMS): $${baseline.cost.toFixed(1)}/day, ${baseline.co2.toFixed(2)} t CO2/day`}</title>
+  </circle>
+  <text x={sx(baseline.cost)} y={sy(baseline.co2) + 22} class="t-sm" text-anchor="middle">baseline (no EMS)</text>
 
-  {[150, 308, 482].map((x) => (
-    <g>
-      <line x1={x + 4} y1="109" x2={x + 15} y2="109" class="ln"></line>
-      <polygon points={`${x + 21},109 ${x + 13},104.5 ${x + 13},113.5`} class="head"></polygon>
-    </g>
-  ))}
-
-  <!-- Receding horizon: re-plan as new real-time data arrives -->
-  <path d="M574 188 V204 Q574 212 566 212 H416 Q408 212 408 204 V191" class="ln-muted" stroke-width="1.4"></path>
-  <polygon points="408,186 403.5,194 412.5,194" class="head-muted"></polygon>
-  <text x="491" y="204" class="t-xs t-muted" text-anchor="middle">re-plan each step (MPC)</text>
-
+  <text x={(x0 + x1) / 2} y={y0 + 46} class="t-sm" text-anchor="middle">Energy cost ($/day)</text>
+  <text x="0" y="0" class="t-sm" text-anchor="middle" transform={`translate(18 ${(y0 + y1) / 2}) rotate(-90)`}>Carbon emissions (t CO₂/day)</text>
 </svg>

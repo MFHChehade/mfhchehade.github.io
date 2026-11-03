@@ -64,5 +64,6 @@ export function texInline(src: string): string {
   );
 }
 
-/** Replace every $...$ in an HTML string with typeset TeX. */
+/** Replace every $...$ in an HTML string with typeset TeX. Write a literal
+    dollar sign as &#36; so it is not read as a delimiter. */
 export const withTex = (html: string) => html.replace(/\$([^$]+)\$/g, (_, src: string) => texInline(src));
