@@ -1,0 +1,35 @@
+---
+// A TeX formula placed inside a figure's SVG, positioned like <text>:
+// (x, y) is the baseline anchor and `size` the font size in user units.
+import { texBox } from "./tex";
+
+interface Props {
+  tex: string;
+  x: number;
+  y: number;
+  size?: number;
+  anchor?: "start" | "middle" | "end";
+  tone?: "ink" | "text" | "muted";
+}
+
+const { tex, x, y, size = 14, anchor = "start", tone = "ink" } = Astro.props;
+const b = texBox(tex);
+const s = size / 1000;
+const w = b.width * s;
+const h = b.height * s;
+const left = anchor === "middle" ? x - w / 2 : anchor === "end" ? x - w : x;
+const top = y + b.minY * s;
+const r = (n: number) => Math.round(n * 100) / 100;
+---
+
+<svg
+  x={r(left)}
+  y={r(top)}
+  width={r(w)}
+  height={r(h)}
+  viewBox={`${b.minX} ${b.minY} ${b.width} ${b.height}`}
+  class={`tex tex-${tone}`}
+  aria-hidden="true"
+  overflow="visible"
+  set:html={b.inner}
+/>

@@ -79,6 +79,18 @@
 }
 .fig .t-num { font-variant-numeric: tabular-nums; }
 
+/* TeX typeset at build time by MathJax (src/components/figures/tex.ts);
+   glyphs are filled with currentColor. */
+.fig .tex-ink { color: var(--f-ink); }
+.fig .tex-text { color: var(--f-text); }
+.fig .tex-muted { color: var(--f-muted); }
+
+.tex-inline {
+  display: inline-block;
+  overflow: visible;
+  fill: currentColor;
+}
+
 /* Surfaces and strokes */
 .fig .panel { fill: var(--f-panel); stroke: none; }
 .fig .card { fill: var(--f-bg); stroke: var(--f-line); stroke-width: 1; }

@@ -24,7 +24,7 @@ export type Publication = {
   summary: string;
   contribution: string[];
   topics: string[];
-  /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed. */
+  /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed, $...$ is typeset as TeX. */
   figureCaption?: string;
   links: Array<{ label: string; href: string }>;
 };
@@ -109,7 +109,7 @@ export const publications: Publication[] = [
     ],
     topics: ["risk-aware-learning", "llm-decision-systems"],
     figureCaption:
-      "Risk-neutral source policies are trained once. When a new hazard <em>S&#772;</em> is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.",
+      String.raw`Risk-neutral source policies $\pi_1, \pi_2, \pi_3$ are trained once. When a new hazard $\overline{\mathcal{S}}$ is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.`,
     links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
   },
   {
@@ -130,7 +130,7 @@ export const publications: Publication[] = [
     ],
     topics: ["llm-decision-systems", "power-systems-applications", "data-driven-reliability"],
     figureCaption:
-      "Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-N keeps the best feasible plan at inference time.",
+      String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time.`,
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
   },
   {
@@ -172,7 +172,7 @@ export const publications: Publication[] = [
     ],
     topics: ["power-systems-applications", "data-driven-reliability"],
     figureCaption:
-      "The feeder&rsquo;s volt-var loop (power flow maps reactive power to voltage, a local rule maps voltage back) is learned as two ReLU networks and solved directly as a deep-equilibrium fixed point.",
+      String.raw`The feeder&rsquo;s volt-var loop (power flow maps reactive power to voltage, a local rule $\mathbf{q}^{g} = g(\mathbf{v};\phi)$ maps voltage back) is learned as two ReLU networks and solved directly as the deep-equilibrium fixed point $\mathbf{v}^{*} = F_{\phi}(\mathbf{v}^{*})$.`,
     links: [
       { label: "paper", href: "/Neo-Grid.pdf" },
       { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
@@ -196,7 +196,7 @@ export const publications: Publication[] = [
     ],
     topics: ["data-driven-reliability", "risk-aware-learning"],
     figureCaption:
-      "The verifiable region <em>C</em> holds every input whose output satisfies <em>f</em>(<em>x</em>) &gt; 0. LEVIS-&alpha; finds the largest verifiable ball, which touches two boundaries of <em>C</em>; LEVIS-&beta; covers the rest of <em>C</em> with a union of balls.",
+      String.raw`The verifiable region $\mathcal{C}$ holds every input whose output satisfies $f(x) > 0$. LEVIS-$\alpha$ finds the largest verifiable ball, which touches two boundaries of $\mathcal{C}$; LEVIS-$\beta$ covers the rest of $\mathcal{C}$ with a union of balls.`,
     links: [
       { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
@@ -220,7 +220,7 @@ export const publications: Publication[] = [
     ],
     topics: ["llm-decision-systems", "risk-aware-learning"],
     figureCaption:
-      "Share of responses GPT-4 judges harmless, by harmlessness-reward bin (values from the paper&rsquo;s Figure 1). Past a reward of &minus;12 the share levels off near 90%, which motivates maximizing helpfulness subject to a harmlessness threshold.",
+      String.raw`Share of responses GPT-4 judges harmless, by harmlessness-reward bin (values from the paper&rsquo;s Figure 1). Past a reward of $-12$ the share levels off near 90%, which motivates maximizing helpfulness $Q^{*}_{1}$ subject to a harmlessness threshold $\beta_2$ on $Q^{*}_{2}$.`,
     links: [
       { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
@@ -244,7 +244,7 @@ export const publications: Publication[] = [
     ],
     topics: ["power-systems-applications"],
     figureCaption:
-      "Ordinal optimization ranks many candidate microgrid sizings with a cheap model, then evaluates only the top few exactly, returning a good-enough design with high probability.",
+      String.raw`Ordinal optimization ranks $N$ candidate microgrid sizings with a cheap model, then evaluates only the top $s$ exactly, returning a good-enough design with high probability.`,
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
   },
   {
@@ -265,7 +265,7 @@ export const publications: Publication[] = [
     ],
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
     figureCaption:
-      "The building buys energy at price <em>&rho;<sub>t</sub></em> and a battery shifts it in time through actions <em>a<sub>t</sub></em>; the paper compares model-free and model-based controllers for choosing <em>a<sub>t</sub></em>.",
+      String.raw`The building buys energy at price $\rho_t$ and a battery shifts it in time through actions $a_t$, with $\mathrm{SOC}_{t+1} = \mathrm{SOC}_t + a_t$; the paper compares model-free and model-based controllers for choosing $a_t$.`,
     links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
   },
 ];

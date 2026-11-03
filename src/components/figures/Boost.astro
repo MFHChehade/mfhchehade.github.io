@@ -1,6 +1,9 @@
 ---
 // BOOST (TPEC 2025): ordinal optimization for microgrid sizing. Rank many
 // candidate sizings with a cheap model, then evaluate only the top few exactly.
+import Tex from "./Tex.astro";
+import { texWidth } from "./tex";
+
 const grid = [];
 for (let r = 0; r < 6; r++) {
   for (let c = 0; c < 6; c++) {
@@ -10,16 +13,27 @@ for (let r = 0; r < 6; r++) {
 const ranked = [118, 108, 100, 88, 76, 66, 54, 44, 34];
 const topS = 3;
 const columns = [
-  { cx: 59, title: "Candidates", sub: "N microgrid sizings" },
+  { cx: 59, title: "Candidates", subHead: "N", sub: "microgrid sizings" },
   { cx: 236, title: "Crude ranking", sub: "cheap model, by order" },
-  { cx: 402, title: "Exact evaluation", sub: "only the top s" },
+  { cx: 402, title: "Exact evaluation", sub: "only the top", subTail: "s" },
   { cx: 574, title: "Good-enough design", sub: "with high probability" },
 ];
 const arrows = [
   { x1: 124, x2: 168, label: "rank" },
-  { x1: 302, x2: 352, label: "keep top s" },
+  { x1: 302, x2: 352, label: "keep top", tail: "s" },
   { x1: 452, x2: 512, label: "pick best" },
 ];
+// Mixed text + TeX labels: TeX widths are exact, sans text widths are
+// estimated (IBM Plex Sans averages ~0.55 em per character).
+const textW = (t: string, size: number) => t.length * size * 0.55;
+const mixed = (cx: number, text: string, size: number, tex: string, texSize: number, texFirst: boolean) => {
+  const tw = textW(text, size);
+  const mw = texWidth(tex, texSize);
+  const left = cx - (tw + mw + 3) / 2;
+  return texFirst
+    ? { texX: left, textX: left + mw + 3, anchor: "start" }
+    : { textX: left + tw, texX: left + tw + 3, anchor: "end" };
+};
 ---
 
 <svg
@@ -52,14 +66,35 @@ const arrows = [
     <g>
       <line x1={a.x1} y1="96" x2={a.x2 - 6} y2="96" class="ln"></line>
       <polygon points={`${a.x2},96 ${a.x2 - 8},91.5 ${a.x2 - 8},100.5`} class="head"></polygon>
-      <text x={(a.x1 + a.x2) / 2} y="86" class="t-xs t-muted" text-anchor="middle">{a.label}</text>
+      {a.tail ? (() => {
+        const m = mixed((a.x1 + a.x2) / 2, a.label, 10.5, a.tail, 12, false);
+        return (
+          <>
+            <text x={m.textX} y="86" class="t-xs t-muted" text-anchor={m.anchor}>{a.label}</text>
+            <Tex tex={a.tail} x={m.texX} y={86} size={12} tone="muted" />
+          </>
+        );
+      })() : (
+        <text x={(a.x1 + a.x2) / 2} y="86" class="t-xs t-muted" text-anchor="middle">{a.label}</text>
+      )}
     </g>
   ))}
 
   {columns.map((c) => (
     <g>
       <text x={c.cx} y="184" class="t-sm t-b" text-anchor="middle">{c.title}</text>
-      <text x={c.cx} y="201" class="t-xs t-muted" text-anchor="middle">{c.sub}</text>
+      {c.subHead || c.subTail ? (() => {
+        const tex = (c.subHead ?? c.subTail) as string;
+        const m = mixed(c.cx, c.sub, 10.5, tex, 12, Boolean(c.subHead));
+        return (
+          <>
+            <text x={m.textX} y="201" class="t-xs t-muted" text-anchor={m.anchor}>{c.sub}</text>
+            <Tex tex={tex} x={m.texX} y={201} size={12} tone="muted" />
+          </>
+        );
+      })() : (
+        <text x={c.cx} y="201" class="t-xs t-muted" text-anchor="middle">{c.sub}</text>
+      )}
     </g>
   ))}
 </svg>

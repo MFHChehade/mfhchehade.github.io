@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
+import { withTex } from '../../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../../data/research';
 
 export function getStaticPaths() {
@@ -33,7 +34,7 @@ const featured = getPublication(topic.featured);
     <PaperFigure name={topic.featured} />
     <figcaption>
       <strong><a href={`/publications/${topic.featured}`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
-      {" "}<span set:html={featured?.figureCaption} />
+      {" "}<span set:html={withTex(featured?.figureCaption ?? "")} />
     </figcaption>
   </figure>
 

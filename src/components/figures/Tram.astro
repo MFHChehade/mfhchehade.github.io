@@ -1,9 +1,13 @@
 ---
 // TRAM (NeurIPS 2026), redrawn from the camera-ready Figure 1:
 // risk-neutral sources trained once, composed state by state at deployment.
+import Tex from "./Tex.astro";
 import { uid } from "./uid";
 
 const hatch = uid("tram-hatch");
+// Notation from the paper's Figure 1 source.
+const PI = String.raw`\pi`;
+const HAZARD = String.raw`\overline{\mathcal{S}}`;
 
 const sources = [
   {
@@ -78,7 +82,7 @@ const steps = [
       <path d={s.path} class={`path s-${s.hue}`}></path>
       <circle cx={s.start[0]} cy={s.start[1]} r="4" class="f-bg" stroke="currentColor" stroke-width="1.6"></circle>
       <circle cx={s.goal[0]} cy={s.goal[1]} r="4.2" class={`f-${s.hue}`}></circle>
-      <text x={s.label[0]} y={s.label[1]} class="math" font-size="14">π<tspan dy="3" font-size="10">{s.name}</tspan></text>
+      <Tex tex={`${PI}_${s.name}`} x={s.label[0]} y={s.label[1]} size={15} />
     </g>
   ))}
 
@@ -100,23 +104,23 @@ const steps = [
     stroke-linejoin="round"
   ></polygon>
   <circle cx="400" cy="146" r="15" class="f-bg"></circle>
-  <text x="400" y="153.5" class="math" font-size="21" text-anchor="middle">S</text>
-  <line x1="393.5" y1="135.5" x2="407.5" y2="135.5" class="ln" stroke-width="1.5"></line>
+  <Tex tex={HAZARD} x={400} y={153} size={19} anchor="middle" />
   <text x="454" y="112" class="t-sm t-muted">new hazard</text>
 
   <!-- what a single source would do: keep pi_1 and walk into the hazard -->
   <path d="M304 240 C 344 222, 384 170, 412 76" class="ln-muted dash s-blue" stroke-width="1.8"></path>
   <circle cx="412" cy="76" r="3.4" class="f-bg s-blue" stroke-width="1.6"></circle>
-  <text x="420" y="73" class="t-sm t-muted">keeping π<tspan dy="3" font-size="9">1</tspan></text>
+  <text x="466" y="73" class="t-sm t-muted" text-anchor="end">keeping</text>
+  <Tex tex={`${PI}_1`} x={469} y={73} size={13} tone="muted" />
 
   <!-- TRAM's path: pi_1 -> pi_2 -> pi_3 -->
   <path d="M206 262 C 240 258, 274 250, 304 240" class="path s-blue"></path>
   <path d="M304 240 C 352 272, 430 272, 478 246" class="path s-pink"></path>
   <path d="M478 246 C 534 214, 580 150, 600 78" class="path s-green"></path>
 
-  <text x="252" y="242" class="math" text-anchor="middle">π<tspan dy="3" font-size="10.5">1</tspan></text>
-  <text x="392" y="292" class="math" text-anchor="middle">π<tspan dy="3" font-size="10.5">2</tspan></text>
-  <text x="586" y="176" class="math">π<tspan dy="3" font-size="10.5">3</tspan></text>
+  <Tex tex={`${PI}_1`} x={252} y={242} size={15} anchor="middle" />
+  <Tex tex={`${PI}_2`} x={392} y={292} size={15} anchor="middle" />
+  <Tex tex={`${PI}_3`} x={586} y={176} size={15} />
 
   <!-- states where TRAM re-scores; 2 and 3 are switches -->
   <circle cx="206" cy="262" r="5.5" class="f-bg s-blue" stroke-width="2.2"></circle>

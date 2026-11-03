@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
+import { withTex } from '../../components/figures/tex';
 import { publications, topics } from '../../data/research';
 
 export function getStaticPaths() {
@@ -103,7 +104,7 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
       <PaperFigure name={paper.slug} />
       {paper.figureCaption && (
         <figcaption>
-          <strong>Figure.</strong> <span set:html={paper.figureCaption} />
+          <strong>Figure.</strong> <span set:html={withTex(paper.figureCaption)} />
         </figcaption>
       )}
     </figure>

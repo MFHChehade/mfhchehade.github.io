@@ -1,6 +1,17 @@
 ---
 // Battery control (NAPS 2024), redrawn from the paper's system figure, with
 // the question the paper asks: which controller should choose a_t?
+import Tex from "./Tex.astro";
+import { texWidth } from "./tex";
+
+const tex = {
+  rho: String.raw`\rho_t`,
+  d: String.raw`d_t`,
+  a: String.raw`a_t`,
+  charge: String.raw`a_t > 0`,
+  discharge: String.raw`a_t < 0`,
+  soc: String.raw`\mathrm{SOC}_{t+1} = \mathrm{SOC}_{t} + a_t`,
+};
 const windows = [];
 for (let r = 0; r < 4; r++) {
   for (let c = 0; c < 2; c++) {
@@ -20,21 +31,23 @@ for (let r = 0; r < 4; r++) {
     <path d="M60 64 L44 196 M60 64 L76 196 M32 92 H88 M26 120 H94 M50 150 H70 M50 150 L76 196 M70 150 L44 196 M52 92 L68 120 M68 92 L52 120"></path>
   </g>
   <text x="60" y="222" class="t-b" text-anchor="middle">Grid</text>
-  <text x="60" y="242" class="t-sm" text-anchor="middle">price <tspan class="math" font-size="15">ρ</tspan><tspan class="math" dy="3" font-size="10.5">t</tspan></text>
+  <text x="62" y="242" class="t-sm" text-anchor="end">price</text>
+  <Tex tex={tex.rho} x={65} y={242} size={15} />
 
   <!-- Building -->
   <rect x="236" y="34" width="32" height="68" class="ln" stroke-width="1.6"></rect>
   <rect x="268" y="56" width="16" height="46" class="ln" stroke-width="1.6"></rect>
   {windows.map(([x, y]) => <rect x={x} y={y} width="7" height="7" class="ln" stroke-width="1.2"></rect>)}
   <text x="296" y="62" class="t-b">Building</text>
-  <text x="296" y="82" class="t-sm">demand <tspan class="math" font-size="15">d</tspan><tspan class="math" dy="3" font-size="10.5">t</tspan></text>
+  <text x="339" y="82" class="t-sm" text-anchor="end">demand</text>
+  <Tex tex={tex.d} x={343} y={82} size={15} />
 
   <!-- Battery -->
   <rect x="240" y="188" width="40" height="52" rx="6" class="ln" stroke-width="1.6"></rect>
   <rect x="252" y="182" width="16" height="6" rx="1.5" class="head"></rect>
   <path d="M264 198 L253 216 H262 L256 232 L270 210 H261 Z" class="f-orange"></path>
   <text x="296" y="204" class="t-b">Battery</text>
-  <text x="296" y="228" class="math" font-size="14"><tspan class="math-up">SOC</tspan><tspan dy="3" font-size="10">t+1</tspan><tspan dy="-3" class="math-up"> = SOC</tspan><tspan dy="3" font-size="10">t</tspan><tspan dy="-3" class="math-up"> + </tspan>a<tspan dy="3" font-size="10">t</tspan></text>
+  <Tex tex={tex.soc} x={296} y={228} size={14} />
 
   <!-- Energy flows -->
   <line x1="100" y1="106" x2="222" y2="74" class="s-blue" stroke-width="2" stroke-linecap="round"></line>
@@ -43,17 +56,19 @@ for (let r = 0; r < 4; r++) {
 
   <line x1="100" y1="148" x2="224" y2="203" class="s-blue" stroke-width="2" stroke-linecap="round"></line>
   <polygon points="231,206 224.8,198.5 221.1,206.7" class="f-blue"></polygon>
-  <text x="204" y="226" class="t-sm" text-anchor="end">charge, <tspan class="math" font-size="14">a</tspan><tspan class="math" dy="3" font-size="10">t</tspan><tspan dy="-3"> &gt; 0</tspan></text>
+  <Tex tex={tex.charge} x={204} y={226} size={14} anchor="end" />
+  <text x={204 - texWidth(tex.charge, 14) - 5} y="226" class="t-sm" text-anchor="end">charge,</text>
 
   <line x1="260" y1="174" x2="260" y2="117" class="s-orange" stroke-width="2" stroke-linecap="round"></line>
   <polygon points="260,110 255.5,118 264.5,118" class="f-orange"></polygon>
   <text x="250" y="138" class="t-sm" text-anchor="end">discharge,</text>
-  <text x="250" y="156" class="t-sm" text-anchor="end"><tspan class="math" font-size="14">a</tspan><tspan class="math" dy="3" font-size="10">t</tspan><tspan dy="-3"> &lt; 0</tspan></text>
+  <Tex tex={tex.discharge} x={250} y={157} size={14} anchor="end" />
 
   <!-- The question the paper asks -->
   <line x1="456" y1="150" x2="278" y2="150" class="ln-muted dash" stroke-width="1.4"></line>
   <polygon points="272,150 280,145.5 280,154.5" class="head-muted"></polygon>
-  <text x="366" y="142" class="t-xs t-muted" text-anchor="middle">chooses <tspan class="math" font-size="13">a</tspan><tspan class="math" dy="3" font-size="9">t</tspan></text>
+  <text x="370" y="142" class="t-xs t-muted" text-anchor="end">chooses</text>
+  <Tex tex={tex.a} x={373} y={142} size={13} tone="muted" />
 
   <rect class="card" x="460" y="34" width="180" height="214" rx="9"></rect>
   <text x="476" y="56" class="t-eyebrow">CONTROLLER</text>

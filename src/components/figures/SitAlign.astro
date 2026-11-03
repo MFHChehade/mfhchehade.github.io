@@ -1,6 +1,10 @@
 ---
 // SITAlign (ICML 2025), Figure 1 redrawn from the values printed on the
 // paper's bars: share of responses GPT-4 judges harmless, per reward bin.
+import Tex from "./Tex.astro";
+
+const OBJECTIVE = String.raw`\mathbb{E}_{z\sim\pi}\big[Q^{*}_{1}(s_t,z)\big]`;
+const CONSTRAINT = String.raw`\mathbb{E}_{z\sim\pi}\big[Q^{*}_{2}(s_t,z)\big] \ge \beta_2`;
 const bins = [
   { label: "[−36, −30)", value: 5.26 },
   { label: "[−30, −24)", value: 6.26 },
@@ -36,7 +40,7 @@ const bar = (i: number, v: number) => {
   class="fig"
   viewBox="0 0 640 290"
   role="img"
-  aria-label="SITAlign motivation: the share of responses GPT-4 judges harmless rises with the harmlessness reward and saturates near 90 percent once the reward exceeds minus 12 (89.47 and 90.42 percent in the top two bins, against 5.26 percent in the lowest), so harmlessness can be treated as a threshold while helpfulness is maximized."
+  aria-label="SITAlign motivation: the share of responses GPT-4 judges harmless rises with the harmlessness reward and saturates near 90 percent once the reward exceeds minus 12 (89.47 and 90.42 percent in the top two bins, against 5.26 percent in the lowest), so SITAlign maximizes helpfulness subject to a harmlessness threshold beta."
 >
   <text x="0" y="12" class="t-eyebrow">HARMLESSNESS SATURATES PAST A THRESHOLD</text>
   <text x="0" y="38" class="t-sm t-muted">% of responses judged harmless (GPT-4)</text>
@@ -66,18 +70,19 @@ const bar = (i: number, v: number) => {
   })}
 
   <line x1={threshold} x2={threshold} y1={top - 10} y2={base} class="s-orange" stroke-width="1.4"></line>
-  <text x={threshold - 6} y={top - 2} class="t-sm" text-anchor="end">threshold <tspan class="math" font-size="14">τ</tspan> = −12</text>
+  <text x={threshold - 6} y={top - 2} class="t-sm" text-anchor="end">reward −12</text>
   <text x={(x0 + x1) / 2} y={base + 40} class="t-sm t-muted" text-anchor="middle">harmlessness reward score</text>
 
-  <!-- The satisficing objective this motivates -->
+  <!-- The satisficing problem this motivates, in the paper's notation:
+       Q*_1 is the primary (helpfulness) objective, Q*_2 the harmlessness one. -->
   <rect class="card" x="446" y="40" width="194" height="196" rx="9"></rect>
   <text x="462" y="64" class="t-eyebrow">SATISFICING ALIGNMENT</text>
-  <text x="462" y="96" class="t-sm t-muted">maximize</text>
-  <text x="462" y="115" class="t-b">helpfulness</text>
-  <text x="462" y="141" class="t-sm t-muted">subject to</text>
-  <text x="462" y="160" class="t-b">harmlessness ≥ <tspan class="math" font-size="15">τ</tspan></text>
-  <line x1="462" y1="176" x2="624" y2="176" class="grid"></line>
-  <text x="462" y="196" class="t-xs t-muted">Past τ, extra harmlessness reward</text>
-  <text x="462" y="211" class="t-xs t-muted">buys little, so it is enforced as a</text>
-  <text x="462" y="226" class="t-xs t-muted">threshold at inference time.</text>
+  <text x="462" y="90" class="t-xs t-muted">maximize helpfulness</text>
+  <Tex tex={OBJECTIVE} x={462} y={113} size={14} />
+  <text x="462" y="139" class="t-xs t-muted">subject to harmlessness</text>
+  <Tex tex={CONSTRAINT} x={462} y={162} size={14} />
+  <line x1="462" y1="178" x2="624" y2="178" class="grid"></line>
+  <text x="462" y="197" class="t-xs t-muted">Above −12 the harmless share</text>
+  <text x="462" y="212" class="t-xs t-muted">levels off, so harmlessness is a</text>
+  <text x="462" y="227" class="t-xs t-muted">threshold, not an objective.</text>
 </svg>

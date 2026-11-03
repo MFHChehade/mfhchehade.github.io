@@ -2,15 +2,19 @@
 // Fine-tuning LLMs for grid actions (PESGM 2026), Fig. 1 redrawn: the
 // multi-stage adaptation pipeline for PSPS corrective switching, with the
 // signal that supervises each stage drawn underneath it.
+import Tex from "./Tex.astro";
+import { texWidth } from "./tex";
+
+const N = String.raw`N`;
 const stages = [
   { x: 118, eyebrow: "STAGE 1", title: "SFT", sub: "imitate the oracle" },
   { x: 252, eyebrow: "STAGE 2", title: "DPO", sub: "prefer safe voltages" },
-  { x: 386, eyebrow: "INFERENCE", title: "Best-of-N", sub: "keep best feasible" },
+  { x: 386, eyebrow: "INFERENCE", title: "Best-of-", titleTex: N, sub: "keep best feasible" },
 ];
 const signals = [
   { x: 118, a: "DC-OPF MILP oracle", b: "optimal plans" },
   { x: 252, a: "AC power flow", b: "voltage-ranked pairs" },
-  { x: 386, a: "N sampled plans", b: "feasibility + metric" },
+  { x: 386, aTex: N, a: "sampled plans", b: "feasibility + metric" },
 ];
 // small transmission network for the scenario card; dashed = shut off
 const buses = [
@@ -34,7 +38,7 @@ const lines = [
   class="fig"
   viewBox="0 32 640 250"
   role="img"
-  aria-label="Multi-stage pipeline: a PSPS scenario summary prompts an instruction-tuned LLM; supervised fine-tuning imitates a DC-OPF MILP oracle; direct preference optimization uses AC power-flow evaluations ranked by voltage penalty; best-of-N selection keeps the best feasible plan; the output is an open-only switching plan within budget."
+  aria-label="Multi-stage pipeline: a PSPS scenario summary prompts an instruction-tuned LLM; supervised fine-tuning imitates a DC-OPF MILP oracle; direct preference optimization uses AC power-flow evaluations ranked by voltage penalty; best-of-N selection over N sampled plans keeps the best feasible one; the output is an open-only switching plan within budget."
 >
   <!-- Row 1: the model as it is adapted -->
   <rect class="card" x="0" y="40" width="100" height="70" rx="9"></rect>
@@ -46,7 +50,14 @@ const lines = [
     <g>
       <rect class="card" x={s.x} y="40" width="116" height="70" rx="9"></rect>
       <text x={s.x + 58} y="58" class="t-eyebrow" text-anchor="middle">{s.eyebrow}</text>
-      <text x={s.x + 58} y="80" class="t-b t-lg" text-anchor="middle">{s.title}</text>
+      {s.titleTex ? (
+        <>
+          <text x={s.x + 58 + texWidth(s.titleTex, 16) / 2} y="80" class="t-b t-lg" text-anchor="end">{s.title}</text>
+          <Tex tex={s.titleTex} x={s.x + 59 + texWidth(s.titleTex, 16) / 2} y={80} size={16} />
+        </>
+      ) : (
+        <text x={s.x + 58} y="80" class="t-b t-lg" text-anchor="middle">{s.title}</text>
+      )}
       <text x={s.x + 58} y="98" class="t-xs t-muted" text-anchor="middle">{s.sub}</text>
     </g>
   ))}
@@ -69,7 +80,14 @@ const lines = [
       <line x1={s.x + 58} y1="160" x2={s.x + 58} y2="121" class="s-green" stroke-width="2" stroke-linecap="round"></line>
       <polygon points={`${s.x + 58},114 ${s.x + 53.5},122 ${s.x + 62.5},122`} class="f-green"></polygon>
       <rect class="panel" x={s.x} y="164" width="116" height="58" rx="8"></rect>
-      <text x={s.x + 58} y="187" class="t-sm t-b" text-anchor="middle">{s.a}</text>
+      {s.aTex ? (
+        <>
+          <Tex tex={s.aTex} x={s.x + 14} y={187} size={14} />
+          <text x={s.x + 17 + texWidth(s.aTex, 14)} y="187" class="t-sm t-b">{s.a}</text>
+        </>
+      ) : (
+        <text x={s.x + 58} y="187" class="t-sm t-b" text-anchor="middle">{s.a}</text>
+      )}
       <text x={s.x + 58} y="205" class="t-xs t-muted" text-anchor="middle">{s.b}</text>
     </g>
   ))}

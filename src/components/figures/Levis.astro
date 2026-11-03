@@ -2,9 +2,14 @@
 // LEVIS (ICML 2025), redrawn from Figures 1, 2 and 4 of the paper: the
 // verifiable region C, LEVIS-alpha's largest ball touching two boundaries,
 // LEVIS-beta's union of balls, and the output condition f(x) > 0.
+import Tex from "./Tex.astro";
+import { texWidth } from "./tex";
 import { uid } from "./uid";
 
 const safeClip = uid("levis-safe");
+const C = String.raw`\mathcal{C}`;
+const SAFE = String.raw`f(x) > 0`;
+const UNSAFE = String.raw`f(x) \le 0`;
 const region =
   "M 69 100 C 69 60, 100 40, 130 38 C 165 36, 181 65, 181 100 C 181 130, 170 150, 152 160 C 138 168, 130 185, 115 205 C 100 225, 78 232, 66 220 C 54 208, 62 192, 74 180 C 84 170, 88 160, 80 150 C 72 140, 69 120, 69 100 Z";
 const nnCols = [
@@ -49,7 +54,8 @@ for (let c = 0; c < nnCols.length - 1; c++) {
     <circle cx="69" cy="100" r="3.6" class="dot"></circle>
     <circle cx="181" cy="100" r="3.6" class="dot"></circle>
     <circle cx="125" cy="100" r="3.2" class="f-blue"></circle>
-    <text x="125" y="78" class="t-b t-sm" text-anchor="middle">LEVIS-α</text>
+    <text x="129" y="80" class="t-b t-sm" text-anchor="end">LEVIS-</text>
+    <Tex tex={String.raw`\alpha`} x={130} y={80} size={14} />
     <text x="125" y="122" class="t-xs t-muted" text-anchor="middle">largest ball</text>
 
     <!-- LEVIS-beta: a union of balls fills the rest of C -->
@@ -59,11 +65,13 @@ for (let c = 0; c < nnCols.length - 1; c++) {
     <circle cx="84" cy="212" r="2" class="f-blue"></circle>
   </g>
   <text x="12" y="44" class="t-sm t-muted">all inputs</text>
-  <line x1="58" y1="243" x2="82" y2="233" class="ln-muted" stroke-width="1"></line>
-  <text x="12" y="250" class="t-b t-sm">LEVIS-β</text>
+  <line x1="62" y1="243" x2="82" y2="233" class="ln-muted" stroke-width="1"></line>
+  <text x="50" y="250" class="t-b t-sm" text-anchor="end">LEVIS-</text>
+  <Tex tex={String.raw`\beta`} x={51} y={250} size={14} />
   <text x="12" y="265" class="t-xs t-muted">union of balls</text>
   <text x="250" y="250" class="t-sm" text-anchor="end">verifiable</text>
-  <text x="250" y="266" class="t-sm" text-anchor="end">region <tspan class="math" font-size="14">C</tspan></text>
+  <text x={250 - texWidth(C, 15) - 4} y="267" class="t-sm" text-anchor="end">region</text>
+  <Tex tex={C} x={250} y={267} size={15} anchor="end" />
   <line x1="196" y1="246" x2="150" y2="214" class="ln-muted" stroke-width="1"></line>
 
   <!-- Network -->
@@ -87,8 +95,9 @@ for (let c = 0; c < nnCols.length - 1; c++) {
     stroke-width="1.6"
   ></path>
   <text x="486" y="170" class="t-sm" text-anchor="middle">outputs of</text>
-  <text x="486" y="187" class="t-sm" text-anchor="middle">inputs in <tspan class="math" font-size="14">C</tspan></text>
-  <text x="392" y="272" class="math" font-size="15">f<tspan class="math-up">(</tspan>x<tspan class="math-up">) &gt; 0</tspan></text>
-  <text x="438" y="272" class="t-sm t-muted" dx="12">safe</text>
-  <text x="626" y="56" class="math" font-size="15" text-anchor="end">f<tspan class="math-up">(</tspan>x<tspan class="math-up">) ≤ 0</tspan></text>
+  <text x="491" y="188" class="t-sm" text-anchor="end">inputs in</text>
+  <Tex tex={C} x={495} y={188} size={15} />
+  <Tex tex={SAFE} x={392} y={272} size={15} />
+  <text x={392 + texWidth(SAFE, 15) + 8} y="272" class="t-sm t-muted">safe</text>
+  <Tex tex={UNSAFE} x={626} y={56} size={15} anchor="end" />
 </svg>
