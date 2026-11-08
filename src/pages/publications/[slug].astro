@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
 import { withTex } from '../../components/figures/tex';
-import { publications, topics } from '../../data/research';
+import { publications, toBibtex, topics, untex } from '../../data/research';
 
 export function getStaticPaths() {
   return publications.map((paper) => ({
@@ -16,64 +16,63 @@ const relatedTopics = paper.topics
   .map((slug) => topics.find((topic) => topic.slug === slug))
   .filter(Boolean);
 
-const siteOrigin = Astro.site?.origin ?? "https://mohamadchehade.com";
+const siteOrigin = Astro.site?.origin ?? "https://www.mohamadchehade.com";
 const pageURL = new URL(Astro.url.pathname, siteOrigin).toString();
+const cite = paper.cite;
+const bibtex = toBibtex(paper);
+const [firstPage, lastPage] = (cite.pages ?? "").split("--");
 
-const parseAuthors = (raw: string) =>
-  raw
-    .split(/,\s*(?:&|and)\s*|\s*,\s*/)
-    .map((name) => name.replace(/\.$/, "").trim())
-    .filter(Boolean)
-    .map((name) => {
-      const parts = name.split(/\s+/);
-      const given = parts[0];
-      const family = parts.slice(1).join(" ");
-      return { "@type": "Person", givenName: given, familyName: family, name };
-    });
+// "Last, First" -> schema.org Person.
+const people = cite.authors.map((author) => {
+  const [familyName, givenName] = author.split(/,\s*/);
+  return { "@type": "Person", givenName, familyName, name: `${givenName} ${familyName}` };
+});
 
-const firstExternalLink = paper.links.find((l) => l.href.startsWith("http"));
-const isPeerReviewed = paper.type === "peer-reviewed";
+const externalLinks = paper.links.filter((l) => l.href.startsWith("http")).map((l) => l.href);
 
-const scholarlyArticleJsonLd: Record<string, unknown> = {
+const scholarlyArticleJsonLd = {
   "@context": "https://schema.org",
-  "@type": isPeerReviewed ? "ScholarlyArticle" : "Article",
+  "@type": paper.type === "peer-reviewed" ? "ScholarlyArticle" : "Article",
   headline: paper.title,
-  name: paper.shortTitle,
+  name: paper.title,
+  alternativeHeadline: paper.shortTitle,
   description: paper.summary,
   url: pageURL,
-  datePublished: `${paper.year}-01-01`,
+  datePublished: paper.year,
   inLanguage: "en",
-  author: parseAuthors(paper.authors),
+  author: people,
   keywords: paper.topics
     .map((slug) => topics.find((t) => t.slug === slug)?.shortTitle ?? slug)
     .join(", "),
   isAccessibleForFree: true,
-  isPartOf: isPeerReviewed
-    ? {
-        "@type": "PublicationIssue",
-        issueNumber: paper.year,
-        datePublished: `${paper.year}-01-01`,
-        isPartOf: {
-          "@type": "Periodical",
-          name: paper.venue,
-        },
-      }
-    : undefined,
-  identifier: firstExternalLink?.href,
-  sameAs: paper.links.filter((l) => l.href.startsWith("http")).map((l) => l.href),
+  identifier: cite.doi ? `https://doi.org/${cite.doi}` : externalLinks[0],
+  sameAs: externalLinks,
 };
 ---
 
 <Layout
-  title={`${paper.shortTitle} - Mohamad Chehade`}
+  title={`${paper.title} - Mohamad Chehade`}
   description={`${paper.title}: ${paper.summary}`}
   ogType="article"
 >
+  <Fragment slot="head">
+    {/* Google Scholar's inclusion guidelines read these tags. */}
+    <meta name="citation_title" content={paper.title} />
+    {cite.authors.map((author) => <meta name="citation_author" content={author} />)}
+    <meta name="citation_publication_date" content={paper.year} />
+    <meta name="citation_conference_title" content={untex(cite.booktitle)} />
+    {cite.volume && <meta name="citation_volume" content={cite.volume} />}
+    {firstPage && <meta name="citation_firstpage" content={firstPage} />}
+    {lastPage && <meta name="citation_lastpage" content={lastPage} />}
+    {cite.publisher && <meta name="citation_publisher" content={cite.publisher} />}
+    {cite.doi && <meta name="citation_doi" content={cite.doi} />}
+    {cite.pdf && <meta name="citation_pdf_url" content={new URL(cite.pdf, siteOrigin).toString()} />}
+  </Fragment>
   <script type="application/ld+json" set:html={JSON.stringify(scholarlyArticleJsonLd)} />
   <article class="paper-page">
     <header class="paper-hero">
       <div class="paper-copy">
-        <a class="back-link" href="/publications">Publications</a>
+        <a class="back-link" href="/publications/">Publications</a>
         <h1>{paper.title}</h1>
         <p class="authors">{paper.authors}</p>
         <p class="venue">{paper.venue}</p>
@@ -91,6 +90,7 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
               </a>
             );
           })}
+          <a href="#cite">BibTeX</a>
         </div>
       </div>
 
@@ -119,15 +119,46 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
         <h2>Research directions</h2>
         <div class="topic-list">
           {relatedTopics.map((topic) => (
-            <a href={`/research/${topic.slug}`}>
+            <a href={`/research/${topic.slug}/`}>
               <strong>{topic.shortTitle}</strong>
             </a>
           ))}
         </div>
       </aside>
     </section>
+
+    <section class="section cite" id="cite">
+      <div class="cite-head">
+        <h2>Cite</h2>
+        <button class="copy-bib" type="button" data-copy="bibtex">Copy BibTeX</button>
+      </div>
+      <pre class="bibtex"><code id="bibtex">{bibtex}</code></pre>
+    </section>
   </article>
 </Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("button[data-copy]").forEach((button) => {
+    const code = document.getElementById(button.dataset.copy ?? "");
+    if (!code) return;
+    const label = button.textContent;
+    button.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent ?? "");
+        button.textContent = "Copied";
+      } catch {
+        // No clipboard access: select the entry so it can be copied by hand.
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        button.textContent = "Selected";
+      }
+      setTimeout(() => (button.textContent = label), 2200);
+    });
+  });
+</script>
 
 <style>
   .paper-page {
@@ -203,6 +234,56 @@ const scholarlyArticleJsonLd: Record<string, unknown> = {
 
   .topic-list a:hover {
     color: var(--burnt);
+  }
+
+  .cite {
+    min-width: 0;
+    scroll-margin-top: 5rem;
+  }
+
+  .cite-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .cite-head h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .copy-bib {
+    color: var(--blue);
+    background: var(--blue-soft);
+    border: 1px solid var(--blue-line);
+    border-radius: 999px;
+    padding: 0.25rem 0.8rem;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .copy-bib:hover {
+    color: var(--on-accent);
+    background: var(--burnt);
+    border-color: var(--burnt);
+  }
+
+  .bibtex {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    color: var(--charcoal);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    tab-size: 2;
   }
 
   @media (max-width: 820px) {

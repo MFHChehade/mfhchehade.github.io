@@ -11,6 +11,28 @@ export type ResearchTopic = {
   paperSlugs: string[];
 };
 
+/**
+ * Citation record behind the BibTeX block and the Google Scholar meta tags.
+ * Authors are "Last, First" exactly as the publisher lists them (PMLR, IEEE,
+ * HICSS); papers not yet in proceedings use the camera-ready / arXiv names.
+ */
+export type Citation = {
+  key: string;
+  authors: string[];
+  /** Title with BibTeX brace protection, when it differs from the display title. */
+  title?: string;
+  /** BibTeX-escaped (\&). */
+  booktitle: string;
+  series?: string;
+  volume?: string;
+  pages?: string;
+  publisher?: string;
+  doi?: string;
+  url?: string;
+  /** Self-hosted PDF, for citation_pdf_url. */
+  pdf?: string;
+};
+
 export type Publication = {
   slug: string;
   title: string;
@@ -26,6 +48,7 @@ export type Publication = {
   /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed, $...$ is typeset as TeX. */
   figureCaption?: string;
   links: Array<{ label: string; href: string }>;
+  cite: Citation;
 };
 
 export const topics: ResearchTopic[] = [
@@ -88,7 +111,7 @@ export const topics: ResearchTopic[] = [
 export const publications: Publication[] = [
   {
     slug: "tram",
-    title: "Test-Time Risk Adaptation with Mixture of Agents",
+    title: "TRAM: Test-Time Risk Adaptation with Mixture of Agents",
     shortTitle: "TRAM",
     authors: "M. Chehade, A. S. Bedi, S. Chakraborty, A. Zhang, H. Zhu",
     venue: "Advances in Neural Information Processing Systems (NeurIPS), 2026",
@@ -105,14 +128,23 @@ export const publications: Publication[] = [
     topics: ["risk-aware-learning", "llm-decision-systems"],
     figureCaption:
       String.raw`Risk-neutral source policies $\pi_1, \pi_2, \pi_3$ are trained once. When a new hazard $\overline{\mathcal{S}}$ is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.`,
-    links: [{ label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" }],
+    links: [
+      { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" },
+      { label: "NeurIPS", href: "https://neurips.cc/virtual/2026/poster/148449" },
+    ],
+    cite: {
+      key: "chehade2026tram",
+      authors: ["Chehade, Mohamad", "Bedi, Amrit Singh", "Chakraborty, Souradip", "Zhang, Amy", "Zhu, Hao"],
+      title: "{TRAM}: Test-Time Risk Adaptation with Mixture of Agents",
+      booktitle: "Advances in Neural Information Processing Systems",
+    },
   },
   {
     slug: "llm-grid-actions",
     title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
     shortTitle: "Fine-Tuning LLMs for Grid Actions",
     authors: "M. Chehade, H. Zhu",
-    venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
+    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), Jul. 2026",
     year: "2026",
     shortVenue: "PESGM",
     type: "peer-reviewed",
@@ -127,13 +159,20 @@ export const publications: Publication[] = [
     figureCaption:
       String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time. On IEEE 118-bus PSPS scenarios, AC power-flow failures drop from 50% (zero-shot) to single digits.`,
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
+    cite: {
+      key: "chehade2026finetuning",
+      authors: ["Chehade, Mohamad", "Zhu, Hao"],
+      title: "Fine-Tuning {LLMs} to Generate Economical and Reliable Actions for the Power Grid",
+      booktitle: String.raw`2026 IEEE Power \& Energy Society General Meeting (PESGM)`,
+      url: "https://arxiv.org/abs/2602.15350",
+    },
   },
   {
     slug: "carbon-aware-bems",
     title: "Carbon-aware Market Participation for Building Energy Management Systems",
     shortTitle: "Carbon-Aware Building Energy Markets",
     authors: "Y. Cho, M. Chehade, F. Al-Janahi, S. Lim, J. Mohammadi, H. Zhu",
-    venue: "Accepted to 2026 IEEE Power & Energy Society General Meeting (PESGM), 2026",
+    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), Jul. 2026",
     year: "2026",
     shortVenue: "PESGM",
     type: "peer-reviewed",
@@ -148,6 +187,12 @@ export const publications: Publication[] = [
     figureCaption:
       "Daily energy cost and carbon emissions on PJM data for carbon taxes of &#36;0 to &#36;30 per tonne, plus an unmanaged baseline (points read from the paper&rsquo;s Fig. 3). Cost-only dispatch (&#36;0/t) is cheapest but emits slightly more than the baseline; at &#36;30/t emissions fall by about 21% for about 1.5% more cost.",
     links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
+    cite: {
+      key: "cho2026carbon",
+      authors: ["Cho, Young-ho", "Chehade, Mohamad", "Al-Janahi, Fatima", "Lim, Sol", "Mohammadi, Javad", "Zhu, Hao"],
+      booktitle: String.raw`2026 IEEE Power \& Energy Society General Meeting (PESGM)`,
+      url: "https://arxiv.org/abs/2603.08654",
+    },
   },
   {
     slug: "neo-grid",
@@ -169,16 +214,26 @@ export const publications: Publication[] = [
     figureCaption:
       String.raw`The feeder&rsquo;s volt-var loop (power flow maps reactive power to voltage, a local rule $\mathbf{q}^{g} = g(\mathbf{v};\phi)$ maps voltage back) is learned as two ReLU networks and solved directly as the deep-equilibrium fixed point $\mathbf{v}^{*} = F_{\phi}(\mathbf{v}^{*})$.`,
     links: [
-      { label: "paper", href: "/Neo-Grid.pdf" },
+      { label: "HICSS", href: "https://doi.org/10.24251/HICSS.2026.380" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2509.21668" },
+      { label: "PDF", href: "/Neo-Grid.pdf" },
       { label: "code", href: "https://github.com/MFHChehade/Neo-Grid" },
     ],
+    cite: {
+      key: "chehade2026neogrid",
+      authors: ["Chehade, Mohamad", "Zhu, Hao"],
+      title: "{NEO-Grid}: A Neural Approximation Framework for Optimization and Control in Distribution Grids",
+      booktitle: "Proceedings of the 59th Hawaii International Conference on System Sciences",
+      doi: "10.24251/HICSS.2026.380",
+      pdf: "/Neo-Grid.pdf",
+    },
   },
   {
     slug: "levis",
     title: "LEVIS: Large Exact Verifiable Input Spaces for Neural Networks",
     shortTitle: "LEVIS",
     authors: "M. Chehade, W. Li, B. W. Bell, R. Bent, S. R. Kazi, H. Zhu",
-    venue: "Proceedings of the 42nd International Conference on Machine Learning (ICML), 2025",
+    venue: "Proceedings of the 42nd International Conference on Machine Learning (ICML), PMLR 267, pp. 7634–7647, 2025",
     year: "2025",
     shortVenue: "ICML",
     type: "peer-reviewed",
@@ -193,16 +248,28 @@ export const publications: Publication[] = [
     figureCaption:
       String.raw`The verifiable region $\mathcal{C}$ holds every input whose output satisfies $f(x) > 0$. LEVIS-$\alpha$ finds the largest verifiable ball, which touches two boundaries of $\mathcal{C}$; LEVIS-$\beta$ covers the rest of $\mathcal{C}$ with a union of balls.`,
     links: [
-      { label: "paper", href: "https://doi.org/10.48550/arXiv.2408.08824" },
+      { label: "PMLR", href: "https://proceedings.mlr.press/v267/chehade25b.html" },
+      { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08824" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=WFIMSlNS7C" },
     ],
+    cite: {
+      key: "chehade2025levis",
+      authors: ["Chehade, Mohamad Fares El Hajj", "Li, Wenting", "Bell, Brian Wesley", "Bent, Russell", "Kazi, Saif R.", "Zhu, Hao"],
+      title: "{LEVIS}: Large Exact Verifiable Input Spaces for Neural Networks",
+      booktitle: "Proceedings of the 42nd International Conference on Machine Learning",
+      series: "Proceedings of Machine Learning Research",
+      volume: "267",
+      pages: "7634--7647",
+      publisher: "PMLR",
+      url: "https://proceedings.mlr.press/v267/chehade25b.html",
+    },
   },
   {
     slug: "sitalign",
     title: "Bounded Rationality for LLMs: Satisficing Alignment at Inference-Time",
     shortTitle: "SITAlign",
     authors: "M. Chehade, S. S. Ghosal, S. Chakraborty, A. Reddy, D. Manocha, H. Zhu, A. S. Bedi",
-    venue: "Proceedings of the 42nd International Conference on Machine Learning (ICML), 2025",
+    venue: "Proceedings of the 42nd International Conference on Machine Learning (ICML), PMLR 267, pp. 7617–7633, 2025",
     year: "2025",
     shortVenue: "ICML",
     type: "peer-reviewed",
@@ -217,16 +284,36 @@ export const publications: Publication[] = [
     figureCaption:
       "GPT-4 win-tie rates against the base model (Zephyr-7B-&beta;) on PKU-SafeRLHF, read from the paper&rsquo;s Figure 2. Decoding for helpfulness alone falls below the 50% harmlessness threshold. Decoding for harmlessness alone, or with MOD, clears it but gives up helpfulness. SITAlign stays above the threshold and is the most helpful of the four, about 22 points ahead of MOD.",
     links: [
-      { label: "paper", href: "https://arxiv.org/abs/2505.23729" },
+      { label: "PMLR", href: "https://proceedings.mlr.press/v267/chehade25a.html" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2505.23729" },
       { label: "OpenReview", href: "https://openreview.net/forum?id=cEhLObwvvu" },
     ],
+    cite: {
+      key: "chehade2025sitalign",
+      authors: [
+        "Chehade, Mohamad Fares El Hajj",
+        "Ghosal, Soumya Suvra",
+        "Chakraborty, Souradip",
+        "Reddy, Avinash",
+        "Manocha, Dinesh",
+        "Zhu, Hao",
+        "Bedi, Amrit Singh",
+      ],
+      title: "Bounded Rationality for {LLM}s: Satisficing Alignment at Inference-Time",
+      booktitle: "Proceedings of the 42nd International Conference on Machine Learning",
+      series: "Proceedings of Machine Learning Research",
+      volume: "267",
+      pages: "7617--7633",
+      publisher: "PMLR",
+      url: "https://proceedings.mlr.press/v267/chehade25a.html",
+    },
   },
   {
     slug: "boost",
-    title: "BOOST: Microgrid Sizing using Ordinal Optimization",
+    title: "BOOST: Microgrid Sizing Using Ordinal Optimization",
     shortTitle: "BOOST",
     authors: "M. Chehade, S. Karaki",
-    venue: "2025 Texas Power and Energy Conference (TPEC), IEEE, pp. 1-4, Feb. 2025",
+    venue: "2025 IEEE Texas Power and Energy Conference (TPEC), pp. 1–4, Feb. 2025",
     year: "2025",
     shortVenue: "TPEC",
     type: "peer-reviewed",
@@ -240,14 +327,23 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications"],
     figureCaption:
       String.raw`Ordinal optimization ranks $N$ candidate microgrid sizings with a cheap model, then evaluates only the top $s$ exactly, returning a good-enough design with high probability.`,
-    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/document/10907217" }],
+    links: [{ label: "IEEE Xplore", href: "https://doi.org/10.1109/TPEC63981.2025.10907217" }],
+    cite: {
+      key: "chehade2025boost",
+      authors: ["El Hajj Chehade, Mohamad Fares", "Karaki, Sami"],
+      title: "{BOOST}: Microgrid Sizing Using Ordinal Optimization",
+      booktitle: "2025 IEEE Texas Power and Energy Conference (TPEC)",
+      pages: "1--4",
+      publisher: "IEEE",
+      doi: "10.1109/TPEC63981.2025.10907217",
+    },
   },
   {
     slug: "battery-control",
     title: "Should We Use Model-Free or Model-Based Control? A Case Study of Battery Control",
     shortTitle: "Battery Control",
     authors: "M. Chehade, Y. H. Cho, S. Chinchali, H. Zhu",
-    venue: "2024 56th North American Power Symposium (NAPS), IEEE, pp. 1-5, Oct. 2024",
+    venue: "2024 56th North American Power Symposium (NAPS), pp. 1–5, Oct. 2024",
     year: "2024",
     shortVenue: "NAPS",
     type: "peer-reviewed",
@@ -261,7 +357,16 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
     figureCaption:
       String.raw`The building buys energy at price $\rho_t$ and a battery shifts it in time through actions $a_t$, with $\mathrm{SOC}_{t+1} = \mathrm{SOC}_t + a_t$; the paper compares model-free and model-based controllers for choosing $a_t$.`,
-    links: [{ label: "paper", href: "https://ieeexplore.ieee.org/abstract/document/10741791" }],
+    links: [{ label: "IEEE Xplore", href: "https://doi.org/10.1109/NAPS61145.2024.10741791" }],
+    cite: {
+      key: "chehade2024battery",
+      authors: ["El Hajj Chehade, Mohamad Fares", "Cho, Young-Ho", "Chinchali, Sandeep", "Zhu, Hao"],
+      title: "Should We Use Model-Free or Model-Based Control? {A} Case Study of Battery Control",
+      booktitle: "2024 56th North American Power Symposium (NAPS)",
+      pages: "1--5",
+      publisher: "IEEE",
+      doi: "10.1109/NAPS61145.2024.10741791",
+    },
   },
 ];
 
@@ -275,6 +380,28 @@ export function getPublication(slug: string) {
 export function getTopic(slug: string) {
   return topics.find((topic) => topic.slug === slug);
 }
+
+export function toBibtex(paper: Publication) {
+  const c = paper.cite;
+  const fields = ([
+    ["title", c.title ?? paper.title],
+    ["author", c.authors.join(" and ")],
+    ["booktitle", c.booktitle],
+    ["series", c.series],
+    ["volume", c.volume],
+    ["pages", c.pages],
+    ["publisher", c.publisher],
+    ["year", paper.year],
+    ["doi", c.doi],
+    ["url", c.url],
+  ] as const).filter(([, value]) => value);
+  const width = Math.max(...fields.map(([name]) => name.length));
+  const body = fields.map(([name, value]) => `  ${name.padEnd(width)} = {${value}}`).join(",\n");
+  return `@inproceedings{${c.key},\n${body}\n}`;
+}
+
+/** BibTeX field text as plain text, for meta tags. */
+export const untex = (text: string) => text.replace(/\\&/g, "&").replace(/[{}]/g, "");
 
 /** Papers in a direction, with the direction's featured paper first. */
 export function getTopicPapers(topicSlug: string) {

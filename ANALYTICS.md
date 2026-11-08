@@ -3,8 +3,9 @@
 See how many people visit mohamadchehade.com, **where they are**, which pages
 they read, and how they found you.
 
-Tracking is **off right now**. It stays off, and nothing is added to the
-pages, until you paste an ID in step 3.
+Tracking is **on**: the Website ID is set in `src/config/analytics.ts`, and
+the dashboard is at <https://cloud.umami.is>. The steps below are how it was
+set up, kept for reference.
 
 ---
 

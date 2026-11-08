@@ -27,15 +27,15 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
     const featured = getPublication(topic.featured);
     return (
       <section class="direction" id={topic.slug}>
-        <h2><a href={`/research/${topic.slug}`}>{topic.title}</a></h2>
+        <h2><a href={`/research/${topic.slug}/`}>{topic.title}</a></h2>
         <p>{topic.summary} {topic.focus}</p>
 
         <figure class="figure-frame">
-          <a href={`/publications/${topic.featured}`} aria-label={`Open ${featured?.shortTitle}`}>
+          <a href={`/publications/${topic.featured}/`} aria-label={`Open ${featured?.shortTitle}`}>
             <PaperFigure name={topic.featured} />
           </a>
           <figcaption>
-            <strong><a href={`/publications/${topic.featured}`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
+            <strong><a href={`/publications/${topic.featured}/`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
             {" "}<span set:html={withTex(featured?.figureCaption ?? "")} />
           </figcaption>
         </figure>
@@ -44,11 +44,11 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
           Papers:{" "}
           {topicPapers.map((paper, i) => (
             <>
-              <a href={`/publications/${paper.slug}`}>{paper.shortTitle}</a>{i < topicPapers.length - 1 ? ", " : ""}
+              <a href={`/publications/${paper.slug}/`}>{paper.shortTitle}</a>{i < topicPapers.length - 1 ? ", " : ""}
             </>
           ))}
           {" · "}
-          <a href={`/research/${topic.slug}`}>more on this direction</a>
+          <a href={`/research/${topic.slug}/`}>more on this direction</a>
         </p>
       </section>
     );

@@ -1,6 +1,8 @@
 # Mohamad Chehade Personal Website
 
-Astro source for [mfhchehade.github.io](https://mfhchehade.github.io).
+Astro source for [www.mohamadchehade.com](https://www.mohamadchehade.com) (GitHub Pages, custom domain in `public/CNAME`).
+
+Publications, their figures and BibTeX live in `src/data/research.ts`; each paper's `cite` record feeds the BibTeX block and the Google Scholar meta tags on its page.
 
 ## Development
 

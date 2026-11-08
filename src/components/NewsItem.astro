@@ -5,10 +5,16 @@ interface Props {
 }
 
 const { date, content } = Astro.props;
+
+// "Oct 2026" -> "2026-10", the machine-readable form <time> expects.
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const [month, year] = date.split(" ");
+const monthIndex = months.indexOf(month);
+const datetime = monthIndex >= 0 && year ? `${year}-${String(monthIndex + 1).padStart(2, "0")}` : undefined;
 ---
 
 <article class="news-item">
-  <time>{date}</time>
+  <time datetime={datetime}>{date}</time>
   <span set:html={content} />
 </article>
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mohamadchehade.com/sitemap-index.xml
+Sitemap: https://www.mohamadchehade.com/sitemap-index.xml

@@ -24,7 +24,7 @@ const featured = getPublication(topic.featured);
 >
   <header class="topic-hero">
     <div class="topic-copy">
-      <a class="back-link" href="/research">Research</a>
+      <a class="back-link" href="/research/">Research</a>
       <div class="topic-title">
         <span class="topic-icon"><DirectionIcon name={topic.slug} /></span>
         <h1>{topic.title}</h1>
@@ -37,7 +37,7 @@ const featured = getPublication(topic.featured);
   <figure class="figure-frame topic-figure">
     <PaperFigure name={topic.featured} />
     <figcaption>
-      <strong><a href={`/publications/${topic.featured}`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
+      <strong><a href={`/publications/${topic.featured}/`}>{featured?.shortTitle}</a> ({featured?.shortVenue} {featured?.year}).</strong>
       {" "}<span set:html={withTex(featured?.figureCaption ?? "")} />
     </figcaption>
   </figure>
@@ -53,15 +53,15 @@ const featured = getPublication(topic.featured);
     <div class="topic-paper-grid">
       {papers.map((paper) => (
         <article class="topic-paper">
-          <a class="pub-thumb" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
+          <a class="pub-thumb" href={`/publications/${paper.slug}/`} aria-label={`Open ${paper.shortTitle}`}>
             <PaperThumb name={paper.slug} />
           </a>
           <div>
             <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
-            <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+            <h3><a href={`/publications/${paper.slug}/`}>{paper.title}</a></h3>
             <p>{paper.summary}</p>
             <div class="link-row">
-              <a href={`/publications/${paper.slug}`}>details</a>
+              <a href={`/publications/${paper.slug}/`}>details</a>
               {paper.links.map((link) => {
                 const isExternal = link.href.startsWith("http");
                 return (

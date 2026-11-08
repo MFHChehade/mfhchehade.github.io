@@ -16,11 +16,11 @@ const hasSelf = rest.length > 0;
 ---
 
 <article class="publication-entry with-thumb">
-  <a class="pub-thumb" href={`/publications/${paper.slug}`} aria-label={`Open ${paper.shortTitle}`}>
+  <a class="pub-thumb" href={`/publications/${paper.slug}/`} aria-label={`Open ${paper.shortTitle}`}>
     <PaperThumb name={paper.slug} />
   </a>
   <div class="pub-text">
-    <h3><a href={`/publications/${paper.slug}`}>{paper.title}</a></h3>
+    <h3><a href={`/publications/${paper.slug}/`}>{paper.title}</a></h3>
     <p class="authors">
       {hasSelf ? (
         <>{before}<strong>{SELF}</strong>{after}</>
@@ -42,7 +42,8 @@ const hasSelf = rest.length > 0;
           </a>
         );
       })}
-      <a href={`/publications/${paper.slug}`}>details</a>
+      <a href={`/publications/${paper.slug}/`}>details</a>
+      <a href={`/publications/${paper.slug}/#cite`}>BibTeX</a>
     </div>
   </div>
 </article>

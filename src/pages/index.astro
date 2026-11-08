@@ -60,7 +60,7 @@ const selectedPublications = ["tram", "levis", "sitalign"]
 
     <aside class="hero-media" aria-label="Research profile">
       <div class="portrait-shell">
-        <img src="/profile.jpeg" alt="Mohamad Chehade" class="profile-photo" />
+        <img src="/profile.jpeg" alt="Mohamad Chehade" class="profile-photo" width="741" height="741" fetchpriority="high" />
       </div>
       <div class="affiliation-strip">
         <span>Ph.D. Student</span>
@@ -76,12 +76,12 @@ const selectedPublications = ["tram", "levis", "sitalign"]
       <div>
         <h2>Research directions</h2>
       </div>
-      <a href="/research">Explore all research</a>
+      <a href="/research/">Explore all research</a>
     </div>
 
     <div class="theme-list">
       {researchThemes.map((theme) => (
-        <a class="theme-row" href={`/research/${theme.slug}`} data-reveal>
+        <a class="theme-row" href={`/research/${theme.slug}/`} data-reveal>
           <span class="theme-icon"><DirectionIcon name={theme.slug} /></span>
           <div class="theme-body">
             <h3>{theme.shortTitle}</h3>
@@ -103,7 +103,7 @@ const selectedPublications = ["tram", "levis", "sitalign"]
       <div>
         <h2>Selected publications</h2>
       </div>
-      <a href="/publications">View all publications</a>
+      <a href="/publications/">View all publications</a>
     </div>
 
     <div class="publication-list">
@@ -219,6 +219,7 @@ const selectedPublications = ["tram", "levis", "sitalign"]
 
   .profile-photo {
     width: 100%;
+    height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: 13px;
@@ -351,27 +352,6 @@ const selectedPublications = ["tram", "levis", "sitalign"]
     align-items: start;
   }
 
-  .thesis-section {
-    max-width: 860px;
-    margin: 3.6rem auto 0;
-    padding: 2rem 2.2rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--burnt);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
-  }
-
-  .thesis-statement {
-    margin: 0;
-    font-family: var(--sans);
-    font-size: clamp(1.18rem, 2.2vw, 1.5rem);
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--ink);
-    letter-spacing: -0.005em;
-  }
-
   @media (max-width: 820px) {
     .hero,
     .lower-grid {
@@ -395,10 +375,6 @@ const selectedPublications = ["tram", "levis", "sitalign"]
 
     .bio-block {
       font-size: 1rem;
-    }
-
-    .thesis-section {
-      padding: 1.5rem 1.3rem;
     }
   }
 </style>

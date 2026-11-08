@@ -30,15 +30,16 @@ import "../styles/figures.css";
 // Analytics only ship in a production build, and only once an ID is set.
 const enableAnalytics = import.meta.env.PROD && UMAMI_WEBSITE_ID !== "";
 
-const siteOrigin = Astro.site?.origin ?? "https://mohamadchehade.com";
+const siteOrigin = Astro.site?.origin ?? "https://www.mohamadchehade.com";
 const canonicalURL = new URL(Astro.url.pathname, siteOrigin).toString();
 const ogImageURL = new URL(ogImage, siteOrigin).toString();
-const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+// Internal links end in "/" because GitHub Pages redirects "/research" to "/research/".
+const currentPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/research", label: "Research" },
-  { href: "/publications", label: "Publications" },
-  { href: "/contact", label: "Contact" },
+  { href: "/research/", label: "Research" },
+  { href: "/publications/", label: "Publications" },
+  { href: "/contact/", label: "Contact" },
 ];
 
 const isActive = (href: string) => href === "/" ? currentPath === "/" : currentPath.startsWith(href);
@@ -67,7 +68,7 @@ const personJsonLd = {
   sameAs: [
     "https://scholar.google.com/citations?user=cVUnhukAAAAJ&hl=en",
     "https://github.com/MFHChehade",
-    "https://lb.linkedin.com/in/mfhchehade",
+    "https://www.linkedin.com/in/mfhchehade",
   ],
   knowsAbout: [
     "Machine Learning",
@@ -143,6 +144,7 @@ const personJsonLd = {
         />
       )
     }
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
@@ -165,7 +167,7 @@ const personJsonLd = {
             </a>
           ))}
           <a class="nav-cv" href="/CV_Mohamad.pdf" target="_blank" rel="noopener noreferrer">CV ↗</a>
-          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode">
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false">
             <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <circle cx="12" cy="12" r="4"></circle>
               <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
@@ -194,7 +196,7 @@ const personJsonLd = {
         <div class="footer-links">
           <a href="https://scholar.google.com/citations?user=cVUnhukAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Scholar</a>
           <a href="https://github.com/MFHChehade" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://lb.linkedin.com/in/mfhchehade" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/mfhchehade" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="mailto:chehade@utexas.edu">Email</a>
         </div>
         <p class="footer-copy">&copy; {new Date().getFullYear()} Mohamad Chehade</p>
@@ -205,9 +207,11 @@ const personJsonLd = {
       (function () {
         const btn = document.getElementById("theme-toggle");
         if (btn) {
+          btn.setAttribute("aria-pressed", String(document.documentElement.dataset.theme === "dark"));
           btn.addEventListener("click", function () {
             const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
             document.documentElement.dataset.theme = next;
+            btn.setAttribute("aria-pressed", String(next === "dark"));
             try { localStorage.setItem("theme", next); } catch (e) {}
           });
         }
