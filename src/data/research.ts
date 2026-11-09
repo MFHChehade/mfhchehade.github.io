@@ -145,7 +145,7 @@ export const publications: Publication[] = [
     title: "Fine-Tuning LLMs to Generate Economical and Reliable Actions for the Power Grid",
     shortTitle: "Fine-Tuning LLMs for Grid Actions",
     authors: "M. Chehade, H. Zhu",
-    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), Jul. 2026",
+    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), pp. 1–5, Jul. 2026",
     year: "2026",
     shortVenue: "PESGM",
     type: "peer-reviewed",
@@ -159,13 +159,18 @@ export const publications: Publication[] = [
     topics: ["llm-decision-systems", "power-systems-applications", "data-driven-reliability"],
     figureCaption:
       String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time. On IEEE 118-bus PSPS scenarios, AC power-flow failures drop from 50% (zero-shot) to single digits.`,
-    links: [{ label: "arXiv", href: "https://arxiv.org/abs/2602.15350" }],
+    links: [
+      { label: "IEEE Xplore", href: "https://doi.org/10.1109/PESGM58988.2026.11693462" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2602.15350" },
+    ],
     cite: {
       key: "chehade2026finetuning",
       authors: ["Chehade, Mohamad", "Zhu, Hao"],
       title: "Fine-Tuning {LLMs} to Generate Economical and Reliable Actions for the Power Grid",
       booktitle: String.raw`2026 IEEE Power \& Energy Society General Meeting (PESGM)`,
-      url: "https://arxiv.org/abs/2602.15350",
+      pages: "1--5",
+      publisher: "IEEE",
+      doi: "10.1109/PESGM58988.2026.11693462",
     },
   },
   {
@@ -173,7 +178,7 @@ export const publications: Publication[] = [
     title: "Carbon-aware Market Participation for Building Energy Management Systems",
     shortTitle: "Carbon-Aware Building Energy Markets",
     authors: "Y. Cho, M. Chehade, F. Al-Janahi, S. Lim, J. Mohammadi, H. Zhu",
-    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), Jul. 2026",
+    venue: "2026 IEEE Power & Energy Society General Meeting (PESGM), pp. 1–5, Jul. 2026",
     year: "2026",
     shortVenue: "PESGM",
     type: "peer-reviewed",
@@ -187,12 +192,17 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications"],
     figureCaption:
       "Daily energy cost and carbon emissions on PJM data for carbon taxes of &#36;0 to &#36;30 per tonne, plus an unmanaged baseline (points read from the paper&rsquo;s Fig. 3). Cost-only dispatch (&#36;0/t) is cheapest but emits slightly more than the baseline; at &#36;30/t emissions fall by about 21% for about 1.5% more cost.",
-    links: [{ label: "arXiv", href: "https://arxiv.org/abs/2603.08654" }],
+    links: [
+      { label: "IEEE Xplore", href: "https://doi.org/10.1109/PESGM58988.2026.11693113" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2603.08654" },
+    ],
     cite: {
       key: "cho2026carbon",
-      authors: ["Cho, Young-ho", "Chehade, Mohamad", "Al-Janahi, Fatima", "Lim, Sol", "Mohammadi, Javad", "Zhu, Hao"],
+      authors: ["Cho, Young-Ho", "Chehade, Mohamad", "Al-Janahi, Fatima", "Lim, Sol", "Mohammadi, Javad", "Zhu, Hao"],
       booktitle: String.raw`2026 IEEE Power \& Energy Society General Meeting (PESGM)`,
-      url: "https://arxiv.org/abs/2603.08654",
+      pages: "1--5",
+      publisher: "IEEE",
+      doi: "10.1109/PESGM58988.2026.11693113",
     },
   },
   {
