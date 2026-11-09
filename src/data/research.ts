@@ -47,6 +47,7 @@ export type Publication = {
   topics: string[];
   /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed, $...$ is typeset as TeX. */
   figureCaption?: string;
+  /** Order: published version (venue, PMLR, IEEE Xplore), arXiv, OpenReview, PDF, code. BibTeX is appended. */
   links: Array<{ label: string; href: string }>;
   cite: Citation;
 };
@@ -129,8 +130,8 @@ export const publications: Publication[] = [
     figureCaption:
       String.raw`Risk-neutral source policies $\pi_1, \pi_2, \pi_3$ are trained once. When a new hazard $\overline{\mathcal{S}}$ is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.`,
     links: [
-      { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" },
       { label: "NeurIPS", href: "https://neurips.cc/virtual/2026/poster/148449" },
+      { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" },
     ],
     cite: {
       key: "chehade2026tram",
