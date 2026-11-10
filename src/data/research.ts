@@ -131,7 +131,7 @@ export const publications: Publication[] = [
       String.raw`Risk-neutral source policies $\pi_1, \pi_2, \pi_3$ are trained once. When a new hazard $\overline{\mathcal{S}}$ is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.`,
     links: [
       { label: "NeurIPS", href: "https://neurips.cc/virtual/2026/poster/148449" },
-      { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08812" },
+      { label: "arXiv", href: "https://arxiv.org/pdf/2408.08812v3" },
     ],
     cite: {
       key: "chehade2026tram",
