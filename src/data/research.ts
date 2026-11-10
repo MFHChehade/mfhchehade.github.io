@@ -131,6 +131,15 @@ export const publications: Publication[] = [
     topics: ["risk-aware-learning", "llm-decision-systems"],
     figureCaption:
       String.raw`Risk-neutral source policies $\pi_1, \pi_2, \pi_3$ are trained once. When a new hazard $\overline{\mathcal{S}}$ is specified at deployment, TRAM scores every source as value minus risk penalty at each state and switches sources (here at states 2 and 3) instead of retraining.`,
+    video: {
+      src: "/videos/tram.mp4",
+      poster: "/videos/tram-poster.jpg",
+      thumb: "/videos/tram-thumb.mp4",
+      thumbPoster: "/videos/tram-thumb-poster.jpg",
+      label: "Animation of TRAM switching source policies to go around a new hazard",
+      caption:
+        String.raw`The figure above, step by step: following one source policy walks into the new hazard; TRAM instead scores every source at each decision state, value minus risk penalty, and switches sources to go around it. Schematic, as in the paper&rsquo;s Figure 1.`,
+    },
     links: [
       { label: "NeurIPS", href: "https://neurips.cc/virtual/2026/poster/148449" },
       { label: "arXiv", href: "https://arxiv.org/pdf/2408.08812v3" },
