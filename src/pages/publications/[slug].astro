@@ -105,6 +105,25 @@ const scholarlyArticleJsonLd = {
       )}
     </figure>
 
+    {paper.video && (
+      <figure class="figure-frame paper-video">
+        <video
+          src={paper.video.src}
+          poster={paper.video.poster}
+          autoplay
+          muted
+          loop
+          playsinline
+          controls
+          preload="metadata"
+          aria-label={paper.video.label}
+        ></video>
+        <figcaption>
+          <strong>Animation.</strong> <span set:html={withTex(paper.video.caption)} />
+        </figcaption>
+      </figure>
+    )}
+
     <section class="section paper-grid">
       <div class="paper-panel">
         <h2>What this paper adds</h2>
@@ -199,6 +218,20 @@ const scholarlyArticleJsonLd = {
 
   .paper-figure {
     max-width: 920px;
+  }
+
+  .paper-video {
+    max-width: 560px;
+    margin-top: 1.5rem;
+  }
+
+  .paper-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-sm);
+    background: #fff;
   }
 
   .paper-grid {

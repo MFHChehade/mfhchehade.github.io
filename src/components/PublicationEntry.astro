@@ -1,7 +1,7 @@
 ---
 // One publication in a list: a small-size figure thumbnail, then title,
 // authors (own name in bold), venue, and plain links.
-import PaperThumb from "./figures/PaperThumb.astro";
+import PaperTile from "./figures/PaperTile.astro";
 import type { Publication } from "../data/research";
 
 interface Props {
@@ -17,7 +17,7 @@ const hasSelf = rest.length > 0;
 
 <article class="publication-entry with-thumb">
   <a class="pub-thumb" href={`/publications/${paper.slug}/`} aria-label={`Open ${paper.shortTitle}`}>
-    <PaperThumb name={paper.slug} />
+    <PaperTile name={paper.slug} />
   </a>
   <div class="pub-text">
     <h3><a href={`/publications/${paper.slug}/`}>{paper.title}</a></h3>

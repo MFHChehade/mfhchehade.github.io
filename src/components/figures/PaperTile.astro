@@ -1,0 +1,50 @@
+---
+// Publication-list tile: the paper's silent animation when it has one
+// (public/videos, text-free 16:10 clip), otherwise the drawn PaperThumb.
+import PaperThumb from "./PaperThumb.astro";
+import { getPublication } from "../../data/research";
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const video = getPublication(name)?.video;
+---
+
+{video ? (
+  <video
+    class="thumb-video"
+    src={video.thumb}
+    poster={video.thumbPoster}
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+    data-motion
+  ></video>
+) : (
+  <PaperThumb name={name} />
+)}
+
+<script>
+  // Respect reduced-motion settings: keep the poster frame instead of looping.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll<HTMLVideoElement>("video[data-motion]").forEach((v) => {
+      v.removeAttribute("autoplay");
+      v.pause();
+    });
+  }
+</script>
+
+<style>
+  .thumb-video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: #fff;
+  }
+</style>

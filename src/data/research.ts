@@ -47,6 +47,8 @@ export type Publication = {
   topics: string[];
   /** Caption for the paper's hand-drawn figure (src/components/figures); HTML allowed, $...$ is typeset as TeX. */
   figureCaption?: string;
+  /** Silent looping animation in public/videos: square video + caption for the paper page, text-free 16:10 clip for lists. */
+  video?: { src: string; poster: string; thumb: string; thumbPoster: string; label: string; caption: string };
   /** Order: published version (venue, PMLR, IEEE Xplore), arXiv, OpenReview, PDF, code. BibTeX is appended. */
   links: Array<{ label: string; href: string }>;
   cite: Citation;
@@ -258,6 +260,15 @@ export const publications: Publication[] = [
     topics: ["data-driven-reliability", "risk-aware-learning"],
     figureCaption:
       String.raw`The verifiable region $\mathcal{C}$ holds every input whose output satisfies $f(x) > 0$. LEVIS-$\alpha$ finds the largest verifiable ball, which touches two boundaries of $\mathcal{C}$; LEVIS-$\beta$ covers the rest of $\mathcal{C}$ with a union of balls.`,
+    video: {
+      src: "/videos/levis.mp4",
+      poster: "/videos/levis-poster.jpg",
+      thumb: "/videos/levis-thumb.mp4",
+      thumbPoster: "/videos/levis-thumb-poster.jpg",
+      label: "Animation of LEVIS-alpha growing a verified ball inside a region",
+      caption:
+        String.raw`LEVIS-$\alpha$ on an illustrative two-dimensional region: the ball grows to the nearest unsafe point, probes opposite directions, and moves its center to the middle, until it touches the boundary on two sides.`,
+    },
     links: [
       { label: "PMLR", href: "https://proceedings.mlr.press/v267/chehade25b.html" },
       { label: "arXiv", href: "https://doi.org/10.48550/arXiv.2408.08824" },
@@ -338,6 +349,15 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications"],
     figureCaption:
       String.raw`Ordinal optimization ranks $N$ candidate microgrid sizings with a cheap model, then evaluates only the top $s$ exactly, returning a good-enough design with high probability.`,
+    video: {
+      src: "/videos/boost.mp4",
+      poster: "/videos/boost-poster.jpg",
+      thumb: "/videos/boost-thumb.mp4",
+      thumbPoster: "/videos/boost-thumb-poster.jpg",
+      label: "Animation of BOOST screening a grid of battery and solar designs",
+      caption:
+        "A cheap model scores every battery and solar sizing, only the most promising designs are kept, and only those are re-checked with the exact model.",
+    },
     links: [{ label: "IEEE Xplore", href: "https://doi.org/10.1109/TPEC63981.2025.10907217" }],
     cite: {
       key: "chehade2025boost",

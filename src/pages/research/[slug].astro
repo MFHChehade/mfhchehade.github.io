@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PaperFigure from '../../components/figures/PaperFigure.astro';
-import PaperThumb from '../../components/figures/PaperThumb.astro';
+import PaperTile from '../../components/figures/PaperTile.astro';
 import DirectionIcon from '../../components/figures/DirectionIcon.astro';
 import { withTex } from '../../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../../data/research';
@@ -54,7 +54,7 @@ const featured = getPublication(topic.featured);
       {papers.map((paper) => (
         <article class="topic-paper">
           <a class="pub-thumb" href={`/publications/${paper.slug}/`} aria-label={`Open ${paper.shortTitle}`}>
-            <PaperThumb name={paper.slug} />
+            <PaperTile name={paper.slug} />
           </a>
           <div>
             <p class="paper-venue">{paper.shortVenue} {paper.year}</p>
