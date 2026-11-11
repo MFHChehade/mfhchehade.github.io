@@ -253,6 +253,15 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications", "data-driven-reliability"],
     figureCaption:
       String.raw`The feeder&rsquo;s volt-var loop (power flow maps reactive power to voltage, a local rule $\mathbf{q}^{g} = g(\mathbf{v};\phi)$ maps voltage back) is learned as two ReLU networks and solved directly as the deep-equilibrium fixed point $\mathbf{v}^{*} = F_{\phi}(\mathbf{v}^{*})$.`,
+    video: {
+      src: "/videos/neogrid.mp4",
+      poster: "/videos/neogrid-poster.jpg",
+      thumb: "/videos/neogrid-thumb.mp4",
+      thumbPoster: "/videos/neogrid-thumb-poster.jpg",
+      label: "Animation of feeder voltages rising with midday solar and returning inside the safe band under a learned volt-var rule",
+      caption:
+        "Schematic feeder (toy linearized power flow with illustrative parameters, not the paper&rsquo;s test feeder). Midday solar pushes voltages above the band; a generic volt-var rule is not enough; NEO-Grid learns the rule and solves the closed loop as a fixed point, bringing every bus back inside the band.",
+    },
     links: [
       { label: "HICSS", href: "https://doi.org/10.24251/HICSS.2026.380" },
       { label: "arXiv", href: "https://arxiv.org/abs/2509.21668" },
