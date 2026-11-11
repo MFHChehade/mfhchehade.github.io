@@ -376,7 +376,10 @@ export const publications: Publication[] = [
       caption:
         "A cheap model scores every battery and solar sizing, only the most promising designs are kept, and only those are re-checked with the exact model.",
     },
-    links: [{ label: "IEEE Xplore", href: "https://doi.org/10.1109/TPEC63981.2025.10907217" }],
+    links: [
+      { label: "IEEE Xplore", href: "https://doi.org/10.1109/TPEC63981.2025.10907217" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2501.10842" },
+    ],
     cite: {
       key: "chehade2025boost",
       authors: ["El Hajj Chehade, Mohamad Fares", "Karaki, Sami"],
@@ -406,7 +409,10 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
     figureCaption:
       String.raw`The building buys energy at price $\rho_t$ and a battery shifts it in time through actions $a_t$, with $\mathrm{SOC}_{t+1} = \mathrm{SOC}_t + a_t$; the paper compares model-free and model-based controllers for choosing $a_t$.`,
-    links: [{ label: "IEEE Xplore", href: "https://doi.org/10.1109/NAPS61145.2024.10741791" }],
+    links: [
+      { label: "IEEE Xplore", href: "https://doi.org/10.1109/NAPS61145.2024.10741791" },
+      { label: "arXiv", href: "https://arxiv.org/abs/2407.15313" },
+    ],
     cite: {
       key: "chehade2024battery",
       authors: ["El Hajj Chehade, Mohamad Fares", "Cho, Young-Ho", "Chinchali, Sandeep", "Zhu, Hao"],
