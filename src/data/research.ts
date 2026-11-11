@@ -212,6 +212,15 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications"],
     figureCaption:
       "Daily energy cost and carbon emissions on PJM data for carbon taxes of &#36;0 to &#36;30 per tonne, plus an unmanaged baseline (points read from the paper&rsquo;s Fig. 3). Cost-only dispatch (&#36;0/t) is cheapest but emits slightly more than the baseline; at &#36;30/t emissions fall by about 21% for about 1.5% more cost.",
+    video: {
+      src: "/videos/carbon.mp4",
+      poster: "/videos/carbon-poster.jpg",
+      thumb: "/videos/carbon-thumb.mp4",
+      thumbPoster: "/videos/carbon-thumb-poster.jpg",
+      label: "Animation of a building charging its battery in clean hours and running on it in carbon-heavy hours",
+      caption:
+        "Schematic day (illustrative carbon profile and battery rule, not the paper&rsquo;s PJM signal). With a carbon price, the building charges its battery when the grid is clean and runs on it when the grid is carbon-heavy; the bars end at the paper&rsquo;s result of about 21% less carbon for about 1.5% more cost.",
+    },
     links: [
       { label: "IEEE Xplore", href: "https://doi.org/10.1109/PESGM58988.2026.11693113" },
       { label: "arXiv", href: "https://arxiv.org/abs/2603.08654" },
