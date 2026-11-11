@@ -314,6 +314,15 @@ export const publications: Publication[] = [
     topics: ["llm-decision-systems", "risk-aware-learning"],
     figureCaption:
       "GPT-4 win-tie rates against the base model (Zephyr-7B-&beta;) on PKU-SafeRLHF, read from the paper&rsquo;s Figure 2. Decoding for helpfulness alone falls below the 50% harmlessness threshold. Decoding for harmlessness alone, or with MOD, clears it but gives up helpfulness. SITAlign stays above the threshold and is the most helpful of the four, about 22 points ahead of MOD.",
+    video: {
+      src: "/videos/sitalign.mp4",
+      poster: "/videos/sitalign-poster.jpg",
+      thumb: "/videos/sitalign-thumb.mp4",
+      thumbPoster: "/videos/sitalign-thumb-poster.jpg",
+      label: "Animation of three decoding rules: helpfulness only, harmlessness only, and SITAlign",
+      caption:
+        "Schematic of satisficing decoding. At each step, choosing the most helpful token can drift below the harmlessness threshold, and choosing the safest token barely helps; SITAlign keeps only tokens above the threshold and picks the most helpful of them.",
+    },
     links: [
       { label: "PMLR", href: "https://proceedings.mlr.press/v267/chehade25a.html" },
       { label: "arXiv", href: "https://arxiv.org/abs/2505.23729" },
