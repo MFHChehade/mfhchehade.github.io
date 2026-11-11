@@ -1,26 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PaperFigure from '../components/figures/PaperFigure.astro';
+import DirectionIcon from '../components/figures/DirectionIcon.astro';
 import { withTex } from '../components/figures/tex';
 import { getPublication, getTopicPapers, topics } from '../data/research';
+
+// What each direction contributes to the one question, in the page's own words.
+const roles: Record<string, string> = {
+  'risk-aware-learning': 'Sets the objective',
+  'data-driven-reliability': 'Provides the guarantees',
+  'llm-decision-systems': 'Tests it on language-driven control',
+  'power-systems-applications': 'Grounds it in a reliability-critical domain',
+};
 ---
 
 <Layout
   title="Research - Mohamad Chehade"
   description="Research areas for Mohamad Chehade, including risk-aware machine learning, data-driven reliability, reinforcement learning, LLMs, and power systems applications."
 >
-  <header class="page-heading">
+  <header class="page-heading research-intro">
     <h1>Research</h1>
-    <p>
-      My research is organized around one question: how can learning systems make decisions under
-      uncertainty in a way that is risk-aware and verifiable? The four directions below develop
-      complementary pieces of this question — risk-aware learning provides the objective, verification
-      and reliability provide the guarantees, LLM decision systems test the methods on
-      language-driven control, and power-system applications ground the work in a reliability-critical
-      domain. Papers are intentionally cross-tagged across directions, since most of them advance more
-      than one.
+    <p class="question-label">One question behind all of it</p>
+    <p class="research-question">
+      How can learning systems make decisions under uncertainty that are
+      <em>risk-aware</em> and <em>verifiable</em>?
     </p>
   </header>
+
+  <nav class="direction-map" aria-label="Research directions">
+    {topics.map((topic, i) => (
+      <a class="map-card" href={`#${topic.slug}`}>
+        <span class="map-icon"><DirectionIcon name={topic.slug} /></span>
+        <span class="map-text">
+          <span class="map-index">0{i + 1}</span>
+          <span class="map-title">{topic.shortTitle}</span>
+          <span class="map-role">{roles[topic.slug]}</span>
+        </span>
+      </a>
+    ))}
+  </nav>
+  <p class="map-note">Most papers advance more than one direction, so they appear under each one they serve.</p>
 
   {topics.map((topic) => {
     const topicPapers = getTopicPapers(topic.slug);
@@ -56,6 +75,127 @@ import { getPublication, getTopicPapers, topics } from '../data/research';
 </Layout>
 
 <style>
+  .research-intro {
+    padding-bottom: 1.2rem;
+  }
+
+  .question-label {
+    margin: 0 0 0.6rem;
+    color: var(--burnt);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .page-heading .research-question {
+    margin: 0;
+    padding-left: 1.1rem;
+    border-left: 4px solid var(--burnt);
+    color: var(--ink);
+    font-size: clamp(1.45rem, 1.1rem + 1.4vw, 2.05rem);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .research-question em {
+    font-style: normal;
+    color: var(--burnt);
+    white-space: nowrap;
+  }
+
+  .direction-map {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .map-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 0.7rem;
+    padding: 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  }
+
+  .map-card:hover,
+  .map-card:focus-visible {
+    border-color: var(--accent-line);
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-2px);
+  }
+
+  .map-icon {
+    display: block;
+    width: 3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .map-text {
+    display: grid;
+    align-content: start;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+
+  .map-index {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .map-title {
+    color: var(--ink);
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.25;
+    transition: color 200ms ease;
+  }
+
+  .map-card:hover .map-title,
+  .map-card:focus-visible .map-title {
+    color: var(--burnt);
+  }
+
+  .map-role {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .map-note {
+    margin: 0.9rem 0 1.4rem;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 760px) {
+    .direction-map {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .map-card {
+      transition: none;
+    }
+
+    .map-card:hover,
+    .map-card:focus-visible {
+      transform: none;
+    }
+  }
+
   .direction {
     display: grid;
     gap: 1rem;
