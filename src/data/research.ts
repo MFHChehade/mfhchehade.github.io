@@ -170,6 +170,15 @@ export const publications: Publication[] = [
     topics: ["llm-decision-systems", "power-systems-applications", "data-driven-reliability"],
     figureCaption:
       String.raw`Each stage is supervised by a stronger signal: SFT imitates a DC-OPF MILP oracle, DPO learns from AC power-flow evaluations ranked by voltage penalty, and best-of-$N$ keeps the best feasible plan at inference time. On IEEE 118-bus PSPS scenarios, AC power-flow failures drop from 50% (zero-shot) to single digits.`,
+    video: {
+      src: "/videos/llm-grid.mp4",
+      poster: "/videos/llm-grid-poster.jpg",
+      thumb: "/videos/llm-grid-thumb.mp4",
+      thumbPoster: "/videos/llm-grid-thumb-poster.jpg",
+      label: "Animation of a wildfire shutoff stressing a grid and an LLM opening two more lines to relieve it",
+      caption:
+        "Schematic grid (not the IEEE 118-bus test case). A wildfire shutoff forces lines out, a line overloads and a bus loses load; the fine-tuned LLM proposes an open-only corrective action, and the flows reroute so the grid stays served.",
+    },
     links: [
       { label: "IEEE Xplore", href: "https://doi.org/10.1109/PESGM58988.2026.11693462" },
       { label: "arXiv", href: "https://arxiv.org/abs/2602.15350" },
