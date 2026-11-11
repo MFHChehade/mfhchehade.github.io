@@ -436,6 +436,15 @@ export const publications: Publication[] = [
     topics: ["power-systems-applications", "risk-aware-learning", "data-driven-reliability"],
     figureCaption:
       String.raw`The building buys energy at price $\rho_t$ and a battery shifts it in time through actions $a_t$, with $\mathrm{SOC}_{t+1} = \mathrm{SOC}_t + a_t$; the paper compares model-free and model-based controllers for choosing $a_t$.`,
+    video: {
+      src: "/videos/battery.mp4",
+      poster: "/videos/battery-poster.jpg",
+      thumb: "/videos/battery-thumb.mp4",
+      thumbPoster: "/videos/battery-thumb-poster.jpg",
+      label: "Animation comparing an MPC battery controller and an RL battery controller over a normal day and a day when demand shifts",
+      caption:
+        "Schematic day (illustrative prices and demand, and a simple stand-in for the trained RL policy, not the paper&rsquo;s data or agent). On a normal day both controllers save about the same; when customers&rsquo; demand shifts away from MPC&rsquo;s forecast, RL keeps saving while MPC saves less, but RL takes much longer to train.",
+    },
     links: [
       { label: "IEEE Xplore", href: "https://doi.org/10.1109/NAPS61145.2024.10741791" },
       { label: "arXiv", href: "https://arxiv.org/abs/2407.15313" },
